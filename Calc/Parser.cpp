@@ -1,3 +1,6 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
 #include "Parser.h"
 
 Parser::Parser(std::vector<Token>& tokens):
@@ -675,7 +678,7 @@ const TokenPosition Parser::getPositionBeforeToken(const size_t pos) const {
     }
 }
 
-const void Parser::expressionParsingErrorCheck(const IExpression* expression, const std::string errorMsg) const {
+const void Parser::expressionParsingErrorCheck(const IExpression* expression, const std::string& errorMsg) const {
     if (expression == nullptr) {
         throw LangException(ExceptionType::ParserError, errorMsg, getPositionAfterToken(position - 1));
     }

@@ -44,7 +44,7 @@ private:
     const bool match(const TokenType type);
 	const bool lookMatch(const TokenType type, const size_t pos = 0) const;
 
-    const void expressionParsingErrorCheck(const IExpression* expression, const std::string errorMsg) const;
+    const void expressionParsingErrorCheck(const IExpression* expression, const std::string& errorMsg) const;
 
     const TokenPosition getPositionAfterToken(const size_t pos) const;
     const TokenPosition getPositionBeforeToken(const size_t pos) const;

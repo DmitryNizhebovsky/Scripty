@@ -10,6 +10,6 @@ private:
 	std::string errorMsg;
 
 public:
-    LangException(const ExceptionType type, const std::string& message, const TokenPosition position = TokenPosition(0, 0)) noexcept;
+    LangException(const ExceptionType type, const std::string& message, const TokenPosition& position = TokenPosition(0, 0)) noexcept;
 	virtual const char* what() const throw() override;
 };
