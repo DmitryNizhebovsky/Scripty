@@ -9,11 +9,11 @@ Parser::Parser(std::vector<Token>& tokens):
 	position(0),
 	eof(Token(TokenType::END_OF_FILE, "")) {}
 
-std::unique_ptr<IStatement> Parser::parse() {
+SPtr Parser::parse() {
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 
 	while (!match(TokenType::END_OF_FILE)) {
-		std::unique_ptr<IStatement> temp = statement();
+        SPtr temp = statement();
 
 		if (InstanceOf<FunctionDefineStatement>(temp.get())) {
 			result->insertStatement(std::move(temp));
@@ -25,12 +25,12 @@ std::unique_ptr<IStatement> Parser::parse() {
 	return result;
 }
 
-std::unique_ptr<IStatement> Parser::statementOrBlockOfStatements() {
+SPtr Parser::statementOrBlockOfStatements() {
 	if (match(TokenType::OPEN_BRACES)) {
 		std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 
 		while (!match(TokenType::CLOSE_BRACES)) {
-			std::unique_ptr<IStatement> temp = statement();
+			SPtr temp = statement();
 
 			if (InstanceOf<FunctionDefineStatement>(temp.get())) {
 				result->insertStatement(std::move(temp));
@@ -45,7 +45,7 @@ std::unique_ptr<IStatement> Parser::statementOrBlockOfStatements() {
     }
 }
 
-std::unique_ptr<IStatement> Parser::statement() {
+SPtr Parser::statement() {
 	if (match(TokenType::IF)) {
 		return conditionalStatement();
 	}
@@ -89,7 +89,7 @@ std::unique_ptr<IStatement> Parser::statement() {
 	return assignmentStatementWithSemicolon();
 }
 
-std::unique_ptr<IStatement> Parser::definitionVariableStatement() {
+SPtr Parser::definitionVariableStatement() {
     std::unique_ptr<BlockOfVariableStatements> result = std::make_unique<BlockOfVariableStatements>();
     bool isConst = false;
 
@@ -110,7 +110,7 @@ std::unique_ptr<IStatement> Parser::definitionVariableStatement() {
 
 	while (true) {
 		if (match(TokenType::ASSIGN)) {
-            std::unique_ptr<IExpression> expr = expression();
+            EPtr expr = expression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
@@ -131,7 +131,7 @@ std::unique_ptr<IStatement> Parser::definitionVariableStatement() {
 	return result;
 }
 
-std::unique_ptr<IStatement> Parser::definitionFunctionStatement() {
+SPtr Parser::definitionFunctionStatement() {
 	std::string functionName = consume(TokenType::WORD).getValue();
 	std::vector<std::string> argsNames;
 	consume(TokenType::OPEN_BRACKET);
@@ -150,7 +150,7 @@ std::unique_ptr<IStatement> Parser::definitionFunctionStatement() {
 	return std::make_unique<FunctionDefineStatement>(functionName, std::move(argsNames), statementOrBlockOfStatements());
 }
 
-std::unique_ptr<IStatement> Parser::assignmentStatement() {
+SPtr Parser::assignmentStatement() {
 	std::string variableName = consume(TokenType::WORD).getValue();
 
     if (tableOfConstVariable.find(variableName) != tableOfConstVariable.end()) {
@@ -158,7 +158,7 @@ std::unique_ptr<IStatement> Parser::assignmentStatement() {
     }
 
 	std::unique_ptr<BlockOfVariableStatements> result = std::make_unique<BlockOfVariableStatements>();
-	std::unique_ptr<IExpression> variable;
+	EPtr variable;
 
 	while (true) {
 		variable = std::make_unique<VariableExpression>(variableName);
@@ -167,7 +167,7 @@ std::unique_ptr<IStatement> Parser::assignmentStatement() {
 			do {
 				consume(TokenType::OPEN_SQUARE_BRACKET);
 
-				std::unique_ptr<IExpression> index = expression();
+				EPtr index = expression();
 
                 expressionParsingErrorCheck(index.get(), "Missing expression");
 
@@ -201,7 +201,7 @@ std::unique_ptr<IStatement> Parser::assignmentStatement() {
 		{
             consume(assignType);
 
-            std::unique_ptr<IExpression> expr = expression();
+            EPtr expr = expression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
@@ -221,19 +221,19 @@ std::unique_ptr<IStatement> Parser::assignmentStatement() {
 	return result;
 }
 
-std::unique_ptr<IStatement> Parser::assignmentStatementWithSemicolon() {
-    std::unique_ptr<IStatement> statement = assignmentStatement();
+SPtr Parser::assignmentStatementWithSemicolon() {
+    SPtr statement = assignmentStatement();
     consume(TokenType::SEMICOLON);
     return statement;
 }
 
-std::unique_ptr<IStatement> Parser::conditionalStatement() {
-	std::unique_ptr<IExpression> conditional = expression();
+SPtr Parser::conditionalStatement() {
+	EPtr conditional = expression();
 
     expressionParsingErrorCheck(conditional.get(), "Missing conditional expression");
 
-	std::unique_ptr<IStatement> ifStatement = statementOrBlockOfStatements();
-	std::unique_ptr<IStatement> elseStatement = nullptr;
+	SPtr ifStatement = statementOrBlockOfStatements();
+	SPtr elseStatement = nullptr;
 
 	if (match(TokenType::ELSE)) {
 		elseStatement = statementOrBlockOfStatements();
@@ -242,19 +242,19 @@ std::unique_ptr<IStatement> Parser::conditionalStatement() {
 	return std::make_unique<ConditionalStatement>(std::move(conditional), std::move(ifStatement), std::move(elseStatement));
 }
 
-std::unique_ptr<IStatement> Parser::whileStatement() {
-	std::unique_ptr<IExpression> condition = expression();
+SPtr Parser::whileStatement() {
+	EPtr condition = expression();
 
     expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
-	std::unique_ptr<IStatement> statement = statementOrBlockOfStatements();
+	SPtr statement = statementOrBlockOfStatements();
 	return std::make_unique<WhileStatement>(std::move(condition), std::move(statement));
 }
 
-std::unique_ptr<IStatement> Parser::doWhileStatement() {
-	std::unique_ptr<IStatement> statement = statementOrBlockOfStatements();
+SPtr Parser::doWhileStatement() {
+	SPtr statement = statementOrBlockOfStatements();
     consume(TokenType::WHILE);
-	std::unique_ptr<IExpression> condition = expression();
+	EPtr condition = expression();
 
     expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
@@ -262,9 +262,9 @@ std::unique_ptr<IStatement> Parser::doWhileStatement() {
 	return std::make_unique<DoWhileStatement>(std::move(condition), std::move(statement));
 }
 
-std::unique_ptr<IStatement> Parser::forStatement() {
+SPtr Parser::forStatement() {
 	if (match(TokenType::OPEN_BRACKET)) {
-		std::unique_ptr<IStatement> initialization;
+		SPtr initialization;
 
 		if (match(TokenType::VAR)) {
 			initialization = definitionVariableStatement();
@@ -273,46 +273,46 @@ std::unique_ptr<IStatement> Parser::forStatement() {
 		}
 
 		match(TokenType::SEMICOLON);
-		std::unique_ptr<IExpression> condition = expression();
+		EPtr condition = expression();
 
         expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
 		match(TokenType::SEMICOLON);
-		std::unique_ptr<IStatement> increment = assignmentStatement();
+		SPtr increment = assignmentStatement();
 
 		if (!match(TokenType::CLOSE_BRACKET)) {
             throw LangException(ExceptionType::ParserError, "Missing expression or )", getPositionAfterToken(position - 1));
 		}
 
-		std::unique_ptr<IStatement> statement = statementOrBlockOfStatements();
+		SPtr statement = statementOrBlockOfStatements();
 		return std::make_unique<ForStatement>(std::move(initialization), std::move(condition), std::move(increment), std::move(statement));
 	} else {
 		throw LangException(ExceptionType::ParserError, "Missing (", getPositionAfterToken(position - 1));
 	}
 }
 
-std::unique_ptr<IStatement> Parser::continueStatement() {
-    std::unique_ptr<IStatement> statementTemp = std::make_unique<ContinueStatement>();
+SPtr Parser::continueStatement() {
+    SPtr statementTemp = std::make_unique<ContinueStatement>();
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-std::unique_ptr<IStatement> Parser::breakStatement() {
-    std::unique_ptr<IStatement> statementTemp = std::make_unique<BreakStatement>();
+SPtr Parser::breakStatement() {
+    SPtr statementTemp = std::make_unique<BreakStatement>();
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-std::unique_ptr<IStatement> Parser::returnStatement() {
-    std::unique_ptr<IExpression> expr = expression();
-    std::unique_ptr<IStatement> statementTemp = std::make_unique<ReturnStatement>(std::move(expr));
+SPtr Parser::returnStatement() {
+    EPtr expr = expression();
+    SPtr statementTemp = std::make_unique<ReturnStatement>(std::move(expr));
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-std::unique_ptr<IExpression> Parser::arrayExpression() {
-	std::vector<std::unique_ptr<IExpression>> expressions;
-    std::unique_ptr<IExpression> expr = nullptr;
+EPtr Parser::arrayExpression() {
+	std::vector<EPtr> expressions;
+    EPtr expr = nullptr;
 
     consume(TokenType::OPEN_SQUARE_BRACKET);
 
@@ -331,8 +331,8 @@ std::unique_ptr<IExpression> Parser::arrayExpression() {
 	return std::make_unique<ArrayExpression>(std::move(expressions));
 }
 
-std::unique_ptr<IExpression> Parser::objectExpression() {
-    std::map<std::string, std::unique_ptr<IExpression>> dictionary;
+EPtr Parser::objectExpression() {
+    std::map<std::string, EPtr> dictionary;
 
     consume(TokenType::OPEN_BRACES);
 
@@ -342,11 +342,11 @@ std::unique_ptr<IExpression> Parser::objectExpression() {
 
             consume(TokenType::COLON);
 
-            std::unique_ptr<IExpression> expr = expression();
+            EPtr expr = expression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
-            dictionary.insert(std::pair<std::string, std::unique_ptr<IExpression>>(attribute, std::move(expr)));
+            dictionary.insert(std::pair<std::string, EPtr>(attribute, std::move(expr)));
 
         } while (match(TokenType::COMMA));
     }
@@ -355,9 +355,9 @@ std::unique_ptr<IExpression> Parser::objectExpression() {
     return std::make_unique<ObjectExpression>(std::move(dictionary));
 }
 
-std::unique_ptr<IExpression> Parser::objectItemAccessExpression() {
+EPtr Parser::objectItemAccessExpression() {
     std::string variableName = consume(TokenType::WORD).getValue();
-    std::unique_ptr<IExpression> variable = std::make_unique<VariableExpression>(variableName);
+    EPtr variable = std::make_unique<VariableExpression>(variableName);
 
     do {
         consume(TokenType::DOT);
@@ -371,14 +371,14 @@ std::unique_ptr<IExpression> Parser::objectItemAccessExpression() {
     return variable;
 }
 
-std::unique_ptr<IExpression> Parser::arrayItemAccessExpression() {
+EPtr Parser::arrayItemAccessExpression() {
 	std::string variableName = consume(TokenType::WORD).getValue();
-	std::unique_ptr<IExpression> variable = std::make_unique<VariableExpression>(variableName);
+	EPtr variable = std::make_unique<VariableExpression>(variableName);
 
 	do {
 		consume(TokenType::OPEN_SQUARE_BRACKET);
 
-		std::unique_ptr<IExpression> index = expression();
+		EPtr index = expression();
 
         expressionParsingErrorCheck(index.get(), "Missing expression");
 
@@ -390,10 +390,10 @@ std::unique_ptr<IExpression> Parser::arrayItemAccessExpression() {
 	return variable;
 }
 
-std::unique_ptr<IExpression> Parser::functionExpression() {
+EPtr Parser::functionExpression() {
 	std::string name = consume(TokenType::WORD).getValue();
 	std::unique_ptr<FunctionalExpression> function = std::make_unique<FunctionalExpression>(name);
-    std::unique_ptr<IExpression> expr = nullptr;
+    EPtr expr = nullptr;
 
 	consume(TokenType::OPEN_BRACKET);
 
@@ -412,18 +412,18 @@ std::unique_ptr<IExpression> Parser::functionExpression() {
 	return function;
 }
 
-std::unique_ptr<IExpression> Parser::functionExpressionWithSemicolon() {
-    std::unique_ptr<IExpression> function = functionExpression();
+EPtr Parser::functionExpressionWithSemicolon() {
+    EPtr function = functionExpression();
     consume(TokenType::SEMICOLON);
     return function;
 }
 
-std::unique_ptr<IExpression> Parser::expression() {
+EPtr Parser::expression() {
 	return logicaOr();
 }
 
-std::unique_ptr<IExpression> Parser::subExpression() {
-    std::unique_ptr<IExpression> result = expression();
+EPtr Parser::subExpression() {
+    EPtr result = expression();
 
     expressionParsingErrorCheck(result.get(), "Missing expression");
 
@@ -434,8 +434,8 @@ std::unique_ptr<IExpression> Parser::subExpression() {
     return result;
 }
 
-std::unique_ptr<IExpression> Parser::logicaOr() {
-	std::unique_ptr<IExpression> result = logicalAnd();
+EPtr Parser::logicaOr() {
+	EPtr result = logicalAnd();
 
 	while (true) {
 		if (match(TokenType::LOGICAL_OR)) {
@@ -449,8 +449,8 @@ std::unique_ptr<IExpression> Parser::logicaOr() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::logicalAnd() {
-	std::unique_ptr<IExpression> result = equality();
+EPtr Parser::logicalAnd() {
+	EPtr result = equality();
 
 	while (true) {
 		if (match(TokenType::LOGICAL_AND)) {
@@ -464,8 +464,8 @@ std::unique_ptr<IExpression> Parser::logicalAnd() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::equality() {
-	std::unique_ptr<IExpression> result = conditional();
+EPtr Parser::equality() {
+	EPtr result = conditional();
 
 	while (true) {
 		if (match(TokenType::EQUALS)) {
@@ -484,8 +484,8 @@ std::unique_ptr<IExpression> Parser::equality() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::conditional() {
-	std::unique_ptr<IExpression> result = additive();
+EPtr Parser::conditional() {
+	EPtr result = additive();
 
 	while (true) {
 		if (match(TokenType::GREATER_THAN)) {
@@ -514,8 +514,8 @@ std::unique_ptr<IExpression> Parser::conditional() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::additive() {
-	std::unique_ptr<IExpression> result = multiplicative();
+EPtr Parser::additive() {
+	EPtr result = multiplicative();
 
 	while (true) {
 		if (match(TokenType::PLUS)) {
@@ -534,8 +534,8 @@ std::unique_ptr<IExpression> Parser::additive() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::multiplicative() {
-	std::unique_ptr<IExpression> result = unary();
+EPtr Parser::multiplicative() {
+	EPtr result = unary();
 
 	while (true) {
 		if (match(TokenType::MULTIPLY)) {
@@ -564,7 +564,7 @@ std::unique_ptr<IExpression> Parser::multiplicative() {
 	return result;
 }
 
-std::unique_ptr<IExpression> Parser::unary() {
+EPtr Parser::unary() {
 	if (match(TokenType::MINUS)) {
 		return std::make_unique<UnaryExpression>(TokenType::MINUS, primary());
 	}
@@ -580,7 +580,7 @@ std::unique_ptr<IExpression> Parser::unary() {
 	return primary();
 }
 
-std::unique_ptr<IExpression> Parser::primary() {
+EPtr Parser::primary() {
     const Token& token = getToken();
 
 	if (match(TokenType::NUMBER)) {

@@ -30,6 +30,9 @@
 
 #include <set>
 
+using SPtr = std::unique_ptr<IStatement>;
+using EPtr = std::unique_ptr<IExpression>;
+
 class Parser {
 private:
 	std::vector<Token> tokens;
@@ -49,38 +52,38 @@ private:
     const TokenPosition getPositionAfterToken(const size_t pos) const;
     const TokenPosition getPositionBeforeToken(const size_t pos) const;
 	
-	std::unique_ptr<IStatement> statementOrBlockOfStatements();
-	std::unique_ptr<IStatement> definitionVariableStatement();
-	std::unique_ptr<IStatement> definitionFunctionStatement();
-	std::unique_ptr<IStatement> conditionalStatement();
-	std::unique_ptr<IStatement> assignmentStatement();
-    std::unique_ptr<IStatement> assignmentStatementWithSemicolon();
-    std::unique_ptr<IStatement> continueStatement();
-	std::unique_ptr<IStatement> doWhileStatement();
-    std::unique_ptr<IStatement> returnStatement();
-	std::unique_ptr<IStatement> whileStatement();
-    std::unique_ptr<IStatement> breakStatement();
-	std::unique_ptr<IStatement> forStatement();
-	std::unique_ptr<IStatement> statement();
+    SPtr statementOrBlockOfStatements();
+    SPtr definitionVariableStatement();
+    SPtr definitionFunctionStatement();
+    SPtr conditionalStatement();
+    SPtr assignmentStatement();
+    SPtr assignmentStatementWithSemicolon();
+    SPtr continueStatement();
+    SPtr doWhileStatement();
+    SPtr returnStatement();
+    SPtr whileStatement();
+    SPtr breakStatement();
+    SPtr forStatement();
+    SPtr statement();
 
-	std::unique_ptr<IExpression> arrayItemAccessExpression();
-    std::unique_ptr<IExpression> objectItemAccessExpression();
-	std::unique_ptr<IExpression> functionExpression();
-    std::unique_ptr<IExpression> functionExpressionWithSemicolon();
-    std::unique_ptr<IExpression> objectExpression();
-	std::unique_ptr<IExpression> arrayExpression();
-	std::unique_ptr<IExpression> multiplicative();
-	std::unique_ptr<IExpression> subExpression();
-	std::unique_ptr<IExpression> conditional();
-	std::unique_ptr<IExpression> expression();
-	std::unique_ptr<IExpression> logicalAnd();
-	std::unique_ptr<IExpression> additive();
-	std::unique_ptr<IExpression> logicaOr();
-	std::unique_ptr<IExpression> equality();
-	std::unique_ptr<IExpression> primary();
-    std::unique_ptr<IExpression> unary();
+    EPtr arrayItemAccessExpression();
+    EPtr objectItemAccessExpression();
+    EPtr functionExpression();
+    EPtr functionExpressionWithSemicolon();
+    EPtr objectExpression();
+    EPtr arrayExpression();
+    EPtr multiplicative();
+    EPtr subExpression();
+    EPtr conditional();
+    EPtr expression();
+    EPtr logicalAnd();
+    EPtr additive();
+    EPtr logicaOr();
+    EPtr equality();
+    EPtr primary();
+    EPtr unary();
 
 public:
 	Parser(std::vector<Token>& tokens);
-	std::unique_ptr<IStatement> parse();
+    SPtr parse();
 };
