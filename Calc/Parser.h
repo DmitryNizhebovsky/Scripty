@@ -37,7 +37,7 @@ class Parser {
 private:
 	std::vector<Token> tokens;
     std::set<std::string> tableOfConstVariable;
-	Token eof;
+
 	size_t position;
 	size_t size;
 

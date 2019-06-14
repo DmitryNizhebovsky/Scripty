@@ -13,7 +13,7 @@ private:
 	TokenPosition position;
 
 public:
-	Token(const TokenType type, const std::string& value);
+	Token(const TokenType type, const std::string& value = "");
 	Token(const TokenType type, const std::string& value, const TokenPosition& pos);
 
 	void setPosition(const TokenPosition& pos) noexcept;

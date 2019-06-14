@@ -6,8 +6,7 @@
 Parser::Parser(std::vector<Token>& tokens):
 	tokens(tokens),
 	size(tokens.size()),
-	position(0),
-	eof(Token(TokenType::END_OF_FILE, "")) {}
+	position(0) {}
 
 SPtr Parser::parse() {
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
@@ -634,7 +633,7 @@ const Token& Parser::getToken(const size_t relativePos) const {
 	size_t pos = position + relativePos;
 
 	if (pos >= size) {
-		return eof;
+		return Token(TokenType::END_OF_FILE);
 	}
 
 	return tokens[pos];
