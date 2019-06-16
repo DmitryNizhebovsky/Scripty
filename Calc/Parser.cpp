@@ -5,8 +5,9 @@
 
 Parser::Parser(std::vector<Token>& tokens):
 	tokens(tokens),
+    position(0),
 	size(tokens.size()),
-	position(0) {}
+    eof(TokenType::END_OF_FILE) {}
 
 SPtr Parser::parse() {
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
@@ -633,7 +634,7 @@ const Token& Parser::getToken(const size_t relativePos) const {
 	size_t pos = position + relativePos;
 
 	if (pos >= size) {
-		return Token(TokenType::END_OF_FILE);
+		return eof;
 	}
 
 	return tokens[pos];
@@ -644,7 +645,7 @@ const Token& Parser::consume(const TokenType type) {
 		return tokens[position++];
 	}
 
-    throw LangException(ExceptionType::ParserError, "Missing " + tokenTypeToString(type), getPositionAfterToken(position - 1));
+    throw LangException(ExceptionType::ParserError, "Missing " + Token::toString(type), getPositionAfterToken(position - 1));
 }
 
 const bool Parser::lookMatch(const TokenType type, const size_t pos) const {

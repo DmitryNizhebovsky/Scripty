@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 enum class TokenType {
 	NONE,
@@ -43,9 +42,12 @@ enum class TokenType {
 	EQUALS,            // ==
 	NOT_EQUALS,        // !=
 
-	LOGICAL_NOT,       // not
-	LOGICAL_AND,       // and
-	LOGICAL_OR,        // or
+    AMP,               // &
+    BAR,               // |
+
+	LOGICAL_NOT,       // not !
+	LOGICAL_AND,       // and &&
+	LOGICAL_OR,        // or  ||
 
 	OPEN_BRACKET,      // (
 	CLOSE_BRACKET,     // )
@@ -63,5 +65,3 @@ enum class TokenType {
 
 	END_OF_FILE        // eof 
 };
-
-std::string tokenTypeToString(const TokenType type) noexcept;

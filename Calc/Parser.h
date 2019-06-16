@@ -41,6 +41,8 @@ private:
 	size_t position;
 	size_t size;
 
+    Token eof;
+
 private:
     const Token& getToken(const size_t relativePos = 0) const;
     const Token& consume(const TokenType type);

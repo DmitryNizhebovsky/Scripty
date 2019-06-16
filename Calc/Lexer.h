@@ -11,7 +11,6 @@ private:
 	TokenPosition currentPos;
 	std::string input;
 	std::vector<Token> tokens;
-	std::map<std::string, TokenType> operators;
 
 private:
 	void addToken(const TokenType type, const TokenPosition& pos, const std::string& value = "");

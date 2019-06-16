@@ -7,41 +7,7 @@ Lexer::Lexer(const std::string& input) :
     input(input),
     length(input.size()),
     position(0),
-    currentPos{ 1, 1 },
-    operators{
-        { "+",  TokenType::PLUS },
-        { "-",  TokenType::MINUS },
-        { "*",  TokenType::MULTIPLY },
-        { "/",  TokenType::DIVISION },
-        { "%",  TokenType::MOD },
-        { "//", TokenType::DIV },
-        { "(",  TokenType::OPEN_BRACKET },
-        { ")",  TokenType::CLOSE_BRACKET },
-        { "[",  TokenType::OPEN_SQUARE_BRACKET },
-        { "]",  TokenType::CLOSE_SQUARE_BRACKET },
-        { "{",  TokenType::OPEN_BRACES },
-        { "}",  TokenType::CLOSE_BRACES },
-        { "=",  TokenType::ASSIGN },
-        { ">",  TokenType::GREATER_THAN },
-        { "<",  TokenType::LESS_THAN },
-        { "!",  TokenType::LOGICAL_NOT },
-        { ".",  TokenType::DOT },
-        { ",",  TokenType::COMMA },
-        { ":",  TokenType::COLON },
-        { ";",  TokenType::SEMICOLON },
-        { "+=", TokenType::PLUS_ASSIGN },
-        { "-=", TokenType::MINUS_ASSIGN },
-        { "*=", TokenType::MULTIPLY_ASSIGN },
-        { "/=", TokenType::DIVISION_ASSIGN },
-        { "%=", TokenType::MOD_ASSIGN },
-        { "//=",TokenType::DIV_ASSIGN },
-        { "==", TokenType::EQUALS },
-        { "!=", TokenType::NOT_EQUALS },
-        { ">=", TokenType::GREATER_OR_EQUALS },
-        { "<=", TokenType::LESS_OR_EQUALS },
-        { "&&", TokenType::LOGICAL_AND },
-        { "||", TokenType::LOGICAL_OR }
-    } {}				   
+    currentPos{ 1, 1 } {}				   
 					   
 void Lexer::addToken(const TokenType type, const TokenPosition& pos, const std::string& value) {
 	tokens.emplace_back(Token(type, value, pos));
@@ -106,48 +72,11 @@ void Lexer::tokenizeWord() {
 		current = next();
 	}
 
-	if (buffer == "if") {
-		addToken(TokenType::IF, tokenPos, buffer);
-	}
-	else if (buffer == "else") {
-		addToken(TokenType::ELSE, tokenPos, buffer);
-	}
-	else if (buffer == "true") {
-		addToken(TokenType::TRUE, tokenPos, buffer);
-	}
-	else if (buffer == "false") {
-		addToken(TokenType::FALSE, tokenPos, buffer);
-	}
-	else if (buffer == "var") {
-		addToken(TokenType::VAR, tokenPos, buffer);
-	}
-	else if (buffer == "while") {
-		addToken(TokenType::WHILE, tokenPos, buffer);
-	}
-	else if (buffer == "for") {
-		addToken(TokenType::FOR, tokenPos, buffer);
-	}
-	else if (buffer == "do") {
-		addToken(TokenType::DO_WHILE, tokenPos, buffer);
-	}
-	else if (buffer == "break") {
-		addToken(TokenType::BREAK, tokenPos, buffer);
-	}
-	else if (buffer == "continue") {
-		addToken(TokenType::CONTINUE, tokenPos, buffer);
-	}
-	else if (buffer == "function") {
-		addToken(TokenType::FUNCTION, tokenPos, buffer);
-	}
-	else if (buffer == "return") {
-		addToken(TokenType::RETURN, tokenPos, buffer);
-	}
-    else if (buffer == "const") {
-        addToken(TokenType::CONST, tokenPos, buffer);
+    if (Token::isKeyword(buffer)) {
+        addToken(Token::keywords.at(buffer), tokenPos, buffer);
+    } else {
+        addToken(TokenType::WORD, tokenPos, buffer);
     }
-	else {
-		addToken(TokenType::WORD, tokenPos, buffer);
-	}
 }
 
 void Lexer::tokenizeString() {
@@ -189,8 +118,8 @@ void Lexer::tokenizeOperator() {
 	std::string buffer = "";
 
 	while (true) {
-		if (operators.find(buffer + current) == operators.end() && buffer.size() != 0) {
-			addToken(operators.at(buffer), tokenPos, buffer);
+        if (!Token::isOperator(buffer + current) && buffer.size() != 0) {
+            addToken(Token::operators.at(buffer), tokenPos, buffer);
 			return;
 		}
 
@@ -239,31 +168,7 @@ void Lexer::skipMultilineComment() {
 }
 
 bool Lexer::isOperator(const char let) const {
-	switch (let)
-	{
-		case '+': return true;
-		case '-': return true;
-		case '*': return true;
-		case '/': return true;
-		case '%': return true;
-		case '(': return true;
-		case ')': return true;
-		case '[': return true;
-		case ']': return true;
-		case '{': return true;
-		case '}': return true;
-		case '=': return true;
-		case '&': return true;
-		case '|': return true;
-		case '!': return true;
-		case '>': return true;
-		case '<': return true;
-		case ';': return true;
-		case ':': return true;
-		case ',': return true;
-		case '.': return true;
-		default: return false;
-	}
+    return Token::isOperator(std::string(1, let));
 }
 
 bool Lexer::isDigit(const char let) const {

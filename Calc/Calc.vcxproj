@@ -233,7 +233,6 @@
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="StringValue.cpp" />
     <ClCompile Include="TokenPosition.cpp" />
-    <ClCompile Include="TokenType.cpp" />
     <ClCompile Include="UserFunctionDefine.cpp" />
     <ClCompile Include="VariableDefineStatement.cpp" />
     <ClCompile Include="VariableExpression.cpp" />
