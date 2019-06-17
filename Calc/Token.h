@@ -30,7 +30,7 @@ public:
 	const std::string   getValue()    const noexcept;
 	const std::string   toString()    const noexcept;
 
-    static std::string toString(const TokenType type) noexcept;
+    static std::string toString(const TokenType tokenType) noexcept;
     static bool isOperator(const std::string& token) noexcept;
     static bool isKeyword(const std::string& token) noexcept;
 };

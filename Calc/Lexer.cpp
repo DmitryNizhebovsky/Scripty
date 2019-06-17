@@ -81,6 +81,7 @@ void Lexer::tokenizeWord() {
 
 void Lexer::tokenizeString() {
 	TokenPosition tokenPos = currentPos;
+    char quote = peek();
 	next();
 	char current = peek();
 	std::string buffer = "";
@@ -89,9 +90,10 @@ void Lexer::tokenizeString() {
 		if (current == '\\') {
 			current = next();
 
+            if (current == quote) { current = next(); buffer += quote; continue; }
+
 			switch (current)
 			{
-				case '"':  current = next(); buffer += '"';  continue;
 				case 'r':  current = next(); buffer += '\r'; continue;
 				case 'n':  current = next(); buffer += '\n'; continue;
 				case 't':  current = next(); buffer += '\t'; continue;
@@ -100,7 +102,7 @@ void Lexer::tokenizeString() {
 			}
 		}
 
-		if (current == '"') {
+        if (current == quote) {
 			break;
 		}
 
@@ -188,7 +190,7 @@ bool Lexer::isComment(const char let) const {
 }
 
 bool Lexer::isString(const char let) const {
-    return let == '"';
+    return let == '"' || let == '\'';
 }
 
 std::vector<Token>& Lexer::tokenize() {

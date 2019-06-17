@@ -103,8 +103,8 @@ bool Token::isKeyword(const std::string& token) noexcept {
     return (keywords.find(token) != keywords.end());
 }
 
-std::string Token::toString(const TokenType type) noexcept {
-    switch (type) {
+std::string Token::toString(const TokenType tokenType) noexcept {
+    switch (tokenType) {
         case TokenType::NONE:                 return std::string("none");
         case TokenType::NUMBER:               return std::string("number");
         case TokenType::WORD:                 return std::string("identifier");
