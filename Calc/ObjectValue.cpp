@@ -38,12 +38,11 @@ double ObjectValue::asDouble() const {
 std::string ObjectValue::asString() const {
     std::string objectStr = "{\n";
 
-    for (auto const&[key, val] : values) {
-        objectStr += "  " + key + ": " + val->asString() + ",\n";
+    for (auto it = values.begin(); it != values.end(); ++it)
+    {
+        objectStr += "  " + it->first + ": " + it->second->asString();
+        objectStr += it != std::prev(values.end()) ? ",\n" : "\n}";
     }
-
-    objectStr = objectStr.substr(0, objectStr.length() - 2);
-    objectStr += "\n}";
 
     return objectStr;
 }
