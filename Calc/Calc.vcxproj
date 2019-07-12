@@ -100,7 +100,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -174,6 +174,7 @@
     <ClInclude Include="FunctionDefineStatement.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="FunctionStatement.h" />
+    <ClInclude Include="IArrayLikeValue.h" />
     <ClInclude Include="IFunction.h" />
     <ClInclude Include="Ilvalue.h" />
     <ClInclude Include="INode.h" />

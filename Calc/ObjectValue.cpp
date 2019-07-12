@@ -4,31 +4,29 @@
 #include "ObjectValue.h"
 #include "LangException.h"
 
-ObjectValue::ObjectValue(std::map<std::string, std::unique_ptr<IValue>>&& tableValues) :
-    values(std::move(tableValues)) {}
+ObjectValue::ObjectValue(std::map<std::string, std::unique_ptr<IValue>>&& newValue) :
+    value(std::move(newValue)) {}
 
-ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& tableValues) {
-    for (auto const&[key, val] : tableValues) {
-        values.insert(std::pair<std::string, std::unique_ptr<IValue>>(key, val->copy()));
+ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& newValue) {
+    for (auto const&[key, val] : newValue) {
+        value.insert(std::pair<std::string, std::unique_ptr<IValue>>(key, val->copy()));
     }
 }
 
-std::unique_ptr<IValue> ObjectValue::getValue(const std::string& name) {
-    if (values.find(name) == values.end()) {
-        throw LangException(ExceptionType::RuntimeError, "Attribute " + name + " does not exist");
+std::unique_ptr<IValue> ObjectValue::getValue(const std::string& attribute) {
+    if (value.find(attribute) == value.end()) {
+        throw LangException(ExceptionType::RuntimeError, "Attribute " + attribute + " does not exist");
     }
-    else {
-        return values[name]->copy();
-    }
+
+    return value[attribute]->copy();
 }
 
-void ObjectValue::setValue(std::string& name, std::unique_ptr<IValue>&& value) {
-    if (values.find(name) == values.end()) {
-        values.insert(std::pair<std::string, std::unique_ptr<IValue>>(name, std::move(value)));
+std::unique_ptr<IValue>& ObjectValue::getValueRef(const std::string& attribute) {
+    if (value.find(attribute) == value.end()) {
+        value.insert(std::pair<std::string, std::unique_ptr<IValue>>(attribute, nullptr));
     }
-    else {
-        values[name] = std::move(value);
-    }
+
+    return value[attribute];
 }
 
 double ObjectValue::asDouble() const {
@@ -38,27 +36,19 @@ double ObjectValue::asDouble() const {
 std::string ObjectValue::asString() const {
     std::string objectStr = "{\n";
 
-    for (auto it = values.begin(); it != values.end(); ++it)
+    for (auto it = value.begin(); it != value.end(); ++it)
     {
         objectStr += "  " + it->first + ": " + it->second->asString();
-        objectStr += it != std::prev(values.end()) ? ",\n" : "\n}";
+        objectStr += it != std::prev(value.end()) ? ",\n" : "\n}";
     }
 
     return objectStr;
 }
 
 std::unique_ptr<IValue> ObjectValue::copy() const {
-    return std::make_unique<ObjectValue>(values);
+    return std::make_unique<ObjectValue>(value);
 }
 
 IValue* ObjectValue::getPtr() {
     return this;
-}
-
-std::unique_ptr<IValue>& ObjectValue::getValueRef(const std::string& attribute) {
-    if (values.find(attribute) == values.end()) {
-        values.insert(std::pair<std::string, std::unique_ptr<IValue>>(attribute, nullptr));
-    }
-    
-    return values[attribute];
 }

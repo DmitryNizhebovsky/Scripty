@@ -2,25 +2,26 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "ArrayValue.h"
+#include "LangException.h"
 
-ArrayValue::ArrayValue(std::vector<std::unique_ptr<IValue>>&& value) :
-	array(std::move(value)) {}
+ArrayValue::ArrayValue(std::vector<std::unique_ptr<IValue>>&& newValue) :
+    value(std::move(newValue)) {}
 
-ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& value) {
-    for (const auto& val : value) {
-        array.emplace_back(val->copy());
+ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) {
+    for (const auto& val : newValue) {
+        value.emplace_back(val->copy());
     }
 }
 
 double ArrayValue::asDouble() const {
-	throw std::runtime_error("Cannot cast array to number");
+	throw LangException(ExceptionType::RuntimeError, "Cannot cast array to number");
 }
 
 std::string ArrayValue::asString() const {
 	std::string result = "[";
 
-	for (auto it = array.begin(); it != array.end(); ++it) {
-		result += it == array.begin() ? "" : ", ";
+	for (auto it = value.begin(); it != value.end(); ++it) {
+		result += it == value.begin() ? "" : ", ";
         result += (*it)->asString();
 	}
 
@@ -29,7 +30,7 @@ std::string ArrayValue::asString() const {
 }
 
 std::unique_ptr<IValue> ArrayValue::copy() const {
-    return std::make_unique<ArrayValue>(array);
+    return std::make_unique<ArrayValue>(value);
 }
 
 IValue* ArrayValue::getPtr() {
@@ -37,33 +38,17 @@ IValue* ArrayValue::getPtr() {
 }
 
 std::unique_ptr<IValue>& ArrayValue::getValueRef(int index) {
-    if (index >= 0 && index < array.size()) {
-        return array[index];
+    if (index >= 0 && index < value.size()) {
+        return value[index];
     } else {
         throw LangException(ExceptionType::RuntimeError, "Index out of range");
     }
 }
 
 std::unique_ptr<IValue> ArrayValue::getValue(int index) const {
-    if (index >= 0 && index < array.size()) {
-        return array[index]->copy();
+    if (index >= 0 && index < value.size()) {
+        return value[index]->copy();
     } else {
         throw LangException(ExceptionType::RuntimeError, "Index out of range");
     }
-}
-
-void ArrayValue::set(size_t index, std::unique_ptr<IValue>&& value) {
-	array[index] = std::move(value);
-}
-
-void ArrayValue::push(std::unique_ptr<IValue>&& value) {
-	array.emplace_back(std::move(value));
-}
-
-void ArrayValue::pop(std::unique_ptr<IValue>&& value) {
-	array.pop_back();
-}
-
-size_t ArrayValue::size() const {
-	return array.size();
 }

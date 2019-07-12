@@ -32,7 +32,15 @@ std::unique_ptr<IValue> ArrayLikeAccessExpression::eval(Scope& scope) {
             return object->getValue(attribute);
         }
         else {
-            throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+            StringValue* string = dynamic_cast<StringValue*>(getVariableRef(scope).get());
+
+            if (string) {
+                int itemIndex = static_cast<int>(index->eval(scope)->asDouble());
+                return string->getValue(itemIndex);
+            }
+            else {
+                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+            }
         }
     }
 }
@@ -41,8 +49,8 @@ std::unique_ptr<IValue>& ArrayLikeAccessExpression::getRef(Scope& scope) {
     ArrayValue* array = dynamic_cast<ArrayValue*>(getVariableRef(scope).get());
 
     if (array) {
-        int indexVal = static_cast<int>(index->eval(scope)->asDouble());
-        return array->getValueRef(indexVal);
+        int itemIndex = static_cast<int>(index->eval(scope)->asDouble());
+        return array->getValueRef(itemIndex);
     }
     else {
         ObjectValue* object = dynamic_cast<ObjectValue*>(getVariableRef(scope).get());
@@ -52,7 +60,15 @@ std::unique_ptr<IValue>& ArrayLikeAccessExpression::getRef(Scope& scope) {
             return object->getValueRef(attribute);
         }
         else {
-            throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+            StringValue* string = dynamic_cast<StringValue*>(getVariableRef(scope).get());
+
+            if (string) {
+                int itemIndex = static_cast<int>(index->eval(scope)->asDouble());
+                return string->getValueRef(itemIndex);
+            }
+            else {
+                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+            }
         }
     }
 }

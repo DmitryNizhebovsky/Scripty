@@ -4,6 +4,7 @@
 #include "IExpression.h"
 #include "ArrayValue.h"
 #include "ObjectValue.h"
+#include "StringValue.h"
 #include "InstanceOf.h"
 #include "Ilvalue.h"
 

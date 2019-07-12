@@ -7,7 +7,7 @@ private:
 	double value;
 
 public:
-	NumberValue(double value);
+	NumberValue(double newValue);
 	virtual double asDouble() const override;
 	virtual std::string asString() const override;
 	virtual std::unique_ptr<IValue> copy() const override;

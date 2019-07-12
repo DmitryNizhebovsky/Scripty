@@ -3,7 +3,7 @@
 
 #include "NumberValue.h"
 
-NumberValue::NumberValue(double value) : value(value) {}
+NumberValue::NumberValue(double newValue) : value(newValue) {}
 
 double NumberValue::asDouble() const {
 	return value;
