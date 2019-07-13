@@ -7,7 +7,9 @@
 #include "Lexer.h"
 #include "Functions.h"
 
-int main() {
+void pause();
+
+int main(int argc, char* argv[]) {
 	std::ifstream source;
 	source.open("D:\\Projects Visual Studio\\Calc\\Tests\\program.vsc");
 
@@ -21,13 +23,9 @@ int main() {
     }
     catch (std::exception &ex) {
         std::cout << ex.what() << std::endl;
-        getchar();
+        pause();
         return -1;
     }
-
-	//for (auto it = tokens.begin(); it != tokens.end(); ++it) {
-	//	std::cout << (*it).toString() << std::endl;
-	//}
 
 	Scope globalScope;
 
@@ -45,7 +43,7 @@ int main() {
     }
     catch (LangException &ex) {
         std::cout << ex.what() << std::endl;
-        getchar();
+        pause();
         return -1;
     }
 
@@ -54,10 +52,16 @@ int main() {
     }
     catch (std::exception &ex) {
         std::cout << ex.what() << std::endl;
-        getchar();
+        pause();
         return -1;
     }
 
-    //getchar();
+    pause();
 	return 0;
+}
+
+void pause() {
+#ifdef _DEBUG
+    getchar();
+#endif
 }
