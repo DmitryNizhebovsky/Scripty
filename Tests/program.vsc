@@ -269,12 +269,16 @@ println(value);
 #----------------------------------------------------------------------------------
 
 #------------------------------------Проверка строк--------------------------------
-var string1 = "string \" string 123 '' ";
-println(string1);
 
-var string2 = 'string \' str"ing \' ';
-println(string2);
-println(string2[1]);
+#var string1 = "string \" string 123 '' ";
+#println(string1);
+
+#var string2 = 'string \' str"ing \' ';
+#println(string2);
+#println(string2[1]);
+
+var a = ["yiff", "me", "daddy"];
+print(a);
 
 #----------------------------------------------------------------------------------
 

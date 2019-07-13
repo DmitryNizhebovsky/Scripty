@@ -225,6 +225,9 @@
     <ClInclude Include="ExceptionType.h">
       <Filter>Заголовочные файлы\Exception</Filter>
     </ClInclude>
+    <ClInclude Include="IArrayLikeValue.h">
+      <Filter>Заголовочные файлы\Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">

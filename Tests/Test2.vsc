@@ -1,0 +1,2 @@
+var number = 100 + 10 * 2 + 3;
+print(number);

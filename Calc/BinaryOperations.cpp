@@ -2,6 +2,9 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "BinaryOperations.h"
+#include "InstanceOf.h"
+#include "NumberValue.h"
+#include "StringValue.h"
 
 std::unique_ptr<IValue> binaryAdd(std::unique_ptr<IExpression>& expr1, std::unique_ptr<IExpression>& expr2, Scope& scope) {
 	std::unique_ptr<IValue> value1 = expr1->eval(scope);

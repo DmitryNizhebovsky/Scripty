@@ -39,7 +39,7 @@ std::unique_ptr<IValue> ArrayLikeAccessExpression::eval(Scope& scope) {
                 return string->getValue(itemIndex);
             }
             else {
-                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays, objects or strings");
             }
         }
     }
@@ -67,7 +67,7 @@ std::unique_ptr<IValue>& ArrayLikeAccessExpression::getRef(Scope& scope) {
                 return string->getValueRef(itemIndex);
             }
             else {
-                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays or objects");
+                throw LangException(ExceptionType::RuntimeError, "[...] can only be used with arrays, objects or strings");
             }
         }
     }

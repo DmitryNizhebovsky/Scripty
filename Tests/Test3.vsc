@@ -1,0 +1,2 @@
+var array = ["yiff", 'me', "daddy"];
+print(array);

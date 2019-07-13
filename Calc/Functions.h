@@ -42,7 +42,7 @@ class PrintLnFunction : public IFunction {
 public:
 	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
 		for (auto& arg : args) {
-			std::cout << arg->asString() << " ";
+			std::cout << arg->asString();
 		}
 
 	    std::cout << std::endl;
@@ -59,7 +59,7 @@ class PrintFunction : public IFunction {
 public:
 	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
         for (auto& arg : args) {
-            std::cout << arg->asString() << " ";
+            std::cout << arg->asString();
         }
 
 		return std::make_unique<NumberValue>(0.0);

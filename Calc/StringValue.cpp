@@ -29,7 +29,7 @@ std::unique_ptr<IValue>& StringValue::getValueRef(int index) {
 
 std::unique_ptr<IValue> StringValue::getValue(int index) const {
     if (index >= 0 && index < value.size()) {
-        return std::make_unique<StringValue>(value[index]);
+        return std::make_unique<StringValue>(std::string(1, value[index]));
     } else {
         throw LangException(ExceptionType::RuntimeError, "Index out of range");
     }

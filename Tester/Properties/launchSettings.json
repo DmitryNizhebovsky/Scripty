@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Tester": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Projects Visual Studio\\Calc\\Tests\\config.json\""
+    }
+  }
+}

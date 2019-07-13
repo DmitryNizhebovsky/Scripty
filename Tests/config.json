@@ -1,0 +1,22 @@
+{
+	"InterpreterDir": "D:\\Projects Visual Studio\\Calc\\x64\\Debug",
+	"TestsDir": "D:\\Projects Visual Studio\\Calc\\Tests",
+	"InterpreterArgs": "Calc.exe",
+	"Tests": [
+		{
+			"Description": "",
+			"Name": "Test1",
+			"Output": "TestSuccessfull"
+		},
+		{
+			"Description": "",
+			"Name": "Test2",
+			"Output": "123"
+		},
+		{
+			"Description": "",
+			"Name": "Test3",
+			"Output": "[yiff, me, daddy]"
+		}
+	]
+}

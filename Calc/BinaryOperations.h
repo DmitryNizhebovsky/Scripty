@@ -2,9 +2,6 @@
 
 #include "IValue.h"
 #include "IExpression.h"
-#include "InstanceOf.h"
-#include "NumberValue.h"
-#include "StringValue.h"
 #include "Scope.h"
 #include <memory>
 
