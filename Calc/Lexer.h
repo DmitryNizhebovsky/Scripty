@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Token.h"
+#include <fstream>
 #include <vector>
 #include <map>
 
 class Lexer {
 private:
 	size_t position;
-	size_t length;
+	size_t sourceCodeLength;
 	TokenPosition currentPos;
-	std::string input;
+	std::string sourceCode;
 	std::vector<Token> tokens;
 
 private:
@@ -22,17 +23,18 @@ private:
     void skipSinglelineComment();
 	void skipMultilineComment();
 
-	bool isDigit(const char let) const;
-	bool isLetter(const char let) const;
 	bool isLetterOrDigit(const char let) const;
 	bool isOperator(const char let) const;
     bool isComment(const char let) const;
+    bool isLetter(const char let) const;
     bool isString(const char let) const;
+    bool isDigit(const char let) const;
 
+    void readSourceFile(const std::string& fileName);
 	char peek(size_t relativePos = 0) const;
 	char next();
 
 public:
-	Lexer(const std::string& input);
-	std::vector<Token>& tokenize();
+	Lexer();
+	std::vector<Token>&& tokenize(const std::string& fileName);
 };

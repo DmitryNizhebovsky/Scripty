@@ -86,6 +86,6 @@ private:
     EPtr unary();
 
 public:
-	Parser(std::vector<Token>& tokens);
-    SPtr parse();
+	Parser();
+    SPtr parse(std::vector<Token>&& tokensArray);
 };

@@ -3,28 +3,46 @@
 
 #include "Lexer.h"
 
-Lexer::Lexer(const std::string& input) :
-    input(input),
-    length(input.size()),
+Lexer::Lexer() :
+    sourceCodeLength(0),
     position(0),
     currentPos{ 1, 1 } {}				   
 					   
 void Lexer::addToken(const TokenType type, const TokenPosition& pos, const std::string& value) {
 	tokens.emplace_back(Token(type, value, pos));
-}					   
+}		
+
+void Lexer::readSourceFile(const std::string& fileName) {
+    std::ifstream sourceFile(fileName, std::fstream::in);
+
+    if (!sourceFile.is_open()) {
+        throw std::runtime_error("Unable to open source file");
+    }
+
+    sourceFile.seekg(0, sourceFile.end);
+    sourceCodeLength = sourceFile.tellg();
+    sourceFile.seekg(0, sourceFile.beg);
+
+    sourceCode.reserve(sourceCodeLength);
+    sourceCode.resize(sourceCodeLength);
+
+    sourceFile.read(&sourceCode[0], sourceCodeLength);
+
+    sourceFile.close();
+}
 					   
 char Lexer::peek(size_t relativePos) const{
 	size_t pos = position + relativePos;
 					   
-	if (pos >= length) {
+	if (pos >= sourceCodeLength) {
 		return '\0';   
 	}				   
-					   
-	return input[pos]; 
+
+	return sourceCode[pos];
 }					   
 
 char Lexer::next() {
-	if (input[position] == '\r' || input[position] == '\n') {
+	if (sourceCode[position] == '\r' || sourceCode[position] == '\n') {
 		currentPos.row++;
 		currentPos.column = 0;
 	}
@@ -81,16 +99,15 @@ void Lexer::tokenizeWord() {
 
 void Lexer::tokenizeString() {
 	TokenPosition tokenPos = currentPos;
-    char quote = peek();
-	next();
-	char current = peek();
-	std::string buffer = "";
+    char openingQuote      = peek();
+	char current           = next();
+	std::string buffer     = "";
 
 	while (true) {
 		if (current == '\\') {
 			current = next();
 
-            if (current == quote) { current = next(); buffer += quote; continue; }
+            if (current == openingQuote) { current = next(); buffer += openingQuote; continue; }
 
 			switch (current)
 			{
@@ -102,7 +119,7 @@ void Lexer::tokenizeString() {
 			}
 		}
 
-        if (current == quote) {
+        if (current == openingQuote) {
 			break;
 		}
 
@@ -193,8 +210,10 @@ bool Lexer::isString(const char let) const {
     return let == '"' || let == '\'';
 }
 
-std::vector<Token>& Lexer::tokenize() {
-	while (position < length) {
+std::vector<Token>&& Lexer::tokenize(const std::string& fileName) {
+    readSourceFile(fileName);
+
+	while (position < sourceCodeLength) {
 		char current = peek();
 
         if (isComment(current)) {
@@ -217,5 +236,5 @@ std::vector<Token>& Lexer::tokenize() {
 		}
 	}
 
-	return tokens;
+	return std::move(tokens);
 }

@@ -3,13 +3,15 @@
 
 #include "Parser.h"
 
-Parser::Parser(std::vector<Token>& tokens):
-	tokens(tokens),
+Parser::Parser():
+    size(0),
     position(0),
-	size(tokens.size()),
     eof(TokenType::END_OF_FILE) {}
 
-SPtr Parser::parse() {
+SPtr Parser::parse(std::vector<Token>&& tokensArray) {
+    tokens = std::move(tokensArray);
+    size   = tokens.size();
+
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 
 	while (!match(TokenType::END_OF_FILE)) {
