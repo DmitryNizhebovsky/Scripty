@@ -10,10 +10,10 @@
 class UserFunctionDefine : public IFunction {
 private:
 	std::vector<std::string> argsNames;
-	std::unique_ptr<IStatement> body;
+	IStatement* body;
 
 public:
-	UserFunctionDefine(std::vector<std::string>&& argsNames, std::unique_ptr<IStatement>&& body);
+	UserFunctionDefine(std::vector<std::string>&& argsNames, IStatement* body);
 	virtual std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override;
 	virtual IFunction* get() override;
 	size_t getArgsCount() const;

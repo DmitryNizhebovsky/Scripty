@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Заголовочные файлы\Parser">
-      <UniqueIdentifier>{f7a0a386-3862-4b26-8972-729a523a2bb8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы исходного кода\Parser">
-      <UniqueIdentifier>{94fbfb9e-0fd5-46f7-999c-a3f5aeb67605}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Заголовочные файлы\AST">
       <UniqueIdentifier>{2769460c-5483-4704-b967-9279cb92e148}</UniqueIdentifier>
     </Filter>
@@ -73,13 +67,19 @@
     <Filter Include="Заголовочные файлы\HelpFunctions">
       <UniqueIdentifier>{9f1bf940-bbf3-4cae-93bb-fe680535b409}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Interpreter">
+      <UniqueIdentifier>{f7a0a386-3862-4b26-8972-729a523a2bb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы исходного кода\Interpreter">
+      <UniqueIdentifier>{94fbfb9e-0fd5-46f7-999c-a3f5aeb67605}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexer.h">
-      <Filter>Заголовочные файлы\Parser</Filter>
+      <Filter>Заголовочные файлы\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
-      <Filter>Заголовочные файлы\Parser</Filter>
+      <Filter>Заголовочные файлы\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="IExpression.h">
       <Filter>Заголовочные файлы\Interfaces</Filter>
@@ -228,13 +228,16 @@
     <ClInclude Include="IArrayLikeValue.h">
       <Filter>Заголовочные файлы\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Заголовочные файлы\Interpreter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
-      <Filter>Файлы исходного кода\Parser</Filter>
+      <Filter>Файлы исходного кода\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Файлы исходного кода\Parser</Filter>
+      <Filter>Файлы исходного кода\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="NumberValue.cpp">
       <Filter>Файлы исходного кода\Values</Filter>
@@ -346,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
+      <Filter>Файлы исходного кода\Interpreter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

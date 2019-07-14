@@ -9,7 +9,7 @@ FunctionDefineStatement::FunctionDefineStatement(const std::string& name, std::v
 	body(std::move(body)) {}
 
 Action FunctionDefineStatement::execute(Scope& scope) {
-	scope.defineFunction(name, std::make_unique<UserFunctionDefine>(std::move(argsNames), std::move(body)));
+	scope.defineFunction(name, std::make_unique<UserFunctionDefine>(std::move(argsNames), body.get()));
 	return Action(ActionType::NONE);
 }
 

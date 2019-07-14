@@ -3,9 +3,9 @@
 
 #include "UserFunctionDefine.h"
 
-UserFunctionDefine::UserFunctionDefine(std::vector<std::string>&& argsNames, std::unique_ptr<IStatement>&& body) :
+UserFunctionDefine::UserFunctionDefine(std::vector<std::string>&& argsNames, IStatement* body) :
 	argsNames(std::move(argsNames)),
-	body(std::move(body)) {}
+	body(body) {}
 
 std::unique_ptr<IValue> UserFunctionDefine::eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) {
 	Action action = body->execute(scope);

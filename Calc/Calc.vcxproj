@@ -187,6 +187,7 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="NumberValue.h" />
     <ClInclude Include="LangException.h" />
+    <ClInclude Include="Program.h" />
     <ClInclude Include="ReturnStatement.h" />
     <ClInclude Include="Scope.h" />
     <ClInclude Include="StringValue.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="ObjectExpression.cpp" />
     <ClCompile Include="ObjectValue.cpp" />
     <ClCompile Include="LangException.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="ReturnStatement.cpp" />
     <ClCompile Include="Scope.cpp" />
     <ClCompile Include="StringValue.cpp" />
