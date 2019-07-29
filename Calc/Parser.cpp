@@ -186,7 +186,7 @@ SPtr Parser::assignmentStatement() {
 
                 std::string attribute = consume(TokenType::WORD).getValue();
 
-                variable = std::make_unique<ObjectAccessExpression>(std::move(variable), attribute);
+                variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::make_unique<ValueExpression>(attribute));
 
             } while (lookMatch(TokenType::DOT));
         }
@@ -366,7 +366,7 @@ EPtr Parser::objectItemAccessExpression() {
 
         std::string attribute = consume(TokenType::WORD).getValue();
 
-        variable = std::make_unique<ObjectAccessExpression>(std::move(variable), attribute);
+        variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::make_unique<ValueExpression>(attribute));
 
     } while (lookMatch(TokenType::DOT));
 

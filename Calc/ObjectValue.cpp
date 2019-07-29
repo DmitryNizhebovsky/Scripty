@@ -13,15 +13,19 @@ ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& n
     }
 }
 
-std::unique_ptr<IValue> ObjectValue::getValue(const std::string& attribute) {
+std::unique_ptr<IValue> ObjectValue::getValue(std::unique_ptr<IValue>&& key) const {
+    std::string attribute = key->asString();
+
     if (value.find(attribute) == value.end()) {
-        throw LangException(ExceptionType::RuntimeError, "Attribute " + attribute + " does not exist");
+        throw LangException(ExceptionType::RuntimeError, "Attribute \"" + attribute + "\" does not exist");
     }
 
-    return value[attribute]->copy();
+    return value.at(attribute)->copy();
 }
 
-std::unique_ptr<IValue>& ObjectValue::getValueRef(const std::string& attribute) {
+std::unique_ptr<IValue>& ObjectValue::getValueRef(std::unique_ptr<IValue>&& key) {
+    std::string attribute = key->asString();
+
     if (value.find(attribute) == value.end()) {
         value.insert(std::pair<std::string, std::unique_ptr<IValue>>(attribute, nullptr));
     }

@@ -23,11 +23,13 @@ IValue* StringValue::getPtr() {
 	return this;
 }
 
-std::unique_ptr<IValue>& StringValue::getValueRef(int index) {
+std::unique_ptr<IValue>& StringValue::getValueRef(std::unique_ptr<IValue>&& key) {
     throw LangException(ExceptionType::RuntimeError, "Unable to assign value");
 }
 
-std::unique_ptr<IValue> StringValue::getValue(int index) const {
+std::unique_ptr<IValue> StringValue::getValue(std::unique_ptr<IValue>&& key) const {
+    int index = static_cast<int>(key->asDouble());
+
     if (index >= 0 && index < value.size()) {
         return std::make_unique<StringValue>(std::string(1, value[index]));
     } else {

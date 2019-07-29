@@ -37,7 +37,9 @@ IValue* ArrayValue::getPtr() {
 	return this;
 }
 
-std::unique_ptr<IValue>& ArrayValue::getValueRef(int index) {
+std::unique_ptr<IValue>& ArrayValue::getValueRef(std::unique_ptr<IValue>&& key) {
+    int index = static_cast<int>(key->asDouble());
+
     if (index >= 0 && index < value.size()) {
         return value[index];
     } else {
@@ -45,7 +47,9 @@ std::unique_ptr<IValue>& ArrayValue::getValueRef(int index) {
     }
 }
 
-std::unique_ptr<IValue> ArrayValue::getValue(int index) const {
+std::unique_ptr<IValue> ArrayValue::getValue(std::unique_ptr<IValue>&& key) const {
+    int index = static_cast<int>(key->asDouble());
+
     if (index >= 0 && index < value.size()) {
         return value[index]->copy();
     } else {

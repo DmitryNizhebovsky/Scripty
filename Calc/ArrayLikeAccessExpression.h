@@ -14,7 +14,7 @@ private:
 	std::unique_ptr<IExpression> index;
 
 private:
-    std::unique_ptr<IValue>& getVariableRef(Scope& scope) const;
+    ICollection* getCollectionPtr(Scope& scope);
 
 public:
 	ArrayLikeAccessExpression(std::unique_ptr<IExpression>&& variable, std::unique_ptr<IExpression>&& index);

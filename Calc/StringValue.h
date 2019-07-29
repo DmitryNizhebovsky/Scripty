@@ -1,16 +1,17 @@
 #pragma once
 
 #include "IValue.h"
+#include "ICollection.h"
 
-class StringValue : public IValue {
+class StringValue : public IValue, public ICollection {
 private:
 	std::string value;
 
 public:
 	StringValue(const std::string& newValue);
 
-    std::unique_ptr<IValue> getValue(int index) const;
-    std::unique_ptr<IValue>& getValueRef(int index);
+    virtual std::unique_ptr<IValue> getValue(std::unique_ptr<IValue>&& key) const override;
+    virtual std::unique_ptr<IValue>& getValueRef(std::unique_ptr<IValue>&& key) override;
 
 	virtual double asDouble() const override;
 	virtual std::string asString() const override;

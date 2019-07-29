@@ -18,7 +18,6 @@
 #include "ForStatement.h"
 
 #include "ArrayLikeAccessExpression.h"
-#include "ObjectAccessExpression.h"
 #include "ConditionalExpression.h"
 #include "FunctionalExpression.h"
 #include "VariableExpression.h"
