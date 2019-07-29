@@ -24,7 +24,7 @@ class ReturnStatement;
 class VariableDefineStatement;
 class WhileStatement;
 
-class IVisitor {
+class IVisitor: public NonCopyable {
 public:
 	IVisitor() = default;
 	virtual void visit(ArrayExpression& expr) = 0;
@@ -53,8 +53,4 @@ public:
 	virtual void visit(WhileStatement& stat) = 0;
 
 	virtual ~IVisitor() = default;
-
-private:
-	IVisitor(const IVisitor&) = delete;
-	IVisitor& operator=(const IVisitor&) = delete;
 };

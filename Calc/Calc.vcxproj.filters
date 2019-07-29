@@ -213,9 +213,6 @@
     <ClInclude Include="ObjectExpression.h">
       <Filter>Заголовочные файлы\AST\Expressions</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectAccessExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
-    </ClInclude>
     <ClInclude Include="ArrayLikeAccessExpression.h">
       <Filter>Заголовочные файлы\AST\Expressions</Filter>
     </ClInclude>
@@ -225,11 +222,11 @@
     <ClInclude Include="ExceptionType.h">
       <Filter>Заголовочные файлы\Exception</Filter>
     </ClInclude>
-    <ClInclude Include="IArrayLikeValue.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Program.h">
       <Filter>Заголовочные файлы\Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollection.h">
+      <Filter>Заголовочные файлы\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -333,9 +330,6 @@
       <Filter>Файлы исходного кода\Values</Filter>
     </ClCompile>
     <ClCompile Include="ObjectExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectAccessExpression.cpp">
       <Filter>Файлы исходного кода\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ArrayLikeAccessExpression.cpp">

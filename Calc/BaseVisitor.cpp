@@ -8,7 +8,6 @@
 #include "ConditionalExpression.h"
 #include "FunctionalExpression.h"
 #include "ArrayLikeAccessExpression.h"
-#include "ObjectAccessExpression.h"
 #include "UnaryExpression.h"
 #include "ValueExpression.h"
 #include "VariableExpression.h"
@@ -48,10 +47,6 @@ void BaseVisitor::visit(FunctionalExpression& expr) {
 
 void BaseVisitor::visit(ArrayLikeAccessExpression& expr) {
 	expr.innerAccept(this);
-}
-
-void BaseVisitor::visit(ObjectAccessExpression& expr) {
-    expr.innerAccept(this);
 }
 
 void BaseVisitor::visit(UnaryExpression& expr) {

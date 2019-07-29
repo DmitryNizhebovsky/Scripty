@@ -9,7 +9,6 @@ public:
 	virtual void visit(ConditionalExpression& expr) override;
 	virtual void visit(FunctionalExpression& expr) override;
 	virtual void visit(ArrayLikeAccessExpression& expr) override;
-    virtual void visit(ObjectAccessExpression& expr) override;
 	virtual void visit(UnaryExpression& expr) override;
 	virtual void visit(ValueExpression& expr) override;
 	virtual void visit(VariableExpression& expr) override;

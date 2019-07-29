@@ -174,12 +174,11 @@
     <ClInclude Include="FunctionDefineStatement.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="FunctionStatement.h" />
-    <ClInclude Include="IArrayLikeValue.h" />
+    <ClInclude Include="ICollection.h" />
     <ClInclude Include="IFunction.h" />
     <ClInclude Include="Ilvalue.h" />
     <ClInclude Include="INode.h" />
     <ClInclude Include="InstanceOf.h" />
-    <ClInclude Include="ObjectAccessExpression.h" />
     <ClInclude Include="ObjectExpression.h" />
     <ClInclude Include="ObjectValue.h" />
     <ClInclude Include="IValue.h" />
@@ -227,7 +226,6 @@
     <ClCompile Include="FunctionDefineStatement.cpp" />
     <ClCompile Include="FunctionStatement.cpp" />
     <ClCompile Include="NumberValue.cpp" />
-    <ClCompile Include="ObjectAccessExpression.cpp" />
     <ClCompile Include="ObjectExpression.cpp" />
     <ClCompile Include="ObjectValue.cpp" />
     <ClCompile Include="LangException.cpp" />

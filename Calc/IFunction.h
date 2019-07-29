@@ -5,14 +5,10 @@
 
 class Scope;
 
-class IFunction {
+class IFunction : public NonCopyable {
 public:
 	IFunction() = default;
 	virtual std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) = 0;
 	virtual IFunction* get() = 0;
 	virtual ~IFunction() = default;
-
-private:
-	IFunction(const IFunction&) = delete;
-	IFunction& operator=(const IFunction&) = delete;
 };
