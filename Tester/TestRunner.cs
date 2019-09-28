@@ -45,6 +45,7 @@ namespace Tester
                 else
                 {
                     TestLog(testCounter, config.Tests.Count, TestState.Failed, test.Name);
+                    WriteOutput(test.Name, output.StdOutput);
                 }
             }
 
@@ -52,6 +53,15 @@ namespace Tester
                 TestsCompleteLog(TestState.Successful);
             else
                 TestsCompleteLog(TestState.Failed);
+        }
+
+        private void WriteOutput(string testName, string output)
+        {
+            using (FileStream fstream = new FileStream(Path.Combine(config.OutputLogDir, $"{testName}.log"), FileMode.Append))
+            {
+                byte[] array = System.Text.Encoding.Default.GetBytes(output);
+                fstream.Write(array, 0, array.Length);
+            }
         }
 
         private void TestLog(int numberOfCurrentTest, int numberofTests, TestState state, string testName)
@@ -80,7 +90,7 @@ namespace Tester
             string output = "";
             string error = "";
             string interpreterExe = Path.Combine(config.InterpreterDir, config.InterpreterArgs);
-            string arguments = $"/c \"\"{interpreterExe}\" \"{testFile}\"\"";
+            string arguments = $"/c \"\"{interpreterExe}\" -f \"{testFile}\"\"";
 
             try
             {

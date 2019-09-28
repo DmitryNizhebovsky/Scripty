@@ -11,5 +11,6 @@ namespace Tester
         public string InterpreterDir  { get; set; }
         public string TestsDir        { get; set; }
         public string InterpreterArgs { get; set; }
+        public string OutputLogDir    { get; set; }
     }
 }
