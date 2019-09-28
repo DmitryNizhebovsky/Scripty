@@ -1,7 +1,8 @@
 {
-	"InterpreterDir": "D:\\Projects Visual Studio\\Calc\\x64\\Debug",
+	"InterpreterDir": "D:\\Projects Visual Studio\\Calc\\x64\\Release",
 	"TestsDir": "D:\\Projects Visual Studio\\Calc\\Tests",
 	"InterpreterArgs": "Calc.exe",
+	"OutputLogDir": "D:\\Projects Visual Studio\\Calc\\Tests\\Logs",
 	"Tests": [
 		{
 			"Description": "",
@@ -11,7 +12,7 @@
 		{
 			"Description": "",
 			"Name": "Test2",
-			"Output": "123"
+			"Output": "123.000000"
 		},
 		{
 			"Description": "",
