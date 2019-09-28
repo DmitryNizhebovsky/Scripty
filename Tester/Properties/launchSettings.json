@@ -2,7 +2,7 @@
   "profiles": {
     "Tester": {
       "commandName": "Project",
-      "commandLineArgs": "\"D:\\Projects Visual Studio\\Calc\\Tests\\config.json\""
+      "commandLineArgs": "\"D:\\Projects Visual Studio\\Scripty\\Tests\\config.json\""
     }
   }
 }
