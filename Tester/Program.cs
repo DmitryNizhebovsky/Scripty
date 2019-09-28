@@ -11,7 +11,7 @@ namespace Tester
         {
             Console.Title = "CalcTester v1.0.1";
 
-            Console.WriteLine("Interpreter tester launched\n");
+            Console.WriteLine("Tester launched\n");
 
             try
             {
@@ -24,7 +24,7 @@ namespace Tester
 
                 var testRunner = new TestRunner(configPath);
 
-                testRunner.RunAll();
+                testRunner.RunAllTests();
             }
             catch (Exception ex)
             {

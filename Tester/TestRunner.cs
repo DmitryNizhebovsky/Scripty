@@ -20,7 +20,7 @@ namespace Tester
             config = reader.ReadConfig();
         }
 
-        public void RunAll()
+        public void RunAllTests()
         {
             CheckInterpreterExists();
 

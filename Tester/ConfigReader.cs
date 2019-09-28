@@ -9,7 +9,7 @@ namespace Tester
 {
     public class ConfigReader
     {
-        private string PathToConfig;
+        private readonly string PathToConfig;
 
         public ConfigReader(string pathToConfig)
         {
