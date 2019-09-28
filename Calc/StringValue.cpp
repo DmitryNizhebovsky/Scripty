@@ -23,16 +23,25 @@ IValue* StringValue::getPtr() {
 	return this;
 }
 
-std::unique_ptr<IValue>& StringValue::getValueRef(std::unique_ptr<IValue>&& key) {
+std::unique_ptr<IValue>& StringValue::getValueRef(std::unique_ptr<IValue>&& index) {
     throw LangException(ExceptionType::RuntimeError, "Unable to assign value");
 }
 
-std::unique_ptr<IValue> StringValue::getValue(std::unique_ptr<IValue>&& key) const {
-    int index = static_cast<int>(key->asDouble());
+std::unique_ptr<IValue> StringValue::getValue(std::unique_ptr<IValue>&& index) const {
+    size_t validIndex = validateIndex(std::move(index));
+    return std::make_unique<StringValue>(std::string(1, value[validIndex]));
+}
 
-    if (index >= 0 && index < value.size()) {
-        return std::make_unique<StringValue>(std::string(1, value[index]));
-    } else {
+size_t StringValue::validateIndex(std::unique_ptr<IValue>&& index) const {
+    double dIndex = index->asDouble();
+
+    if (dIndex < 0)
         throw LangException(ExceptionType::RuntimeError, "Index out of range");
-    }
+
+    size_t sIndex = static_cast<size_t>(dIndex);
+
+    if (sIndex >= value.size())
+        throw LangException(ExceptionType::RuntimeError, "Index out of range");
+
+    return sIndex;
 }

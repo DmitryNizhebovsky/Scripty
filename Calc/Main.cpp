@@ -15,8 +15,6 @@ int main(int argc, char* argv[]) {
 
     CLI11_PARSE(app, argc, argv);
 
-    //"D:\\Projects Visual Studio\\Calc\\Tests\\program.vsc"
-
     try {
         Program program(sourceFile);
         program.Run();
