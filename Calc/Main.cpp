@@ -3,13 +3,22 @@
 
 #include <iostream>
 #include "Program.h"
+#include "CLI/CLI.hpp"
 
 void pause();
 
 int main(int argc, char* argv[]) {
+    CLI::App app;
+
+    std::string sourceFile;
+    app.add_option("-f,--file", sourceFile, "File name")->check(CLI::ExistingFile);
+
+    CLI11_PARSE(app, argc, argv);
+
+    //"D:\\Projects Visual Studio\\Calc\\Tests\\program.vsc"
 
     try {
-        Program program("D:\\Projects Visual Studio\\Calc\\Tests\\program.vsc");
+        Program program(sourceFile);
         program.Run();
     }
     catch (std::exception &ex) {
