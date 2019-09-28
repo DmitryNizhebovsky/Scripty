@@ -24,7 +24,7 @@ class ReturnStatement;
 class VariableDefineStatement;
 class WhileStatement;
 
-class IVisitor: public NonCopyable {
+class IVisitor {
 public:
 	IVisitor() = default;
 	virtual void visit(ArrayExpression& expr) = 0;

@@ -2,7 +2,7 @@
 #include "IVisitor.h"
 #include "NonCopyable.h"
 
-class INode : public NonCopyable {
+class INode {
 public:
 	INode() = default;
 	virtual void accept(IVisitor* visitor) = 0;
