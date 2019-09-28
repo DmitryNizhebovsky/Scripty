@@ -1,399 +1,399 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Файлы исходного кода">
+    <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Заголовочные файлы">
+    <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Файлы ресурсов">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Заголовочные файлы\AST">
+    <Filter Include="Header Files\AST">
       <UniqueIdentifier>{2769460c-5483-4704-b967-9279cb92e148}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\AST">
+    <Filter Include="Source Files\AST">
       <UniqueIdentifier>{bacc3ece-483e-449d-b061-3f6eb09e344f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Lib">
+    <Filter Include="Header Files\Lib">
       <UniqueIdentifier>{ac8a1a12-4b88-44cd-8153-aecdb62689d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Lib">
+    <Filter Include="Source Files\Lib">
       <UniqueIdentifier>{54876bc4-c04b-4946-979e-cc5ef2d8ef71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Interfaces">
+    <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{9bd70cff-0749-49d8-84e5-7bab296f9fd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Values">
+    <Filter Include="Header Files\Values">
       <UniqueIdentifier>{9f7c9365-73fd-4b4a-9d1e-28dace848d6a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Values">
+    <Filter Include="Source Files\Values">
       <UniqueIdentifier>{6cee33a2-64bc-4fd5-9216-0dc20396fbbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Tools">
+    <Filter Include="Header Files\Tools">
       <UniqueIdentifier>{5ab91431-fd89-4a44-8762-311249554605}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Tools">
+    <Filter Include="Source Files\Tools">
       <UniqueIdentifier>{3a44a7e9-eb40-4fe8-8166-e300d01af9bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\AST\Statements">
+    <Filter Include="Header Files\AST\Statements">
       <UniqueIdentifier>{6eb46cc2-6bfd-4ff2-ac6f-dac54153b59c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\AST\Expressions">
+    <Filter Include="Header Files\AST\Expressions">
       <UniqueIdentifier>{18427391-0803-46ae-b8b6-e510060e0599}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\AST\Statements">
+    <Filter Include="Source Files\AST\Statements">
       <UniqueIdentifier>{43c88294-52cd-41b8-93e6-d491d8825d6c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\AST\Expressions">
+    <Filter Include="Source Files\AST\Expressions">
       <UniqueIdentifier>{1181e770-e8c6-4eb2-a6f8-adda0d8652fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Visitors">
+    <Filter Include="Header Files\Visitors">
       <UniqueIdentifier>{b7339ea3-1b43-4ef7-b062-c0ddbfa22a5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Visitors">
+    <Filter Include="Source Files\Visitors">
       <UniqueIdentifier>{9a82ca1a-1b6c-4b64-a1dc-169badab6c61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Exception">
+    <Filter Include="Header Files\Exception">
       <UniqueIdentifier>{cffb2d4e-0b01-4816-bec4-d140dc423fa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Exception">
+    <Filter Include="Source Files\Exception">
       <UniqueIdentifier>{a1a35306-54e5-429d-aaa4-c2a2575c1502}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\HelpFunctions">
+    <Filter Include="Header Files\HelpFunctions">
       <UniqueIdentifier>{9f1bf940-bbf3-4cae-93bb-fe680535b409}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\Interpreter">
+    <Filter Include="Header Files\Interpreter">
       <UniqueIdentifier>{f7a0a386-3862-4b26-8972-729a523a2bb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы исходного кода\Interpreter">
+    <Filter Include="Source Files\Interpreter">
       <UniqueIdentifier>{94fbfb9e-0fd5-46f7-999c-a3f5aeb67605}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Заголовочные файлы\CLI">
+    <Filter Include="Header Files\CLI">
       <UniqueIdentifier>{655063bb-9af7-4b01-ae47-d7c62240c1ab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexer.h">
-      <Filter>Заголовочные файлы\Interpreter</Filter>
+      <Filter>Header Files\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="Parser.h">
-      <Filter>Заголовочные файлы\Interpreter</Filter>
+      <Filter>Header Files\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="IExpression.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="IStatement.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="IValue.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="NumberValue.h">
-      <Filter>Заголовочные файлы\Values</Filter>
+      <Filter>Header Files\Values</Filter>
     </ClInclude>
     <ClInclude Include="StringValue.h">
-      <Filter>Заголовочные файлы\Values</Filter>
+      <Filter>Header Files\Values</Filter>
     </ClInclude>
     <ClInclude Include="Scope.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="IFunction.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Functions.h">
-      <Filter>Заголовочные файлы\Lib</Filter>
+      <Filter>Header Files\Lib</Filter>
     </ClInclude>
     <ClInclude Include="Action.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="ActionType.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="TokenType.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Token.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="BlockOfVariableStatements.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="AssignmentStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="BlockOfStatements.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="BreakStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="ConditionalStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="ContinueStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="DoWhileStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="ForStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="FunctionDefineStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="FunctionStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="ReturnStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="VariableDefineStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="WhileStatement.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="BinaryExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="ConditionalExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="FunctionalExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="UnaryExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="ValueExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="VariableExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="ArrayValue.h">
-      <Filter>Заголовочные файлы\Values</Filter>
+      <Filter>Header Files\Values</Filter>
     </ClInclude>
     <ClInclude Include="ArrayExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="InstanceOf.h">
-      <Filter>Заголовочные файлы\HelpFunctions</Filter>
+      <Filter>Header Files\HelpFunctions</Filter>
     </ClInclude>
     <ClInclude Include="Ilvalue.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="TokenPosition.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="BinaryOperations.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="IVisitor.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="INode.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="UserFunctionDefine.h">
-      <Filter>Заголовочные файлы\AST\Statements</Filter>
+      <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="BaseVisitor.h">
-      <Filter>Заголовочные файлы\Visitors</Filter>
+      <Filter>Header Files\Visitors</Filter>
     </ClInclude>
     <ClInclude Include="NonCopyable.h">
-      <Filter>Заголовочные файлы\Tools</Filter>
+      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="ObjectValue.h">
-      <Filter>Заголовочные файлы\Values</Filter>
+      <Filter>Header Files\Values</Filter>
     </ClInclude>
     <ClInclude Include="ObjectExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="ArrayLikeAccessExpression.h">
-      <Filter>Заголовочные файлы\AST\Expressions</Filter>
+      <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="LangException.h">
-      <Filter>Заголовочные файлы\Exception</Filter>
+      <Filter>Header Files\Exception</Filter>
     </ClInclude>
     <ClInclude Include="ExceptionType.h">
-      <Filter>Заголовочные файлы\Exception</Filter>
+      <Filter>Header Files\Exception</Filter>
     </ClInclude>
     <ClInclude Include="Program.h">
-      <Filter>Заголовочные файлы\Interpreter</Filter>
+      <Filter>Header Files\Interpreter</Filter>
     </ClInclude>
     <ClInclude Include="ICollection.h">
-      <Filter>Заголовочные файлы\Interfaces</Filter>
+      <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="CLI\App.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\CLI.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Config.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\ConfigFwd.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Error.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Formatter.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\FormatterFwd.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Macros.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Option.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Split.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\StringTools.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Timer.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\TypeTools.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Validators.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
     <ClInclude Include="CLI\Version.hpp">
-      <Filter>Заголовочные файлы\CLI</Filter>
+      <Filter>Header Files\CLI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
-      <Filter>Файлы исходного кода\Interpreter</Filter>
+      <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
-      <Filter>Файлы исходного кода\Interpreter</Filter>
+      <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="NumberValue.cpp">
-      <Filter>Файлы исходного кода\Values</Filter>
+      <Filter>Source Files\Values</Filter>
     </ClCompile>
     <ClCompile Include="StringValue.cpp">
-      <Filter>Файлы исходного кода\Values</Filter>
+      <Filter>Source Files\Values</Filter>
     </ClCompile>
     <ClCompile Include="Scope.cpp">
-      <Filter>Файлы исходного кода\Tools</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Action.cpp">
-      <Filter>Файлы исходного кода\Tools</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Token.cpp">
-      <Filter>Файлы исходного кода\Tools</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="AssignmentStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BlockOfStatements.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BlockOfVariableStatements.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BreakStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="ConditionalStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="ContinueStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="DoWhileStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="ForStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="FunctionDefineStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="FunctionStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="ReturnStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="VariableDefineStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="WhileStatement.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BinaryExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ConditionalExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="FunctionalExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="UnaryExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ValueExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="VariableExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ArrayValue.cpp">
-      <Filter>Файлы исходного кода\Values</Filter>
+      <Filter>Source Files\Values</Filter>
     </ClCompile>
     <ClCompile Include="ArrayExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="TokenPosition.cpp">
-      <Filter>Файлы исходного кода\Tools</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="BinaryOperations.cpp">
-      <Filter>Файлы исходного кода\Tools</Filter>
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="UserFunctionDefine.cpp">
-      <Filter>Файлы исходного кода\AST\Statements</Filter>
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BaseVisitor.cpp">
-      <Filter>Файлы исходного кода\Visitors</Filter>
+      <Filter>Source Files\Visitors</Filter>
     </ClCompile>
     <ClCompile Include="ObjectValue.cpp">
-      <Filter>Файлы исходного кода\Values</Filter>
+      <Filter>Source Files\Values</Filter>
     </ClCompile>
     <ClCompile Include="ObjectExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ArrayLikeAccessExpression.cpp">
-      <Filter>Файлы исходного кода\AST\Expressions</Filter>
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="LangException.cpp">
-      <Filter>Файлы исходного кода\Exception</Filter>
+      <Filter>Source Files\Exception</Filter>
     </ClCompile>
     <ClCompile Include="ExceptionType.cpp">
-      <Filter>Файлы исходного кода\Exception</Filter>
+      <Filter>Source Files\Exception</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Program.cpp">
-      <Filter>Файлы исходного кода\Interpreter</Filter>
+      <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
