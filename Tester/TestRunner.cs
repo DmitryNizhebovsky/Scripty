@@ -89,7 +89,7 @@ namespace Tester
         {
             string output = "";
             string error = "";
-            string interpreterExe = Path.Combine(config.InterpreterDir, config.InterpreterArgs);
+            string interpreterExe = Path.Combine(config.InterpreterDir, config.InterpreterName);
             string arguments = $"/c \"\"{interpreterExe}\" -f \"{testFile}\"\"";
 
             try
@@ -139,7 +139,7 @@ namespace Tester
 
         private void CheckInterpreterExists()
         {
-            if (!File.Exists(Path.Combine(config.InterpreterDir, config.InterpreterArgs)))
+            if (!File.Exists(Path.Combine(config.InterpreterDir, config.InterpreterName)))
             {
                 throw new Exception("Interpreter not found");
             }

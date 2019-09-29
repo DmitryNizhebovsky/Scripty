@@ -10,7 +10,7 @@ namespace Tester
         public List<Test> Tests       { get; set; }
         public string InterpreterDir  { get; set; }
         public string TestsDir        { get; set; }
-        public string InterpreterArgs { get; set; }
+        public string InterpreterName { get; set; }
         public string OutputLogDir    { get; set; }
     }
 }
