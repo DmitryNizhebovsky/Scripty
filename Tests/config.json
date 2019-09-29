@@ -1,8 +1,8 @@
 {
-	"InterpreterDir": "D:\\Projects Visual Studio\\Calc\\x64\\Release",
-	"TestsDir": "D:\\Projects Visual Studio\\Calc\\Tests",
-	"InterpreterArgs": "Calc.exe",
-	"OutputLogDir": "D:\\Projects Visual Studio\\Calc\\Tests\\Logs",
+	"InterpreterDir": "D:\\Projects Visual Studio\\Scripty\\x64\\Release",
+	"TestsDir": "D:\\Projects Visual Studio\\Scripty\\Tests",
+	"InterpreterArgs": "Scripty.exe",
+	"OutputLogDir": "D:\\Projects Visual Studio\\Scripty\\Tests\\Logs",
 	"Tests": [
 		{
 			"Description": "",

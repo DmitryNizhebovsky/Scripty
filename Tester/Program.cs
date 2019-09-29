@@ -9,7 +9,7 @@ namespace Tester
     {
         static void Main(string[] args)
         {
-            Console.Title = "CalcTester v1.0.1";
+            Console.Title = "ScriptyTester v1.0.1";
 
             Console.WriteLine("Tester launched\n");
 
