@@ -9,6 +9,7 @@ void Program::Initialization() noexcept {
     globalScope.defineFunction("sin", std::make_unique<SinFunction>());
     globalScope.defineFunction("cos", std::make_unique<CosFunction>());
     globalScope.defineFunction("sqrt", std::make_unique<SqrtFunction>());
+    globalScope.defineFunction("input", std::make_unique<InputFunction>());
     globalScope.defineFunction("print", std::make_unique<PrintFunction>());
     globalScope.defineFunction("println", std::make_unique<PrintLnFunction>());
 }

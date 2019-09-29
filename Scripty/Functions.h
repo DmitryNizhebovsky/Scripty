@@ -3,6 +3,7 @@
 #include "IFunction.h"
 #include "NumberValue.h"
 #include <cmath>
+#include <string>
 #include <iostream>
 
 class SinFunction : public IFunction {
@@ -53,6 +54,26 @@ public:
 	IFunction* get() override {
 		return this;
 	};
+};
+
+class InputFunction : public IFunction {
+public:
+    std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+        if (args.size() > 0) {
+            std::string message = args[0]->asString();
+            std::cout << message;
+        }
+
+        std::string input = "";
+
+        getline(std::cin, input);
+
+        return std::make_unique<StringValue>(input);
+    };
+
+    IFunction* get() override {
+        return this;
+    };
 };
 
 class PrintFunction : public IFunction {
