@@ -55,18 +55,11 @@ std::unique_ptr<IValue> binaryMul(std::unique_ptr<IExpression>& expr1, std::uniq
 			pattern = value2->asString();
 		}
 
-        if (count > 0) {
-            buffer.reserve(pattern.length() * count);
+		for (int i = 0; i < count; ++i) {
+			buffer += pattern;
+		}
 
-            for (int i = 0; i < count; ++i) {
-                buffer += pattern;
-            }
-
-            return std::make_unique<StringValue>(buffer);
-        }
-        else {
-            return std::make_unique<StringValue>("");
-        }
+		return std::make_unique<StringValue>(buffer);
 	}
 
 	throw std::runtime_error("Unable to perform operation on these types");
