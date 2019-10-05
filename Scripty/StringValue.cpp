@@ -5,7 +5,7 @@
 #include "LangException.h"
 
 StringValue::StringValue(const std::string& newValue) :
-    value(newValue) {}
+    value(newValue), type(DataType::String) {}
 
 double StringValue::asDouble() const {
 	return std::stod(value);
@@ -17,6 +17,10 @@ std::string StringValue::asString() const {
 
 std::unique_ptr<IValue> StringValue::copy() const {
 	return std::make_unique<StringValue>(value);
+}
+
+DataType StringValue::getType() const {
+    return type;
 }
 
 IValue* StringValue::getPtr() {

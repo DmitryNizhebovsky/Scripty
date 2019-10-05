@@ -184,6 +184,7 @@
     <ClInclude Include="ConditionalExpression.h" />
     <ClInclude Include="ConditionalStatement.h" />
     <ClInclude Include="ContinueStatement.h" />
+    <ClInclude Include="DataType.h" />
     <ClInclude Include="DoWhileStatement.h" />
     <ClInclude Include="ExceptionType.h" />
     <ClInclude Include="ForStatement.h" />

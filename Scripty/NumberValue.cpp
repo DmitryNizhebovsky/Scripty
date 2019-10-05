@@ -3,7 +3,7 @@
 
 #include "NumberValue.h"
 
-NumberValue::NumberValue(double newValue) : value(newValue) {}
+NumberValue::NumberValue(double newValue) : value(newValue), type(DataType::Number) {}
 
 double NumberValue::asDouble() const {
 	return value;
@@ -15,6 +15,10 @@ std::string NumberValue::asString() const {
 
 std::unique_ptr<IValue> NumberValue::copy() const {
 	return std::make_unique<NumberValue>(value);
+}
+
+DataType NumberValue::getType() const {
+    return type;
 }
 
 IValue* NumberValue::getPtr() {

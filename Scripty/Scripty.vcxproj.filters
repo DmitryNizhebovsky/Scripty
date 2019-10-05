@@ -276,6 +276,9 @@
     <ClInclude Include="CLI\Version.hpp">
       <Filter>Header Files\CLI</Filter>
     </ClInclude>
+    <ClInclude Include="DataType.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">

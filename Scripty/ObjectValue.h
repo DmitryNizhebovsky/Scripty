@@ -2,12 +2,15 @@
 
 #include "ICollection.h"
 #include "IValue.h"
+#include "DataType.h"
 #include <string>
+#include <memory>
 #include <map>
 
 class ObjectValue : public IValue, public ICollection {
 private:
     std::map<std::string, std::unique_ptr<IValue>> value;
+    DataType type;
 
 public:
     ObjectValue(std::map<std::string, std::unique_ptr<IValue>>&& newValue);
@@ -19,5 +22,6 @@ public:
     virtual double asDouble() const override;
     virtual std::string asString() const override;
     virtual std::unique_ptr<IValue> copy() const override;
+    virtual DataType getType() const override;
     virtual IValue* getPtr() override;
 };

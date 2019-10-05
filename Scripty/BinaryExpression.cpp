@@ -28,3 +28,17 @@ void BinaryExpression::innerAccept(IVisitor* visitor) {
 	expr1->accept(visitor);
 	expr2->accept(visitor);
 }
+
+BinaryOperationsTable BinaryExpression::binaryOperationsTable = {
+    {{DataType::Number, DataType::Number}, binaryAdd},
+    {{DataType::Number, DataType::Number}, binarySub},
+    {{DataType::Number, DataType::Number}, binaryMul},
+    {{DataType::Number, DataType::Number}, binaryDiv},
+    {{DataType::Number, DataType::Number}, binaryMod},
+    {{DataType::Number, DataType::Number}, binaryIntDiv},
+    {{DataType::String, DataType::String}, binaryIntDiv},
+    {{DataType::String, DataType::Number}, binaryIntDiv},
+    {{DataType::Number, DataType::String}, binaryIntDiv},
+    {{DataType::Number, DataType::Number}, binaryIntDiv},
+    {{DataType::Number, DataType::Number}, binaryIntDiv}
+};

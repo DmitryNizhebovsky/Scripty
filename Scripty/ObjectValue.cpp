@@ -5,9 +5,9 @@
 #include "LangException.h"
 
 ObjectValue::ObjectValue(std::map<std::string, std::unique_ptr<IValue>>&& newValue) :
-    value(std::move(newValue)) {}
+    value(std::move(newValue)), type(DataType::Object) {}
 
-ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& newValue) {
+ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& newValue) : type(DataType::Object) {
     for (auto const&[key, val] : newValue) {
         value.insert(std::pair<std::string, std::unique_ptr<IValue>>(key, val->copy()));
     }
@@ -51,6 +51,10 @@ std::string ObjectValue::asString() const {
 
 std::unique_ptr<IValue> ObjectValue::copy() const {
     return std::make_unique<ObjectValue>(value);
+}
+
+DataType ObjectValue::getType() const {
+    return type;
 }
 
 IValue* ObjectValue::getPtr() {

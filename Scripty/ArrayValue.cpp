@@ -5,9 +5,9 @@
 #include "LangException.h"
 
 ArrayValue::ArrayValue(std::vector<std::unique_ptr<IValue>>&& newValue) :
-    value(std::move(newValue)) {}
+    value(std::move(newValue)), type(DataType::Array) {}
 
-ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) {
+ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) : type(DataType::Array) {
     for (const auto& val : newValue) {
         value.emplace_back(val->copy());
     }
@@ -15,6 +15,10 @@ ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) {
 
 double ArrayValue::asDouble() const {
 	throw LangException(ExceptionType::RuntimeError, "Cannot cast array to number");
+}
+
+DataType ArrayValue::getType() const {
+    return type;
 }
 
 std::string ArrayValue::asString() const {
