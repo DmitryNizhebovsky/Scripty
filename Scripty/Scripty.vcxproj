@@ -162,7 +162,7 @@
     <ClInclude Include="ArrayValue.h" />
     <ClInclude Include="AssignmentStatement.h" />
     <ClInclude Include="BinaryExpression.h" />
-    <ClInclude Include="BinaryOperations.h" />
+    <ClInclude Include="BinaryOperationExecutor.h" />
     <ClInclude Include="BlockOfStatements.h" />
     <ClInclude Include="BlockOfVariableStatements.h" />
     <ClInclude Include="BreakStatement.h" />
@@ -184,7 +184,7 @@
     <ClInclude Include="ConditionalExpression.h" />
     <ClInclude Include="ConditionalStatement.h" />
     <ClInclude Include="ContinueStatement.h" />
-    <ClInclude Include="DataType.h" />
+    <ClInclude Include="ValueType.h" />
     <ClInclude Include="DoWhileStatement.h" />
     <ClInclude Include="ExceptionType.h" />
     <ClInclude Include="ForStatement.h" />
@@ -230,7 +230,7 @@
     <ClCompile Include="ArrayValue.cpp" />
     <ClCompile Include="AssignmentStatement.cpp" />
     <ClCompile Include="BinaryExpression.cpp" />
-    <ClCompile Include="BinaryOperations.cpp" />
+    <ClCompile Include="BinaryOperationExecutor.cpp" />
     <ClCompile Include="BlockOfStatements.cpp" />
     <ClCompile Include="BlockOfVariableStatements.cpp" />
     <ClCompile Include="BreakStatement.cpp" />

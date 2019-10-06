@@ -6,8 +6,8 @@
 ArrayExpression::ArrayExpression(std::vector<std::unique_ptr<IExpression>>&& expressions) :
 	expressions(std::move(expressions)) {}
 
-std::unique_ptr<IValue> ArrayExpression::eval(Scope& scope) {
-	std::vector<std::unique_ptr<IValue>> values;
+Value ArrayExpression::eval(Scope& scope) {
+	std::vector<Value> values;
 
 	for (auto& expression : expressions) {
 		values.emplace_back(expression->eval(scope));

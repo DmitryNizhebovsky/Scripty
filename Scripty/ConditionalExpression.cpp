@@ -8,9 +8,9 @@ ConditionalExpression::ConditionalExpression(TokenType operation, std::unique_pt
 	expr1(std::move(expr1)),
 	expr2(std::move(expr2)) {}
 
-std::unique_ptr<IValue> ConditionalExpression::eval(Scope& scope) {
-	std::unique_ptr<IValue> value1 = expr1->eval(scope);
-	std::unique_ptr<IValue> value2 = expr2->eval(scope);
+Value ConditionalExpression::eval(Scope& scope) {
+	Value value1 = expr1->eval(scope);
+	Value value2 = expr2->eval(scope);
 
 	double number1 = 0.0;
 	double number2 = 0.0;

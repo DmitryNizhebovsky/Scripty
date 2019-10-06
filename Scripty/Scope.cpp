@@ -9,7 +9,7 @@ void Scope::setParentScope(Scope& parent) {
 	parentScope = &parent;
 }
 
-void Scope::defineVariable(const std::string& name, std::unique_ptr<IValue>&& value) {
+void Scope::defineVariable(const std::string& name, Value&& value) {
     if (variables.find(name) == variables.end()) {
         variables.emplace(name, std::move(value));
     } else {
@@ -39,7 +39,7 @@ IValue* Scope::getVariable(const std::string& name) const {
 	}
 }
 
-std::unique_ptr<IValue>& Scope::getRefVariable(const std::string& name) {
+Value& Scope::getRefVariable(const std::string& name) {
 	if (variables.find(name) != variables.end()) {
 		return variables.at(name);
 	}
@@ -53,7 +53,7 @@ std::unique_ptr<IValue>& Scope::getRefVariable(const std::string& name) {
 	}
 }
 
-std::unique_ptr<IValue> Scope::getCopyVariable(const std::string& name) const {
+Value Scope::getCopyVariable(const std::string& name) const {
 	if (variables.find(name) != variables.end()) {
 		return variables.at(name)->copy();
 	}
@@ -67,7 +67,7 @@ std::unique_ptr<IValue> Scope::getCopyVariable(const std::string& name) const {
 	}
 }
 
-void Scope::setVariable(const std::string& name, std::unique_ptr<IValue>&& value) {
+void Scope::setVariable(const std::string& name, Value&& value) {
 	if (variables.find(name) != variables.end()) {
 		variables.at(name) = std::move(value);
 	}

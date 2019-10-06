@@ -10,11 +10,11 @@ FunctionalExpression::FunctionalExpression(const std::string& name, std::vector<
 	name(name),
 	args(std::move(args)) {}
 
-std::unique_ptr<IValue> FunctionalExpression::eval(Scope& scope) {
+Value FunctionalExpression::eval(Scope& scope) {
 	Scope localScope;
 	localScope.setParentScope(scope);
 
-	std::vector<std::unique_ptr<IValue>> values;
+	std::vector<Value> values;
 
 	for (auto& arg : args) {
 		values.emplace_back(arg->eval(scope));

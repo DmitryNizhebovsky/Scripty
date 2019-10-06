@@ -28,12 +28,6 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{9bd70cff-0749-49d8-84e5-7bab296f9fd4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Values">
-      <UniqueIdentifier>{9f7c9365-73fd-4b4a-9d1e-28dace848d6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Values">
-      <UniqueIdentifier>{6cee33a2-64bc-4fd5-9216-0dc20396fbbc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Tools">
       <UniqueIdentifier>{5ab91431-fd89-4a44-8762-311249554605}</UniqueIdentifier>
     </Filter>
@@ -76,6 +70,12 @@
     <Filter Include="Header Files\CLI">
       <UniqueIdentifier>{655063bb-9af7-4b01-ae47-d7c62240c1ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Types">
+      <UniqueIdentifier>{9f7c9365-73fd-4b4a-9d1e-28dace848d6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Types">
+      <UniqueIdentifier>{6cee33a2-64bc-4fd5-9216-0dc20396fbbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lexer.h">
@@ -94,10 +94,10 @@
       <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="NumberValue.h">
-      <Filter>Header Files\Values</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="StringValue.h">
-      <Filter>Header Files\Values</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="Scope.h">
       <Filter>Header Files\Tools</Filter>
@@ -178,7 +178,7 @@
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
     <ClInclude Include="ArrayValue.h">
-      <Filter>Header Files\Values</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="ArrayExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
@@ -190,9 +190,6 @@
       <Filter>Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="TokenPosition.h">
-      <Filter>Header Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="BinaryOperations.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="IVisitor.h">
@@ -211,7 +208,7 @@
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="ObjectValue.h">
-      <Filter>Header Files\Values</Filter>
+      <Filter>Header Files\Types</Filter>
     </ClInclude>
     <ClInclude Include="ObjectExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
@@ -276,7 +273,13 @@
     <ClInclude Include="CLI\Version.hpp">
       <Filter>Header Files\CLI</Filter>
     </ClInclude>
-    <ClInclude Include="DataType.h">
+    <ClInclude Include="TypeChecker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueType.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryOperationExecutor.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -288,10 +291,10 @@
       <Filter>Source Files\Interpreter</Filter>
     </ClCompile>
     <ClCompile Include="NumberValue.cpp">
-      <Filter>Source Files\Values</Filter>
+      <Filter>Source Files\Types</Filter>
     </ClCompile>
     <ClCompile Include="StringValue.cpp">
-      <Filter>Source Files\Values</Filter>
+      <Filter>Source Files\Types</Filter>
     </ClCompile>
     <ClCompile Include="Scope.cpp">
       <Filter>Source Files\Tools</Filter>
@@ -360,15 +363,12 @@
       <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="ArrayValue.cpp">
-      <Filter>Source Files\Values</Filter>
+      <Filter>Source Files\Types</Filter>
     </ClCompile>
     <ClCompile Include="ArrayExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="TokenPosition.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="BinaryOperations.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="UserFunctionDefine.cpp">
@@ -378,7 +378,7 @@
       <Filter>Source Files\Visitors</Filter>
     </ClCompile>
     <ClCompile Include="ObjectValue.cpp">
-      <Filter>Source Files\Values</Filter>
+      <Filter>Source Files\Types</Filter>
     </ClCompile>
     <ClCompile Include="ObjectExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
@@ -397,6 +397,9 @@
     </ClCompile>
     <ClCompile Include="Program.cpp">
       <Filter>Source Files\Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryOperationExecutor.cpp">
+      <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -103,6 +103,23 @@ bool Token::isKeyword(const std::string& token) noexcept {
     return (keywords.find(token) != keywords.end());
 }
 
+bool Token::isCompoundAssignmentOperator(const TokenType tokenType) noexcept {
+    return (operators.find(toString(tokenType)) != operators.end());
+}
+
+TokenType Token::convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) noexcept {
+    switch (tokenType)
+    {
+        case TokenType::PLUS_ASSIGN:     return TokenType::PLUS;
+        case TokenType::MINUS_ASSIGN:    return TokenType::MINUS;
+        case TokenType::MULTIPLY_ASSIGN: return TokenType::MULTIPLY;
+        case TokenType::DIVISION_ASSIGN: return TokenType::DIVISION;
+        case TokenType::MOD_ASSIGN:      return TokenType::MOD;
+        case TokenType::DIV_ASSIGN:      return TokenType::DIV;
+        default: return TokenType::NONE;
+    }
+}
+
 std::string Token::toString(const TokenType tokenType) noexcept {
     switch (tokenType) {
         case TokenType::NONE:                 return std::string("none");

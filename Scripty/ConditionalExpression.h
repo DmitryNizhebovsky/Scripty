@@ -15,7 +15,7 @@ private:
 
 public:
 	ConditionalExpression(TokenType operation, std::unique_ptr<IExpression>&& expr1, std::unique_ptr<IExpression>&& expr2);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
+	virtual Value eval(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 };

@@ -32,5 +32,7 @@ public:
 
     static std::string toString(const TokenType tokenType) noexcept;
     static bool isOperator(const std::string& token) noexcept;
+    static bool isCompoundAssignmentOperator(const TokenType tokenType) noexcept;
+    static TokenType convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) noexcept;
     static bool isKeyword(const std::string& token) noexcept;
 };

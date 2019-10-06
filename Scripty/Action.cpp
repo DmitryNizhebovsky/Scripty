@@ -7,7 +7,7 @@ Action::Action(ActionType type) :
 	type(type),
     value(std::make_unique<NumberValue>(0.0)) {}
 
-Action::Action(ActionType type, std::unique_ptr<IValue>&& value) :
+Action::Action(ActionType type, Value&& value) :
 	type(type),
 	value(std::move(value)) {}
 
@@ -15,10 +15,10 @@ ActionType Action::getType() const {
 	return type;
 }
 
-std::unique_ptr<IValue> Action::getValue() const {
+Value Action::getValue() const {
 	return value->copy();
 }
 
-void Action::setValue(std::unique_ptr<IValue>&& value) {
+void Action::setValue(Value&& value) {
 	this->value = std::move(value);
 }

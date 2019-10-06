@@ -10,8 +10,8 @@ private:
 
 public:
 	VariableExpression(const std::string& name);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
-	virtual std::unique_ptr<IValue>& getRef(Scope& scope) override;
+	virtual Value eval(Scope& scope) override;
+	virtual Value& getRef(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 };

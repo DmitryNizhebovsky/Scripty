@@ -14,7 +14,7 @@ ICollection* ArrayLikeAccessExpression::getCollectionPtr(Scope& scope) {
         throw LangException(ExceptionType::RuntimeError, "Unable to assign value to left expression");
     }
 
-    std::unique_ptr<IValue>& valueRef = variablePtr->getRef(scope);
+    Value& valueRef = variablePtr->getRef(scope);
     ICollection* collection = dynamic_cast<ICollection*>(valueRef.get());
 
     if (!collection) {
@@ -24,13 +24,13 @@ ICollection* ArrayLikeAccessExpression::getCollectionPtr(Scope& scope) {
     return collection;
 }
 
-std::unique_ptr<IValue> ArrayLikeAccessExpression::eval(Scope& scope) {
+Value ArrayLikeAccessExpression::eval(Scope& scope) {
     ICollection* collection = getCollectionPtr(scope);
 
     return collection->getValue(std::move(index->eval(scope)));
 }
 
-std::unique_ptr<IValue>& ArrayLikeAccessExpression::getRef(Scope& scope) {
+Value& ArrayLikeAccessExpression::getRef(Scope& scope) {
     ICollection* collection = getCollectionPtr(scope);
 
     return collection->getValueRef(std::move(index->eval(scope)));

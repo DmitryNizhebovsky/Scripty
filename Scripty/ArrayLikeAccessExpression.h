@@ -18,8 +18,8 @@ private:
 
 public:
 	ArrayLikeAccessExpression(std::unique_ptr<IExpression>&& variable, std::unique_ptr<IExpression>&& index);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
-	virtual std::unique_ptr<IValue>& getRef(Scope& scope) override;
+	virtual Value eval(Scope& scope) override;
+	virtual Value& getRef(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 };

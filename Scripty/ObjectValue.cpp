@@ -4,16 +4,16 @@
 #include "ObjectValue.h"
 #include "LangException.h"
 
-ObjectValue::ObjectValue(std::map<std::string, std::unique_ptr<IValue>>&& newValue) :
-    value(std::move(newValue)), type(DataType::Object) {}
+ObjectValue::ObjectValue(std::map<std::string, Value>&& newValue) :
+    value(std::move(newValue)) {}
 
-ObjectValue::ObjectValue(const std::map<std::string, std::unique_ptr<IValue>>& newValue) : type(DataType::Object) {
+ObjectValue::ObjectValue(const std::map<std::string, Value>& newValue) {
     for (auto const&[key, val] : newValue) {
-        value.insert(std::pair<std::string, std::unique_ptr<IValue>>(key, val->copy()));
+        value.insert(std::pair<std::string, Value>(key, val->copy()));
     }
 }
 
-std::unique_ptr<IValue> ObjectValue::getValue(std::unique_ptr<IValue>&& key) const {
+Value ObjectValue::getValue(Value&& key) const {
     std::string attribute = key->asString();
 
     if (value.find(attribute) == value.end()) {
@@ -23,11 +23,11 @@ std::unique_ptr<IValue> ObjectValue::getValue(std::unique_ptr<IValue>&& key) con
     return value.at(attribute)->copy();
 }
 
-std::unique_ptr<IValue>& ObjectValue::getValueRef(std::unique_ptr<IValue>&& key) {
+Value& ObjectValue::getValueRef(Value&& key) {
     std::string attribute = key->asString();
 
     if (value.find(attribute) == value.end()) {
-        value.insert(std::pair<std::string, std::unique_ptr<IValue>>(attribute, nullptr));
+        value.insert(std::pair<std::string, Value>(attribute, nullptr));
     }
 
     return value[attribute];
@@ -49,12 +49,12 @@ std::string ObjectValue::asString() const {
     return objectStr;
 }
 
-std::unique_ptr<IValue> ObjectValue::copy() const {
+Value ObjectValue::copy() const {
     return std::make_unique<ObjectValue>(value);
 }
 
-DataType ObjectValue::getType() const {
-    return type;
+ValueType ObjectValue::getValueType() const noexcept {
+    return ValueType::Object;
 }
 
 IValue* ObjectValue::getPtr() {
