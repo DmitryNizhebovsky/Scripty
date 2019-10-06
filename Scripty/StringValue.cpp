@@ -15,24 +15,28 @@ std::string StringValue::asString() const {
 	return value;
 }
 
-std::unique_ptr<IValue> StringValue::copy() const {
+Value StringValue::copy() const {
 	return std::make_unique<StringValue>(value);
+}
+
+ValueType StringValue::getValueType() const noexcept {
+    return ValueType::String;
 }
 
 IValue* StringValue::getPtr() {
 	return this;
 }
 
-std::unique_ptr<IValue>& StringValue::getValueRef(std::unique_ptr<IValue>&& index) {
+Value& StringValue::getValueRef(Value&& index) {
     throw LangException(ExceptionType::RuntimeError, "Unable to assign value");
 }
 
-std::unique_ptr<IValue> StringValue::getValue(std::unique_ptr<IValue>&& index) const {
+Value StringValue::getValue(Value&& index) const {
     size_t validIndex = validateIndex(std::move(index));
     return std::make_unique<StringValue>(std::string(1, value[validIndex]));
 }
 
-size_t StringValue::validateIndex(std::unique_ptr<IValue>&& index) const {
+size_t StringValue::validateIndex(Value&& index) const {
     double dIndex = index->asDouble();
 
     if (dIndex < 0)

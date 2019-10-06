@@ -4,10 +4,10 @@
 #include "ArrayValue.h"
 #include "LangException.h"
 
-ArrayValue::ArrayValue(std::vector<std::unique_ptr<IValue>>&& newValue) :
+ArrayValue::ArrayValue(std::vector<Value>&& newValue) :
     value(std::move(newValue)) {}
 
-ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) {
+ArrayValue::ArrayValue(const std::vector<Value>& newValue) {
     for (const auto& val : newValue) {
         value.emplace_back(val->copy());
     }
@@ -15,6 +15,10 @@ ArrayValue::ArrayValue(const std::vector<std::unique_ptr<IValue>>& newValue) {
 
 double ArrayValue::asDouble() const {
 	throw LangException(ExceptionType::RuntimeError, "Cannot cast array to number");
+}
+
+ValueType ArrayValue::getValueType() const noexcept {
+    return ValueType::Array;
 }
 
 std::string ArrayValue::asString() const {
@@ -29,7 +33,7 @@ std::string ArrayValue::asString() const {
 	return result;
 }
 
-std::unique_ptr<IValue> ArrayValue::copy() const {
+Value ArrayValue::copy() const {
     return std::make_unique<ArrayValue>(value);
 }
 
@@ -37,17 +41,17 @@ IValue* ArrayValue::getPtr() {
 	return this;
 }
 
-std::unique_ptr<IValue>& ArrayValue::getValueRef(std::unique_ptr<IValue>&& index) {
+Value& ArrayValue::getValueRef(Value&& index) {
     size_t validIndex = validateIndex(std::move(index));
     return value[validIndex];
 }
 
-std::unique_ptr<IValue> ArrayValue::getValue(std::unique_ptr<IValue>&& index) const {
+Value ArrayValue::getValue(Value&& index) const {
     size_t validIndex = validateIndex(std::move(index));
     return value[validIndex]->copy();
 }
 
-size_t ArrayValue::validateIndex(std::unique_ptr<IValue>&& index) const {
+size_t ArrayValue::validateIndex(Value&& index) const {
     double dIndex = index->asDouble();
 
     if(dIndex < 0)

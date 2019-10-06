@@ -1,10 +1,8 @@
 #pragma once
 
 #include "IExpression.h"
-#include "BinaryOperations.h"
+#include "IValue.h"
 #include "TokenType.h"
-#include "NumberValue.h"
-#include "StringValue.h"
 #include <memory>
 #include <stdexcept>
 
@@ -15,8 +13,8 @@ private:
 	TokenType operation;
 
 public:
-	BinaryExpression(TokenType operation, std::unique_ptr<IExpression>&& expr1, std::unique_ptr<IExpression>&& expr2);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
+	BinaryExpression(TokenType operation, std::unique_ptr<IExpression>&& expr1, std::unique_ptr<IExpression>&& value2);
+	virtual Value eval(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 };

@@ -8,12 +8,12 @@
 class Action {
 private:
 	ActionType type;
-	std::unique_ptr<IValue> value;
+	Value value;
 
 public:
 	Action(ActionType type);
-	Action(ActionType type, std::unique_ptr<IValue>&& value);
+	Action(ActionType type, Value&& value);
 	ActionType getType() const;
-	void setValue(std::unique_ptr<IValue>&& value);
-	std::unique_ptr<IValue> getValue() const;
+	void setValue(Value&& value);
+	Value getValue() const;
 };

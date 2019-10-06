@@ -13,7 +13,7 @@ private:
 
 public:
 	UnaryExpression(TokenType operation, std::unique_ptr<IExpression>&& expr);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
+	virtual Value eval(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 };

@@ -5,6 +5,6 @@
 class IExpression : public INode {
 public:
 	IExpression() = default;
-    virtual std::unique_ptr<IValue> eval(Scope& scope) = 0;
+    virtual Value eval(Scope& scope) = 0;
     virtual ~IExpression() = default;
 };

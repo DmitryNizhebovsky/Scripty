@@ -8,7 +8,7 @@
 
 class SinFunction : public IFunction {
 public:
-	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+	Value eval(Scope& scope, const std::vector<Value>&& args) override {
 		return std::make_unique<NumberValue>(sin(args[0]->asDouble()));
 	};
 
@@ -19,7 +19,7 @@ public:
 
 class CosFunction : public IFunction {
 public:
-	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+	Value eval(Scope& scope, const std::vector<Value>&& args) override {
 		return std::make_unique<NumberValue>(cos(args[0]->asDouble()));
 	};
 
@@ -30,7 +30,7 @@ public:
 
 class SqrtFunction : public IFunction {
 public:
-	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+	Value eval(Scope& scope, const std::vector<Value>&& args) override {
 		return std::make_unique<NumberValue>(sqrt(args[0]->asDouble()));
 	};
 
@@ -41,7 +41,7 @@ public:
 
 class PrintLnFunction : public IFunction {
 public:
-	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+	Value eval(Scope& scope, const std::vector<Value>&& args) override {
 		for (auto& arg : args) {
 			std::cout << arg->asString();
 		}
@@ -58,7 +58,7 @@ public:
 
 class InputFunction : public IFunction {
 public:
-    std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+    Value eval(Scope& scope, const std::vector<Value>&& args) override {
         if (args.size() > 0) {
             std::string message = args[0]->asString();
             std::cout << message;
@@ -78,7 +78,7 @@ public:
 
 class PrintFunction : public IFunction {
 public:
-	std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override {
+	Value eval(Scope& scope, const std::vector<Value>&& args) override {
         for (auto& arg : args) {
             std::cout << arg->asString();
         }

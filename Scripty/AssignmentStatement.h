@@ -17,5 +17,5 @@ public:
 	virtual void innerAccept(IVisitor* visitor) override;
 
 private:
-    std::unique_ptr<IValue> evalExpression(Scope& scope);
+    Value evalExpression(Scope& scope);
 };

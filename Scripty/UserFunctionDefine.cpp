@@ -7,7 +7,7 @@ UserFunctionDefine::UserFunctionDefine(std::vector<std::string>&& argsNames, ISt
 	argsNames(std::move(argsNames)),
 	body(body) {}
 
-std::unique_ptr<IValue> UserFunctionDefine::eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) {
+Value UserFunctionDefine::eval(Scope& scope, const std::vector<Value>&& args) {
 	Action action = body->execute(scope);
 
 	if (action.getType() == ActionType::RETURN) {

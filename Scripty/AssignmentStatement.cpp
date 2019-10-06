@@ -2,7 +2,8 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "AssignmentStatement.h"
-#include "BinaryOperations.h"
+#include "BinaryOperationExecutor.h"
+#include "Token.h"
 #include "Ilvalue.h"
 
 AssignmentStatement::AssignmentStatement(TokenType assignType, std::unique_ptr<IExpression>&& lexpr, std::unique_ptr<IExpression>&& rexpr):
@@ -17,22 +18,21 @@ Action AssignmentStatement::execute(Scope& scope) {
 		throw std::runtime_error("Cannot assign to this expression");
 	}
 
-	std::unique_ptr<IValue>& variable = lvalue->getRef(scope);
+	Value& variable = lvalue->getRef(scope);
 	variable = evalExpression(scope);
 	return Action(ActionType::NONE);
 }
 
-std::unique_ptr<IValue> AssignmentStatement::evalExpression(Scope& scope) {
-	switch (assignType) {
-		case TokenType::PLUS_ASSIGN:     return binaryAdd(lexpr, rexpr, scope);
-		case TokenType::MINUS_ASSIGN:    return binarySub(lexpr, rexpr, scope);
-		case TokenType::MULTIPLY_ASSIGN: return binaryMul(lexpr, rexpr, scope);
-		case TokenType::DIVISION_ASSIGN: return binaryDiv(lexpr, rexpr, scope);
-		case TokenType::MOD_ASSIGN:      return binaryMod(lexpr, rexpr, scope);
-		case TokenType::DIV_ASSIGN:      return binaryIntDiv(lexpr, rexpr, scope);
-		case TokenType::ASSIGN:
-		default:                         return rexpr->eval(scope);
-	}
+Value AssignmentStatement::evalExpression(Scope& scope) {
+    Value value1 = lexpr->eval(scope);
+    Value value2 = rexpr->eval(scope);
+
+    if (Token::isCompoundAssignmentOperator(assignType)) {
+        TokenType binOperator = Token::convertCompoundAssignmentOperatorToBinaryOperator(assignType);
+        return BinaryOperationExecutor::execute(binOperator, value1, value2);
+    } else {
+        return value2;
+    }
 }
 
 void AssignmentStatement::accept(IVisitor* visitor) {

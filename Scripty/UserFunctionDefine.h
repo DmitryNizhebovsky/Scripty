@@ -14,7 +14,7 @@ private:
 
 public:
 	UserFunctionDefine(std::vector<std::string>&& argsNames, IStatement* body);
-	virtual std::unique_ptr<IValue> eval(Scope& scope, const std::vector<std::unique_ptr<IValue>>&& args) override;
+	virtual Value eval(Scope& scope, const std::vector<Value>&& args) override;
 	virtual IFunction* get() override;
 	size_t getArgsCount() const;
 	const std::string& getArgsName(size_t index) const;

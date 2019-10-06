@@ -13,7 +13,7 @@ private:
 public:
 	FunctionalExpression(const std::string& name);
 	FunctionalExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args);
-	virtual std::unique_ptr<IValue> eval(Scope& scope) override;
+	virtual Value eval(Scope& scope) override;
 	virtual void accept(IVisitor* visitor) override;
 	virtual void innerAccept(IVisitor* visitor) override;
 	void addArgument(std::unique_ptr<IExpression>&& arg);

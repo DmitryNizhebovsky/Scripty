@@ -2,22 +2,18 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "BinaryExpression.h"
+#include "BinaryOperationExecutor.h"
 
 BinaryExpression::BinaryExpression(TokenType operation, std::unique_ptr<IExpression>&& expr1, std::unique_ptr<IExpression>&& expr2):
 	operation(operation),
 	expr1(std::move(expr1)),
 	expr2(std::move(expr2)) {}
 
-std::unique_ptr<IValue> BinaryExpression::eval(Scope& scope) {
-	switch (operation) {
-		case TokenType::PLUS:     return binaryAdd(expr1, expr2, scope);
-		case TokenType::MINUS:    return binarySub(expr1, expr2, scope);
-		case TokenType::MULTIPLY: return binaryMul(expr1, expr2, scope);
-		case TokenType::DIVISION: return binaryDiv(expr1, expr2, scope);
-		case TokenType::MOD:      return binaryMod(expr1, expr2, scope);
-		case TokenType::DIV:      return binaryIntDiv(expr1, expr2, scope);
-		default: throw std::runtime_error("Unknown operator");
-	}
+Value BinaryExpression::eval(Scope& scope) {
+    Value value1 = expr1->eval(scope);
+    Value value2 = expr2->eval(scope);
+
+    return BinaryOperationExecutor::execute(operation, value1, value2);
 }
 
 void BinaryExpression::accept(IVisitor* visitor) {
