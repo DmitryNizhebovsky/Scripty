@@ -1,23 +1,28 @@
 {
-	"InterpreterDir": "D:\\Projects Visual Studio\\Scripty\\x64\\Release",
-	"TestsDir": "D:\\Projects Visual Studio\\Scripty\\Tests",
+	"Platform": "x64",
+	"Configuration": "Release",
+	"InterpreterDir": "..\\..\\..\\Interpreter",
 	"InterpreterName": "Scripty.exe",
-	"OutputLogDir": "D:\\Projects Visual Studio\\Scripty\\Tests\\Logs",
+	"TestsDir": "..\\..\\..\\..\\Tests",
+	"LogDir": "..\\..\\..\\..\\Tests\\Logs",
 	"Tests": [
 		{
 			"Description": "",
 			"Name": "Test1",
-			"Output": "TestSuccessfull"
+			"Output": "TestSuccessfull",
+			"Timeout": "00:00:30"
 		},
 		{
 			"Description": "",
 			"Name": "Test2",
-			"Output": "123.000000"
+			"Output": "123.000000",
+			"Timeout": "00:00:30"
 		},
 		{
 			"Description": "",
 			"Name": "Test3",
-			"Output": "[yiff, me, daddy]"
+			"Output": "[yiff, me, daddy]",
+			"Timeout": "00:00:30"
 		}
 	]
 }

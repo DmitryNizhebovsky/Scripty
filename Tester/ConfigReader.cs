@@ -1,7 +1,6 @@
 ﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
-using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -20,22 +19,25 @@ namespace Tester
 
         public Config ReadConfig()
         {
-            Config config;
-
-            using (StreamReader configFile = File.OpenText(PathToConfig))
+            using (StreamReader sReader = new StreamReader(PathToConfig))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                config = (Config)serializer.Deserialize(configFile, typeof(Config));
-            }
+                using (JsonTextReader jReader = new JsonTextReader(sReader))
+                {
+                    Config config;
 
-            return config;
+                    JsonSerializer serializer = new JsonSerializer();
+                    config = serializer.Deserialize<Config>(jReader);
+
+                    return config;
+                }
+            }
         }
 
         private void CheckExistsConfigFile(string pathToConfig)
         {
             if (!File.Exists(pathToConfig))
             {
-                throw new Exception("Config file not found");
+                throw new FileNotFoundException("Config file not found");
             }
         }
     }

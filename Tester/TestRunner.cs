@@ -10,14 +10,21 @@ namespace Tester
 {
     public class TestRunner
     {
-        private enum TestState {Failed, Successful };
+        private enum TestState { Failed, Successful };
         private ConfigReader reader;
         private Config config;
+        private string pathToInterpreter;
 
         public TestRunner(string pathToConfig)
         {
             reader = new ConfigReader(pathToConfig);
             config = reader.ReadConfig();
+
+            pathToInterpreter = Path.Combine(
+                config.InterpreterDir, 
+                config.Platform, 
+                config.Configuration, 
+                config.InterpreterName);
         }
 
         public void RunAllTests()
@@ -57,7 +64,7 @@ namespace Tester
 
         private void WriteOutput(string testName, string output)
         {
-            using (FileStream fstream = new FileStream(Path.Combine(config.OutputLogDir, $"{testName}.log"), FileMode.Append))
+            using (FileStream fstream = new FileStream(Path.Combine(config.LogDir, $"{testName}.log"), FileMode.Append))
             {
                 byte[] array = System.Text.Encoding.Default.GetBytes(output);
                 fstream.Write(array, 0, array.Length);
@@ -89,8 +96,7 @@ namespace Tester
         {
             string output = "";
             string error = "";
-            string interpreterExe = Path.Combine(config.InterpreterDir, config.InterpreterName);
-            string arguments = $"/c \"\"{interpreterExe}\" -f \"{testFile}\"\"";
+            string arguments = $"/c \"\"{pathToInterpreter}\" -f \"{testFile}\"\"";
 
             try
             {
@@ -139,9 +145,9 @@ namespace Tester
 
         private void CheckInterpreterExists()
         {
-            if (!File.Exists(Path.Combine(config.InterpreterDir, config.InterpreterName)))
+            if (!File.Exists(pathToInterpreter))
             {
-                throw new Exception("Interpreter not found");
+                throw new FileNotFoundException("Interpreter not found");
             }
         }
     }
