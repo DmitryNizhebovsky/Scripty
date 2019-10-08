@@ -273,9 +273,6 @@
     <ClInclude Include="CLI\Version.hpp">
       <Filter>Header Files\CLI</Filter>
     </ClInclude>
-    <ClInclude Include="TypeChecker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ValueType.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
