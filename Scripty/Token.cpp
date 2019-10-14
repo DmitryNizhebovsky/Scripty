@@ -104,7 +104,8 @@ bool Token::isKeyword(const std::string& token) noexcept {
 }
 
 bool Token::isCompoundAssignmentOperator(const TokenType tokenType) noexcept {
-    return (operators.find(toString(tokenType)) != operators.end());
+    auto it = operators.find(toString(tokenType));
+    return it != operators.end() && it->second != TokenType::ASSIGN;
 }
 
 TokenType Token::convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) noexcept {
