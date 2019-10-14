@@ -14,6 +14,7 @@ public:
 
 	virtual double asDouble() const = 0;
 	virtual std::string asString() const = 0;
+    virtual bool asBool() const = 0;
 	virtual Value copy() const = 0;
 
     virtual ValueType getValueType() const noexcept = 0;

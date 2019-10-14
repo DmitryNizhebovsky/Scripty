@@ -13,6 +13,10 @@ std::string NumberValue::asString() const {
 	return std::to_string(value);
 }
 
+bool NumberValue::asBool() const {
+    return static_cast<bool>(value);
+}
+
 Value NumberValue::copy() const {
 	return std::make_unique<NumberValue>(value);
 }

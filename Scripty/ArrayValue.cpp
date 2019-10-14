@@ -17,20 +17,24 @@ double ArrayValue::asDouble() const {
 	throw LangException(ExceptionType::RuntimeError, "Cannot cast array to number");
 }
 
-ValueType ArrayValue::getValueType() const noexcept {
-    return ValueType::Array;
+std::string ArrayValue::asString() const {
+    std::string result = "[";
+
+    for (auto it = value.begin(); it != value.end(); ++it) {
+        result += it == value.begin() ? "" : ", ";
+        result += (*it)->asString();
+    }
+
+    result += "]";
+    return result;
 }
 
-std::string ArrayValue::asString() const {
-	std::string result = "[";
+bool ArrayValue::asBool() const {
+    return value.size() > 0;
+}
 
-	for (auto it = value.begin(); it != value.end(); ++it) {
-		result += it == value.begin() ? "" : ", ";
-        result += (*it)->asString();
-	}
-
-	result += "]";
-	return result;
+ValueType ArrayValue::getValueType() const noexcept {
+    return ValueType::Array;
 }
 
 Value ArrayValue::copy() const {

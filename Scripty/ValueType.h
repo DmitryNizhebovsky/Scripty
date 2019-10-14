@@ -3,6 +3,7 @@
 #include <string>
 
 enum class ValueType {
+    Any,
     String,
     Number,
     Array,
@@ -17,7 +18,8 @@ public:
             case ValueType::String: return "string";
             case ValueType::Number: return "number";
             case ValueType::Object: return "object";
-            case ValueType::Array: return "array";
+            case ValueType::Array:  return "array";
+            case ValueType::Any:    return "any";
             default: return "";
         }
     }

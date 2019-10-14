@@ -441,7 +441,7 @@ EPtr Parser::logicaOr() {
 
 	while (true) {
 		if (match(TokenType::LOGICAL_OR)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::LOGICAL_OR, std::move(result), logicalAnd());
+			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_OR, std::move(result), logicalAnd());
 			continue;
 		}
 
@@ -456,7 +456,7 @@ EPtr Parser::logicalAnd() {
 
 	while (true) {
 		if (match(TokenType::LOGICAL_AND)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::LOGICAL_AND, std::move(result), equality());
+			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_AND, std::move(result), equality());
 			continue;
 		}
 
@@ -471,12 +471,12 @@ EPtr Parser::equality() {
 
 	while (true) {
 		if (match(TokenType::EQUALS)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::EQUALS, std::move(result), conditional());
+			result = std::make_unique<BinaryExpression>(TokenType::EQUALS, std::move(result), conditional());
 			continue;
 		}
 
 		if (match(TokenType::NOT_EQUALS)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::NOT_EQUALS, std::move(result), conditional());
+			result = std::make_unique<BinaryExpression>(TokenType::NOT_EQUALS, std::move(result), conditional());
 			continue;
 		}
 
@@ -491,22 +491,22 @@ EPtr Parser::conditional() {
 
 	while (true) {
 		if (match(TokenType::GREATER_THAN)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::GREATER_THAN, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::GREATER_THAN, std::move(result), additive());
 			continue;
 		}
 
 		if (match(TokenType::GREATER_OR_EQUALS)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::GREATER_OR_EQUALS, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::GREATER_OR_EQUALS, std::move(result), additive());
 			continue;
 		}
 
 		if (match(TokenType::LESS_THAN)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::LESS_THAN, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::LESS_THAN, std::move(result), additive());
 			continue;
 		}
 
 		if (match(TokenType::LESS_OR_EQUALS)) {
-			result = std::make_unique<ConditionalExpression>(TokenType::LESS_OR_EQUALS, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::LESS_OR_EQUALS, std::move(result), additive());
 			continue;
 		}
 

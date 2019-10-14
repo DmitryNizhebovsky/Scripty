@@ -185,7 +185,6 @@
     <ClInclude Include="CLI\TypeTools.hpp" />
     <ClInclude Include="CLI\Validators.hpp" />
     <ClInclude Include="CLI\Version.hpp" />
-    <ClInclude Include="ConditionalExpression.h" />
     <ClInclude Include="ConditionalStatement.h" />
     <ClInclude Include="ContinueStatement.h" />
     <ClInclude Include="ValueType.h" />
@@ -238,7 +237,6 @@
     <ClCompile Include="BlockOfStatements.cpp" />
     <ClCompile Include="BlockOfVariableStatements.cpp" />
     <ClCompile Include="BreakStatement.cpp" />
-    <ClCompile Include="ConditionalExpression.cpp" />
     <ClCompile Include="ConditionalStatement.cpp" />
     <ClCompile Include="ContinueStatement.cpp" />
     <ClCompile Include="DoWhileStatement.cpp" />

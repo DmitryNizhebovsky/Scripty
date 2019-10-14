@@ -49,6 +49,10 @@ std::string ObjectValue::asString() const {
     return objectStr;
 }
 
+bool ObjectValue::asBool() const {
+    return value.size() > 0;
+}
+
 Value ObjectValue::copy() const {
     return std::make_unique<ObjectValue>(value);
 }

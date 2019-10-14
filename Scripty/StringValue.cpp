@@ -15,6 +15,10 @@ std::string StringValue::asString() const {
 	return value;
 }
 
+bool StringValue::asBool() const {
+    return value.size() > 0;
+}
+
 Value StringValue::copy() const {
 	return std::make_unique<StringValue>(value);
 }

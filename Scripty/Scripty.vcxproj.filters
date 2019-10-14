@@ -162,9 +162,6 @@
     <ClInclude Include="BinaryExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
-    <ClInclude Include="ConditionalExpression.h">
-      <Filter>Header Files\AST\Expressions</Filter>
-    </ClInclude>
     <ClInclude Include="FunctionalExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
@@ -342,9 +339,6 @@
       <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="BinaryExpression.cpp">
-      <Filter>Source Files\AST\Expressions</Filter>
-    </ClCompile>
-    <ClCompile Include="ConditionalExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
     <ClCompile Include="FunctionalExpression.cpp">

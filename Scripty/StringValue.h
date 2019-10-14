@@ -18,6 +18,8 @@ public:
 
 	virtual double asDouble() const override;
 	virtual std::string asString() const override;
+    virtual bool asBool() const override;
+
 	virtual Value copy() const override;
     virtual ValueType getValueType() const noexcept override;
 	virtual IValue* getPtr() override;
