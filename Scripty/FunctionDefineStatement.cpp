@@ -3,13 +3,14 @@
 
 #include "FunctionDefineStatement.h"
 
-FunctionDefineStatement::FunctionDefineStatement(const std::string& name, std::vector<std::string>&& argsNames, std::unique_ptr<IStatement>&& body) :
+FunctionDefineStatement::FunctionDefineStatement(const std::string& name, std::vector<std::string>&& argsNames, std::unique_ptr<IStatement>&& body, bool isFixedNumberArgs) :
 	name(name),
 	argsNames(std::move(argsNames)),
-	body(std::move(body)) {}
+	body(std::move(body)),
+    isFixedNumberArgs(isFixedNumberArgs) {}
 
 Action FunctionDefineStatement::execute(Scope& scope) {
-	scope.defineFunction(name, std::make_unique<UserFunctionDefine>(std::move(argsNames), body.get()));
+	scope.defineFunction(name, std::make_unique<UserFunctionDefine>(name, std::move(argsNames), body.get(), isFixedNumberArgs));
 	return Action(ActionType::NONE);
 }
 

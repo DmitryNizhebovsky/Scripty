@@ -3,9 +3,6 @@
 
 #include "FunctionalExpression.h"
 
-FunctionalExpression::FunctionalExpression(const std::string& name) :
-	name(name) {}
-
 FunctionalExpression::FunctionalExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args) :
 	name(name),
 	args(std::move(args)) {}
@@ -21,23 +18,24 @@ Value FunctionalExpression::eval(Scope& scope) {
 	}
 
 	IFunction* function = scope.getFunction(name);
-	UserFunctionDefine* userFunction = dynamic_cast<UserFunctionDefine*>(function);
 
-	if (userFunction) {
-		if (userFunction->getArgsCount() != values.size()) {
-			throw std::runtime_error("Arguments count mismatch");
-		}
+    size_t argsCountPassed = values.size();
+    size_t argsCountExpected = 0;
+
+	if (function->isFixedNumberArguments()) {
+        argsCountExpected = function->getArgsCount();
+        checkNumberArgumentsPassed(argsCountExpected, argsCountPassed, function, false);
 
 		for (size_t arg = 0; arg < values.size(); ++arg) {
-			localScope.defineVariable(userFunction->getArgsName(arg), std::move(values[arg]));
+			localScope.defineVariable(function->getArgsName(arg), std::move(values[arg]));
 		}
 	}
+    else {
+        argsCountExpected = function->getMaxArgsCount();
+        checkNumberArgumentsPassed(argsCountExpected, argsCountPassed, function, true);
+    }
 
 	return function->eval(localScope, std::move(values));
-}
-
-void FunctionalExpression::addArgument(std::unique_ptr<IExpression>&& arg) {
-	args.emplace_back(std::move(arg));
 }
 
 void FunctionalExpression::accept(IVisitor* visitor) {
@@ -48,4 +46,31 @@ void FunctionalExpression::innerAccept(IVisitor* visitor) {
 	for (auto& arg : args) {
 		arg->accept(visitor);
 	}
+}
+
+void FunctionalExpression::checkNumberArgumentsPassed(size_t argsCountExpected, size_t argsCountPassed, IFunction* function, bool checkMax) const {
+    if (argsCountPassed > argsCountExpected) {
+        std::string funcName = function->getName();
+        std::string argsExpected = std::to_string(argsCountExpected);
+        std::string argsPassed = std::to_string(argsCountPassed);
+
+        if(checkMax)
+            throw std::runtime_error("Error: " + funcName + " expected at most " + argsExpected + " arguments, got " + argsPassed);
+        else
+            throw std::runtime_error("Error: " + funcName + "() takes " + argsExpected + " arguments but " + argsPassed + " were given");
+    }
+    else if (!checkMax && (argsCountPassed < argsCountExpected)) {
+        std::string funcName = function->getName();
+        std::string argsMissing = std::to_string(argsCountExpected - argsCountPassed);
+        std::string missingArgsList = "";
+
+        for (size_t arg = argsCountPassed; arg < argsCountExpected; ++arg) {
+            missingArgsList += "'" + function->getArgsName(arg) + "'";
+
+            if (arg != argsCountExpected - 1)
+                missingArgsList += arg != argsCountExpected - 2 ? ", " : " and ";
+        }
+
+        throw std::runtime_error("Error: " + funcName + "() missing " + argsMissing + " required positional arguments: " + missingArgsList);
+    }
 }

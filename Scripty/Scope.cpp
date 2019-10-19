@@ -21,7 +21,7 @@ void Scope::defineFunction(const std::string& name, std::unique_ptr<IFunction>&&
     if (functions.find(name) == functions.end()) {
         functions.emplace(name, std::move(function));
     } else {
-        throw std::runtime_error("Error: redefinition  of '" + name + "'");
+        throw std::runtime_error("Error: function '" + name + "' has already been defined");
     }
 }
 
@@ -32,9 +32,8 @@ IValue* Scope::getVariable(const std::string& name) const {
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->getVariable(name);
-		}
-		else {
-			throw std::runtime_error("Unknown variable");
+		} else {
+			throw std::runtime_error("Error: unknown variable");
 		}
 	}
 }
@@ -46,9 +45,8 @@ Value& Scope::getRefVariable(const std::string& name) {
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->getRefVariable(name);
-		}
-		else {
-			throw std::runtime_error("Unknown variable");
+		} else {
+			throw std::runtime_error("Error: unknown variable");
 		}
 	}
 }
@@ -60,9 +58,8 @@ Value Scope::getCopyVariable(const std::string& name) const {
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->getCopyVariable(name);
-		}
-		else {
-			throw std::runtime_error("Unknown variable");
+		} else {
+			throw std::runtime_error("Error: unknown variable");
 		}
 	}
 }
@@ -74,9 +71,8 @@ void Scope::setVariable(const std::string& name, Value&& value) {
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->setVariable(name, std::move(value));
-		}
-		else {
-			throw std::runtime_error("Unknown variable");
+		} else {
+			throw std::runtime_error("Error: unknown variable");
 		}
 	}
 }
@@ -88,9 +84,8 @@ IFunction* Scope::getFunction(const std::string& name) const {
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->getFunction(name);
-		}
-		else {
-			throw std::runtime_error("Unknown function");
+		} else {
+			throw std::runtime_error("Error: could not find function '" + name + "'");
 		}
 	}
 }
@@ -102,8 +97,7 @@ void Scope::setFunction(const std::string& name, std::unique_ptr<IFunction>&& fu
 	else {
 		if (parentScope != nullptr) {
 			return parentScope->setFunction(name, std::move(function));
-		}
-		else {
+		} else {
 			throw std::runtime_error("Unknown function");
 		}
 	}

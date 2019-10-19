@@ -2,63 +2,44 @@
 
 #include "IFunction.h"
 #include "NumberValue.h"
+#include "UserFunctionDefine.h"
 #include <cmath>
 #include <string>
+#include <vector>
 #include <iostream>
 
-class SinFunction : public IFunction {
+class SinFunction : public UserFunctionDefine {
 public:
-	Value eval(Scope& scope, const std::vector<Value>&& args) override {
-		return std::make_unique<NumberValue>(sin(args[0]->asDouble()));
-	};
+    SinFunction() : UserFunctionDefine("sin", { "x" }, nullptr, true) {};
 
-	IFunction* get() override {
-		return this;
-	};
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
+        return std::make_unique<NumberValue>(sin(args[0]->asDouble()));
+    }
 };
 
-class CosFunction : public IFunction {
+class CosFunction : public UserFunctionDefine {
 public:
-	Value eval(Scope& scope, const std::vector<Value>&& args) override {
-		return std::make_unique<NumberValue>(cos(args[0]->asDouble()));
-	};
+    CosFunction() : UserFunctionDefine("cos", { "x" }, nullptr, true) {};
 
-	IFunction* get() override {
-		return this;
-	};
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
+        return std::make_unique<NumberValue>(cos(args[0]->asDouble()));
+    }
 };
 
-class SqrtFunction : public IFunction {
+class SqrtFunction : public UserFunctionDefine {
 public:
-	Value eval(Scope& scope, const std::vector<Value>&& args) override {
-		return std::make_unique<NumberValue>(sqrt(args[0]->asDouble()));
-	};
+    SqrtFunction() : UserFunctionDefine("sqrt", { "x" }, nullptr, true) {};
 
-	IFunction* get() override {
-		return this;
-	};
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
+        return std::make_unique<NumberValue>(sqrt(args[0]->asDouble()));
+    }
 };
 
-class PrintLnFunction : public IFunction {
+class InputFunction : public UserFunctionDefine {
 public:
-	Value eval(Scope& scope, const std::vector<Value>&& args) override {
-		for (auto& arg : args) {
-			std::cout << arg->asString();
-		}
+    InputFunction() : UserFunctionDefine("input", { }, nullptr, false) {};
 
-	    std::cout << std::endl;
-
-		return std::make_unique<NumberValue>(0.0);
-	};
-
-	IFunction* get() override {
-		return this;
-	};
-};
-
-class InputFunction : public IFunction {
-public:
-    Value eval(Scope& scope, const std::vector<Value>&& args) override {
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
         if (args.size() > 0) {
             std::string message = args[0]->asString();
             std::cout << message;
@@ -69,24 +50,37 @@ public:
         getline(std::cin, input);
 
         return std::make_unique<StringValue>(input);
-    };
+    }
 
-    IFunction* get() override {
-        return this;
-    };
+    virtual size_t InputFunction::getMaxArgsCount() const override {
+        return 1;
+    }
 };
 
-class PrintFunction : public IFunction {
+class PrintFunction : public UserFunctionDefine {
 public:
-	Value eval(Scope& scope, const std::vector<Value>&& args) override {
+    PrintFunction() : UserFunctionDefine("print", { }, nullptr, false) {};
+
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
         for (auto& arg : args) {
             std::cout << arg->asString();
         }
 
-		return std::make_unique<NumberValue>(0.0);
-	};
+        return std::make_unique<NumberValue>(0.0);
+    }
+};
 
-	IFunction* get() override {
-		return this;
-	};
+class PrintLnFunction : public UserFunctionDefine {
+public:
+    PrintLnFunction() : UserFunctionDefine("println", { }, nullptr, false) {};
+
+    virtual Value eval(Scope& scope, std::vector<Value>&& args) override {
+        for (auto& arg : args) {
+            std::cout << arg->asString();
+        }
+
+        std::cout << std::endl;
+
+        return std::make_unique<NumberValue>(0.0);
+    }
 };

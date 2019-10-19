@@ -3,11 +3,13 @@
 
 #include "UserFunctionDefine.h"
 
-UserFunctionDefine::UserFunctionDefine(std::vector<std::string>&& argsNames, IStatement* body) :
+UserFunctionDefine::UserFunctionDefine(const std::string& name, std::vector<std::string>&& argsNames, IStatement* body, bool isFixedNumberArgs) :
+    name(name),
 	argsNames(std::move(argsNames)),
-	body(body) {}
+	body(body),
+    isFixedNumberArgs(isFixedNumberArgs) {}
 
-Value UserFunctionDefine::eval(Scope& scope, const std::vector<Value>&& args) {
+Value UserFunctionDefine::eval(Scope& scope, std::vector<Value>&& args) {
 	Action action = body->execute(scope);
 
 	if (action.getType() == ActionType::RETURN) {
@@ -25,6 +27,18 @@ size_t UserFunctionDefine::getArgsCount() const {
 	return argsNames.size();
 }
 
-const std::string& UserFunctionDefine::getArgsName(size_t index) const {
+std::string UserFunctionDefine::getArgsName(size_t index) const {
 	return argsNames[index];
+}
+
+std::string UserFunctionDefine::getName() const {
+    return name;
+}
+
+size_t UserFunctionDefine::getMaxArgsCount() const {
+    return std::numeric_limits<size_t>::max();
+}
+
+bool UserFunctionDefine::isFixedNumberArguments() const {
+    return isFixedNumberArgs;
 }

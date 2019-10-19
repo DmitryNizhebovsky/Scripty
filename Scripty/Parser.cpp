@@ -135,13 +135,13 @@ SPtr Parser::definitionVariableStatement() {
 
 SPtr Parser::definitionFunctionStatement() {
 	std::string functionName = consume(TokenType::WORD).getValue();
-	std::vector<std::string> argsNames;
+	std::vector<std::string> args;
 	consume(TokenType::OPEN_BRACKET);
 
     if (lookMatch(TokenType::WORD)) {
         do {
             if (lookMatch(TokenType::WORD)) {
-                argsNames.emplace_back(consume(TokenType::WORD).getValue());
+                args.emplace_back(consume(TokenType::WORD).getValue());
             } else {
                 throw LangException(ExceptionType::ParserError, "Missing argument or )", getPositionAfterToken(position - 1));
             }
@@ -149,7 +149,7 @@ SPtr Parser::definitionFunctionStatement() {
     }
 
 	consume(TokenType::CLOSE_BRACKET);
-	return std::make_unique<FunctionDefineStatement>(functionName, std::move(argsNames), statementOrBlockOfStatements());
+	return std::make_unique<FunctionDefineStatement>(functionName, std::move(args), statementOrBlockOfStatements(), true);
 }
 
 SPtr Parser::assignmentStatement() {
@@ -393,8 +393,8 @@ EPtr Parser::arrayItemAccessExpression() {
 }
 
 EPtr Parser::functionExpression() {
-	std::string name = consume(TokenType::WORD).getValue();
-	std::unique_ptr<FunctionalExpression> function = std::make_unique<FunctionalExpression>(name);
+	std::string functionName = consume(TokenType::WORD).getValue();
+    std::vector<std::unique_ptr<IExpression>> args;
     EPtr expr = nullptr;
 
 	consume(TokenType::OPEN_BRACKET);
@@ -405,13 +405,14 @@ EPtr Parser::functionExpression() {
 
             expressionParsingErrorCheck(expr.get(), "Missing expression or )");
 
-            function->addArgument(std::move(expr));
+            args.emplace_back(std::move(expr));
 
         } while (match(TokenType::COMMA));
     }
 
 	consume(TokenType::CLOSE_BRACKET);
-	return function;
+
+    return std::make_unique<FunctionalExpression>(functionName, std::move(args));
 }
 
 EPtr Parser::functionExpressionWithSemicolon() {

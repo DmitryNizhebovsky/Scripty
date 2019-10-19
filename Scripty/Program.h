@@ -3,7 +3,6 @@
 #include <fstream>
 #include "Parser.h"
 #include "Lexer.h"
-#include "Functions.h"
 
 class Program: public NonCopyable {
 private:

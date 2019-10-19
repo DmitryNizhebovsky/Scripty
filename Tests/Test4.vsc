@@ -1,0 +1,10 @@
+/*
+function func1(a, b, c, d) {
+	return 42;
+}
+
+print(func1(1, 2, 3, 4));
+*/
+
+var a = input("Enter number: ");
+print(a);
