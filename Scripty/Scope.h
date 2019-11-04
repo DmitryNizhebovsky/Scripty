@@ -2,11 +2,14 @@
 
 #include "IValue.h"
 #include "IFunction.h"
+
 #include <map>
+#include <string>
+#include <memory>
 
 class Scope {
 private:
-	std::map<std::string, Value>    variables;
+	std::map<std::string, Value> variables;
 	std::map<std::string, std::unique_ptr<IFunction>> functions;
 	Scope* parentScope;
 
@@ -14,7 +17,7 @@ public:
 	Scope();
 	void setParentScope(Scope& parent);
 
-	Value  getCopyVariable(const std::string& name) const;
+	Value getCopyVariable(const std::string& name) const;
 	IValue* getVariable(const std::string& name) const;
 	Value& getRefVariable(const std::string& name);
 	void setVariable(const std::string& name, Value&& value);
