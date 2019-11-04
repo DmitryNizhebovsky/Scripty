@@ -20,9 +20,9 @@ public:
 	virtual void visit(ContinueStatement& stat) override;
 	virtual void visit(DoWhileStatement& stat) override;
 	virtual void visit(ForStatement& stat) override;
-	virtual void visit(FunctionDefineStatement& stat) override;
+	virtual void visit(FunctionDefinitionStatement& stat) override;
 	virtual void visit(FunctionStatement& stat) override;
 	virtual void visit(ReturnStatement& stat) override;
-	virtual void visit(VariableDefineStatement& stat) override;
+	virtual void visit(VariableDefinitionStatement& stat) override;
 	virtual void visit(WhileStatement& stat) override;
 };

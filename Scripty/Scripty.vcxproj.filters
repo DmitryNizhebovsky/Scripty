@@ -144,16 +144,10 @@
     <ClInclude Include="ForStatement.h">
       <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionDefineStatement.h">
-      <Filter>Header Files\AST\Statements</Filter>
-    </ClInclude>
     <ClInclude Include="FunctionStatement.h">
       <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="ReturnStatement.h">
-      <Filter>Header Files\AST\Statements</Filter>
-    </ClInclude>
-    <ClInclude Include="VariableDefineStatement.h">
       <Filter>Header Files\AST\Statements</Filter>
     </ClInclude>
     <ClInclude Include="WhileStatement.h">
@@ -276,6 +270,12 @@
     <ClInclude Include="FunctionExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
+    <ClInclude Include="FunctionDefinitionStatement.h">
+      <Filter>Header Files\AST\Statements</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableDefinitionStatement.h">
+      <Filter>Header Files\AST\Statements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
@@ -323,16 +323,10 @@
     <ClCompile Include="ForStatement.cpp">
       <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionDefineStatement.cpp">
-      <Filter>Source Files\AST\Statements</Filter>
-    </ClCompile>
     <ClCompile Include="FunctionStatement.cpp">
       <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="ReturnStatement.cpp">
-      <Filter>Source Files\AST\Statements</Filter>
-    </ClCompile>
-    <ClCompile Include="VariableDefineStatement.cpp">
       <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
     <ClCompile Include="WhileStatement.cpp">
@@ -391,6 +385,12 @@
     </ClCompile>
     <ClCompile Include="FunctionExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionDefinitionStatement.cpp">
+      <Filter>Source Files\AST\Statements</Filter>
+    </ClCompile>
+    <ClCompile Include="VariableDefinitionStatement.cpp">
+      <Filter>Source Files\AST\Statements</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -192,7 +192,7 @@
     <ClInclude Include="ExceptionType.h" />
     <ClInclude Include="ForStatement.h" />
     <ClInclude Include="FunctionExpression.h" />
-    <ClInclude Include="FunctionDefineStatement.h" />
+    <ClInclude Include="FunctionDefinitionStatement.h" />
     <ClInclude Include="Functions.h" />
     <ClInclude Include="FunctionStatement.h" />
     <ClInclude Include="ICollection.h" />
@@ -213,7 +213,7 @@
     <ClInclude Include="StringValue.h" />
     <ClInclude Include="TokenPosition.h" />
     <ClInclude Include="UserFunctionDefine.h" />
-    <ClInclude Include="VariableDefineStatement.h" />
+    <ClInclude Include="VariableDefinitionStatement.h" />
     <ClInclude Include="VariableExpression.h" />
     <ClInclude Include="IExpression.h" />
     <ClInclude Include="IStatement.h" />
@@ -243,7 +243,7 @@
     <ClCompile Include="ExceptionType.cpp" />
     <ClCompile Include="ForStatement.cpp" />
     <ClCompile Include="FunctionExpression.cpp" />
-    <ClCompile Include="FunctionDefineStatement.cpp" />
+    <ClCompile Include="FunctionDefinitionStatement.cpp" />
     <ClCompile Include="FunctionStatement.cpp" />
     <ClCompile Include="NumberValue.cpp" />
     <ClCompile Include="ObjectExpression.cpp" />
@@ -255,7 +255,7 @@
     <ClCompile Include="StringValue.cpp" />
     <ClCompile Include="TokenPosition.cpp" />
     <ClCompile Include="UserFunctionDefine.cpp" />
-    <ClCompile Include="VariableDefineStatement.cpp" />
+    <ClCompile Include="VariableDefinitionStatement.cpp" />
     <ClCompile Include="VariableExpression.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="ValueExpression.cpp" />

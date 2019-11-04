@@ -18,10 +18,10 @@ class ConditionalStatement;
 class ContinueStatement;
 class DoWhileStatement;
 class ForStatement;
-class FunctionDefineStatement;
+class FunctionDefinitionStatement;
 class FunctionStatement;
 class ReturnStatement;
-class VariableDefineStatement;
+class VariableDefinitionStatement;
 class WhileStatement;
 
 class IVisitor {
@@ -46,10 +46,10 @@ public:
 	virtual void visit(ContinueStatement& stat) = 0;
 	virtual void visit(DoWhileStatement& stat) = 0;
 	virtual void visit(ForStatement& stat) = 0;
-	virtual void visit(FunctionDefineStatement& stat) = 0;
+	virtual void visit(FunctionDefinitionStatement& stat) = 0;
 	virtual void visit(FunctionStatement& stat) = 0;
 	virtual void visit(ReturnStatement& stat) = 0;
-	virtual void visit(VariableDefineStatement& stat) = 0;
+	virtual void visit(VariableDefinitionStatement& stat) = 0;
 	virtual void visit(WhileStatement& stat) = 0;
 
 	virtual ~IVisitor() = default;

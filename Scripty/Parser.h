@@ -4,8 +4,8 @@
 #include "LangException.h"
 
 #include "BlockOfVariableStatements.h"
-#include "FunctionDefineStatement.h"
-#include "VariableDefineStatement.h"
+#include "FunctionDefinitionStatement.h"
+#include "VariableDefinitionStatement.h"
 #include "ConditionalStatement.h"
 #include "AssignmentStatement.h"
 #include "FunctionStatement.h"

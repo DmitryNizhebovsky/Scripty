@@ -18,10 +18,10 @@
 #include "ContinueStatement.h"
 #include "DoWhileStatement.h"
 #include "ForStatement.h"
-#include "FunctionDefineStatement.h"
+#include "FunctionDefinitionStatement.h"
 #include "FunctionStatement.h"
 #include "ReturnStatement.h"
-#include "VariableDefineStatement.h"
+#include "VariableDefinitionStatement.h"
 #include "WhileStatement.h"
 
 void BaseVisitor::visit(ArrayExpression& expr) {
@@ -88,7 +88,7 @@ void BaseVisitor::visit(ForStatement& stat) {
 	stat.innerAccept(this);
 }
 
-void BaseVisitor::visit(FunctionDefineStatement& stat) {
+void BaseVisitor::visit(FunctionDefinitionStatement& stat) {
 	stat.innerAccept(this);
 }
 
@@ -100,7 +100,7 @@ void BaseVisitor::visit(ReturnStatement& stat) {
 	stat.innerAccept(this);
 }
 
-void BaseVisitor::visit(VariableDefineStatement& stat) {
+void BaseVisitor::visit(VariableDefinitionStatement& stat) {
 	stat.innerAccept(this);
 }
 

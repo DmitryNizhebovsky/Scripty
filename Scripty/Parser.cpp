@@ -17,7 +17,7 @@ SPtr Parser::parse(std::vector<Token>&& tokensArray) {
 	while (!match(TokenType::END_OF_FILE)) {
         SPtr temp = parseStatement();
 
-		if (InstanceOf<FunctionDefineStatement>(temp.get())) {
+		if (InstanceOf<FunctionDefinitionStatement>(temp.get())) {
 			result->insertStatement(std::move(temp));
 		} else {
 			result->addStatement(std::move(temp));
@@ -34,7 +34,7 @@ SPtr Parser::parseStatementOrBlockOfStatements() {
 		while (!match(TokenType::CLOSE_BRACES)) {
 			SPtr temp = parseStatement();
 
-			if (InstanceOf<FunctionDefineStatement>(temp.get())) {
+			if (InstanceOf<FunctionDefinitionStatement>(temp.get())) {
 				result->insertStatement(std::move(temp));
 			} else {
 				result->addStatement(std::move(temp));
@@ -116,9 +116,9 @@ SPtr Parser::parseVariableDefinitionStatement() {
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
-			result->addStatement(std::make_unique<VariableDefineStatement>(variableName, std::move(expr)));
+			result->addStatement(std::make_unique<VariableDefinitionStatement>(variableName, std::move(expr)));
 		} else {
-			result->addStatement(std::make_unique<VariableDefineStatement>(variableName, std::make_unique<ValueExpression>(0.0)));
+			result->addStatement(std::make_unique<VariableDefinitionStatement>(variableName, std::make_unique<ValueExpression>(0.0)));
 		}
 
 		if (match(TokenType::COMMA)) {
@@ -149,7 +149,7 @@ SPtr Parser::parseFunctionDefinitionStatement() {
     }
 
 	consume(TokenType::CLOSE_BRACKET);
-	return std::make_unique<FunctionDefineStatement>(functionName, std::move(args), parseStatementOrBlockOfStatements(), true);
+	return std::make_unique<FunctionDefinitionStatement>(functionName, std::move(args), parseStatementOrBlockOfStatements(), true);
 }
 
 SPtr Parser::parseAssignmentStatement() {
