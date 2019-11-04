@@ -18,7 +18,7 @@
 #include "ForStatement.h"
 
 #include "ArrayLikeAccessExpression.h"
-#include "FunctionalExpression.h"
+#include "FunctionExpression.h"
 #include "VariableExpression.h"
 #include "BinaryExpression.h"
 #include "ValueExpression.h"

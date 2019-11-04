@@ -3,7 +3,7 @@ class ArrayExpression;
 class ObjectExpression;
 class BinaryExpression;
 class ConditionalExpression;
-class FunctionalExpression;
+class FunctionExpression;
 class ArrayLikeAccessExpression;
 class ObjectAccessExpression;
 class UnaryExpression;
@@ -31,7 +31,7 @@ public:
     virtual void visit(ObjectExpression& expr) = 0;
 	virtual void visit(BinaryExpression& expr) = 0;
 	virtual void visit(ConditionalExpression& expr) = 0;
-	virtual void visit(FunctionalExpression& expr) = 0;
+	virtual void visit(FunctionExpression& expr) = 0;
 	virtual void visit(ArrayLikeAccessExpression& expr) = 0;
     virtual void visit(ObjectAccessExpression& expr) = 0;
 	virtual void visit(UnaryExpression& expr) = 0;

@@ -412,7 +412,7 @@ EPtr Parser::functionExpression() {
 
 	consume(TokenType::CLOSE_BRACKET);
 
-    return std::make_unique<FunctionalExpression>(functionName, std::move(args));
+    return std::make_unique<FunctionExpression>(functionName, std::move(args));
 }
 
 EPtr Parser::functionExpressionWithSemicolon() {

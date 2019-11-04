@@ -5,7 +5,7 @@
 #include "ArrayExpression.h"
 #include "ObjectExpression.h"
 #include "BinaryExpression.h"
-#include "FunctionalExpression.h"
+#include "FunctionExpression.h"
 #include "ArrayLikeAccessExpression.h"
 #include "UnaryExpression.h"
 #include "ValueExpression.h"
@@ -36,7 +36,7 @@ void BaseVisitor::visit(BinaryExpression& expr) {
 	expr.innerAccept(this);
 }
 
-void BaseVisitor::visit(FunctionalExpression& expr) {
+void BaseVisitor::visit(FunctionExpression& expr) {
 	expr.innerAccept(this);
 }
 

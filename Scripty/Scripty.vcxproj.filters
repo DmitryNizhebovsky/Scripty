@@ -162,9 +162,6 @@
     <ClInclude Include="BinaryExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionalExpression.h">
-      <Filter>Header Files\AST\Expressions</Filter>
-    </ClInclude>
     <ClInclude Include="UnaryExpression.h">
       <Filter>Header Files\AST\Expressions</Filter>
     </ClInclude>
@@ -276,6 +273,9 @@
     <ClInclude Include="BinaryOperationExecutor.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="FunctionExpression.h">
+      <Filter>Header Files\AST\Expressions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lexer.cpp">
@@ -341,9 +341,6 @@
     <ClCompile Include="BinaryExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionalExpression.cpp">
-      <Filter>Source Files\AST\Expressions</Filter>
-    </ClCompile>
     <ClCompile Include="UnaryExpression.cpp">
       <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
@@ -391,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="BinaryOperationExecutor.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctionExpression.cpp">
+      <Filter>Source Files\AST\Expressions</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

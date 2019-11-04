@@ -4,13 +4,13 @@
 #include <string>
 #include <vector>
 
-class FunctionalExpression : public IExpression {
+class FunctionExpression : public IExpression {
 private:
 	std::string name;
 	std::vector<std::unique_ptr<IExpression>> args;
 
 public:
-	FunctionalExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args);
+	FunctionExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args);
 
 	virtual Value eval(Scope& scope) override;
 
