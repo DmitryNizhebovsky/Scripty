@@ -99,5 +99,5 @@ private:
 
 public:
 	Parser();
-    SPtr parse(std::vector<Token>&& tokensArray);
+    SPtr parse(const std::vector<Token>& tokensArray);
 };

@@ -27,7 +27,7 @@ void Program::Initialization() noexcept {
 void Program::ReadProgram() {
     std::vector<Token> tokens = lexer.tokenize(sourceFile);
 
-    program = parser.parse(std::move(tokens));
+    program = parser.parse(tokens);
 }
 
 void Program::Run() {

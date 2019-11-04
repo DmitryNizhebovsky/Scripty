@@ -8,9 +8,9 @@ Parser::Parser():
     position(0),
     eof(TokenType::END_OF_FILE) {}
 
-SPtr Parser::parse(std::vector<Token>&& tokensArray) {
-    tokens = std::move(tokensArray);
-    size   = tokens.size();
+SPtr Parser::parse(const std::vector<Token>& tokensArray) {
+    tokens = tokensArray;
+    size = tokens.size();
 
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 

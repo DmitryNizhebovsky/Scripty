@@ -36,5 +36,5 @@ private:
 
 public:
 	Lexer();
-	std::vector<Token>&& tokenize(const std::string& fileName);
+	std::vector<Token> tokenize(const std::string& fileName);
 };

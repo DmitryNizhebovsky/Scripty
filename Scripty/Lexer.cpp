@@ -210,7 +210,7 @@ bool Lexer::isString(const char let) const {
     return let == '"' || let == '\'';
 }
 
-std::vector<Token>&& Lexer::tokenize(const std::string& fileName) {
+std::vector<Token> Lexer::tokenize(const std::string& fileName) {
     readSourceFile(fileName);
 
 	while (position < sourceCodeLength) {
