@@ -32,7 +32,7 @@ IValue* Scope::getVariable(const std::string& name) const {
 		return it->second->getPtr();
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->getVariable(name);
+			return parentScope->getVariable(name);
 		} else {
 			throw std::runtime_error("Error: unknown variable");
 		}
@@ -46,7 +46,7 @@ Value& Scope::getRefVariable(const std::string& name) {
 		return it->second;
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->getRefVariable(name);
+            return parentScope->getRefVariable(name);
 		} else {
 			throw std::runtime_error("Error: unknown variable");
 		}
@@ -60,7 +60,7 @@ Value Scope::getCopyVariable(const std::string& name) const {
 		return it->second->copy();
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->getCopyVariable(name);
+            return parentScope->getCopyVariable(name);
 		} else {
 			throw std::runtime_error("Error: unknown variable");
 		}
@@ -74,7 +74,7 @@ void Scope::setVariable(const std::string& name, Value&& value) {
 		it->second = std::move(value);
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->setVariable(name, std::move(value));
+            return parentScope->setVariable(name, std::move(value));
 		} else {
 			throw std::runtime_error("Error: unknown variable");
 		}
@@ -88,7 +88,7 @@ IFunction* Scope::getFunction(const std::string& name) const {
 		return it->second->get();
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->getFunction(name);
+            return parentScope->getFunction(name);
 		} else {
 			throw std::runtime_error("Error: could not find function '" + name + "'");
 		}
@@ -102,7 +102,7 @@ void Scope::setFunction(const std::string& name, std::unique_ptr<IFunction>&& fu
 		it->second = std::move(function);
 	} else {
 		if (parentScope != nullptr) {
-			parentScope->setFunction(name, std::move(function));
+            return parentScope->setFunction(name, std::move(function));
 		} else {
 			throw std::runtime_error("Unknown function");
 		}
