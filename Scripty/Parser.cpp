@@ -15,7 +15,7 @@ SPtr Parser::parse(std::vector<Token>&& tokensArray) {
 	std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 
 	while (!match(TokenType::END_OF_FILE)) {
-        SPtr temp = statement();
+        SPtr temp = parseStatement();
 
 		if (InstanceOf<FunctionDefineStatement>(temp.get())) {
 			result->insertStatement(std::move(temp));
@@ -27,12 +27,12 @@ SPtr Parser::parse(std::vector<Token>&& tokensArray) {
 	return result;
 }
 
-SPtr Parser::statementOrBlockOfStatements() {
+SPtr Parser::parseStatementOrBlockOfStatements() {
 	if (match(TokenType::OPEN_BRACES)) {
 		std::unique_ptr<BlockOfStatements> result = std::make_unique<BlockOfStatements>();
 
 		while (!match(TokenType::CLOSE_BRACES)) {
-			SPtr temp = statement();
+			SPtr temp = parseStatement();
 
 			if (InstanceOf<FunctionDefineStatement>(temp.get())) {
 				result->insertStatement(std::move(temp));
@@ -43,55 +43,55 @@ SPtr Parser::statementOrBlockOfStatements() {
 
 		return result;
 	} else {
-        return statement();
+        return parseStatement();
     }
 }
 
-SPtr Parser::statement() {
+SPtr Parser::parseStatement() {
 	if (match(TokenType::IF)) {
-		return conditionalStatement();
+		return parseConditionalStatement();
 	}
 
 	if (match(TokenType::BREAK)) {
-		return breakStatement();
+		return parseBreakStatement();
 	}
 
 	if (match(TokenType::CONTINUE)) {
-		return continueStatement();
+		return parseContinueStatement();
 	}
 
 	if (match(TokenType::WHILE)) {
-		return whileStatement();
+		return parseWhileStatement();
 	}
 
 	if (match(TokenType::DO_WHILE)) {
-		return doWhileStatement();
+		return parseDoWhileStatement();
 	}
 
 	if (match(TokenType::FOR)) {
-		return forStatement();
+		return parseForStatement();
 	}
 
 	if (match(TokenType::VAR)) {
-		return definitionVariableStatement();
+		return parseVariableDefinitionStatement();
 	}
 
 	if (lookMatch(TokenType::WORD) && lookMatch(TokenType::OPEN_BRACKET, 1)) {
-		return std::make_unique<FunctionStatement>(functionExpressionWithSemicolon());
+		return std::make_unique<FunctionStatement>(parseFunctionExpressionWithSemicolon());
 	}
 
 	if (match(TokenType::FUNCTION)) {
-		return definitionFunctionStatement();
+		return parseFunctionDefinitionStatement();
 	}
 
 	if (match(TokenType::RETURN)) {
-        return returnStatement();
+        return parseReturnStatement();
 	}
 
-	return assignmentStatementWithSemicolon();
+	return parseAssignmentStatementWithSemicolon();
 }
 
-SPtr Parser::definitionVariableStatement() {
+SPtr Parser::parseVariableDefinitionStatement() {
     std::unique_ptr<BlockOfVariableStatements> result = std::make_unique<BlockOfVariableStatements>();
     bool isConst = false;
 
@@ -103,8 +103,8 @@ SPtr Parser::definitionVariableStatement() {
     std::string variableName = consume(TokenType::WORD).getValue();
 
     if (isConst) {
-        if (tableOfConstVariable.find(variableName) == tableOfConstVariable.end()) {
-            tableOfConstVariable.emplace(variableName);
+        if (tableOfConstantVariables.find(variableName) == tableOfConstantVariables.end()) {
+            tableOfConstantVariables.emplace(variableName);
         } else {
             throw LangException(ExceptionType::ParserError, "Redeclaration of '" + variableName + "'", getPositionBeforeToken(position - 1));
         }
@@ -112,7 +112,7 @@ SPtr Parser::definitionVariableStatement() {
 
 	while (true) {
 		if (match(TokenType::ASSIGN)) {
-            EPtr expr = expression();
+            EPtr expr = parseExpression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
@@ -133,7 +133,7 @@ SPtr Parser::definitionVariableStatement() {
 	return result;
 }
 
-SPtr Parser::definitionFunctionStatement() {
+SPtr Parser::parseFunctionDefinitionStatement() {
 	std::string functionName = consume(TokenType::WORD).getValue();
 	std::vector<std::string> args;
 	consume(TokenType::OPEN_BRACKET);
@@ -149,13 +149,13 @@ SPtr Parser::definitionFunctionStatement() {
     }
 
 	consume(TokenType::CLOSE_BRACKET);
-	return std::make_unique<FunctionDefineStatement>(functionName, std::move(args), statementOrBlockOfStatements(), true);
+	return std::make_unique<FunctionDefineStatement>(functionName, std::move(args), parseStatementOrBlockOfStatements(), true);
 }
 
-SPtr Parser::assignmentStatement() {
+SPtr Parser::parseAssignmentStatement() {
 	std::string variableName = consume(TokenType::WORD).getValue();
 
-    if (tableOfConstVariable.find(variableName) != tableOfConstVariable.end()) {
+    if (tableOfConstantVariables.find(variableName) != tableOfConstantVariables.end()) {
         throw LangException(ExceptionType::TypeError, "invalid assignment to const '" + variableName + "'");
     }
 
@@ -169,7 +169,7 @@ SPtr Parser::assignmentStatement() {
 			do {
 				consume(TokenType::OPEN_SQUARE_BRACKET);
 
-				EPtr index = expression();
+				EPtr index = parseExpression();
 
                 expressionParsingErrorCheck(index.get(), "Missing expression");
 
@@ -203,7 +203,7 @@ SPtr Parser::assignmentStatement() {
 		{
             consume(assignType);
 
-            EPtr expr = expression();
+            EPtr expr = parseExpression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
@@ -223,40 +223,40 @@ SPtr Parser::assignmentStatement() {
 	return result;
 }
 
-SPtr Parser::assignmentStatementWithSemicolon() {
-    SPtr statement = assignmentStatement();
+SPtr Parser::parseAssignmentStatementWithSemicolon() {
+    SPtr statement = parseAssignmentStatement();
     consume(TokenType::SEMICOLON);
     return statement;
 }
 
-SPtr Parser::conditionalStatement() {
-	EPtr conditional = expression();
+SPtr Parser::parseConditionalStatement() {
+	EPtr conditional = parseExpression();
 
     expressionParsingErrorCheck(conditional.get(), "Missing conditional expression");
 
-	SPtr ifStatement = statementOrBlockOfStatements();
+	SPtr ifStatement = parseStatementOrBlockOfStatements();
 	SPtr elseStatement = nullptr;
 
 	if (match(TokenType::ELSE)) {
-		elseStatement = statementOrBlockOfStatements();
+		elseStatement = parseStatementOrBlockOfStatements();
 	}
 
 	return std::make_unique<ConditionalStatement>(std::move(conditional), std::move(ifStatement), std::move(elseStatement));
 }
 
-SPtr Parser::whileStatement() {
-	EPtr condition = expression();
+SPtr Parser::parseWhileStatement() {
+	EPtr condition = parseExpression();
 
     expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
-	SPtr statement = statementOrBlockOfStatements();
+	SPtr statement = parseStatementOrBlockOfStatements();
 	return std::make_unique<WhileStatement>(std::move(condition), std::move(statement));
 }
 
-SPtr Parser::doWhileStatement() {
-	SPtr statement = statementOrBlockOfStatements();
+SPtr Parser::parseDoWhileStatement() {
+	SPtr statement = parseStatementOrBlockOfStatements();
     consume(TokenType::WHILE);
-	EPtr condition = expression();
+	EPtr condition = parseExpression();
 
     expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
@@ -264,55 +264,55 @@ SPtr Parser::doWhileStatement() {
 	return std::make_unique<DoWhileStatement>(std::move(condition), std::move(statement));
 }
 
-SPtr Parser::forStatement() {
+SPtr Parser::parseForStatement() {
 	if (match(TokenType::OPEN_BRACKET)) {
 		SPtr initialization;
 
 		if (match(TokenType::VAR)) {
-			initialization = definitionVariableStatement();
+			initialization = parseVariableDefinitionStatement();
 		} else {
-			initialization = assignmentStatement();
+			initialization = parseAssignmentStatement();
 		}
 
 		match(TokenType::SEMICOLON);
-		EPtr condition = expression();
+		EPtr condition = parseExpression();
 
         expressionParsingErrorCheck(condition.get(), "Missing conditional expression");
 
 		match(TokenType::SEMICOLON);
-		SPtr increment = assignmentStatement();
+		SPtr increment = parseAssignmentStatement();
 
 		if (!match(TokenType::CLOSE_BRACKET)) {
             throw LangException(ExceptionType::ParserError, "Missing expression or )", getPositionAfterToken(position - 1));
 		}
 
-		SPtr statement = statementOrBlockOfStatements();
+		SPtr statement = parseStatementOrBlockOfStatements();
 		return std::make_unique<ForStatement>(std::move(initialization), std::move(condition), std::move(increment), std::move(statement));
 	} else {
 		throw LangException(ExceptionType::ParserError, "Missing (", getPositionAfterToken(position - 1));
 	}
 }
 
-SPtr Parser::continueStatement() {
+SPtr Parser::parseContinueStatement() {
     SPtr statementTemp = std::make_unique<ContinueStatement>();
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-SPtr Parser::breakStatement() {
+SPtr Parser::parseBreakStatement() {
     SPtr statementTemp = std::make_unique<BreakStatement>();
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-SPtr Parser::returnStatement() {
-    EPtr expr = expression();
+SPtr Parser::parseReturnStatement() {
+    EPtr expr = parseExpression();
     SPtr statementTemp = std::make_unique<ReturnStatement>(std::move(expr));
     consume(TokenType::SEMICOLON);
     return statementTemp;
 }
 
-EPtr Parser::arrayExpression() {
+EPtr Parser::parseArrayExpression() {
 	std::vector<EPtr> expressions;
     EPtr expr = nullptr;
 
@@ -320,7 +320,7 @@ EPtr Parser::arrayExpression() {
 
     if (!lookMatch(TokenType::CLOSE_SQUARE_BRACKET)) {
         do {
-            expr = expression();
+            expr = parseExpression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression or ]");
 
@@ -333,7 +333,7 @@ EPtr Parser::arrayExpression() {
 	return std::make_unique<ArrayExpression>(std::move(expressions));
 }
 
-EPtr Parser::objectExpression() {
+EPtr Parser::parseObjectExpression() {
     std::map<std::string, EPtr> dictionary;
 
     consume(TokenType::OPEN_BRACES);
@@ -344,7 +344,7 @@ EPtr Parser::objectExpression() {
 
             consume(TokenType::COLON);
 
-            EPtr expr = expression();
+            EPtr expr = parseExpression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression");
 
@@ -357,7 +357,7 @@ EPtr Parser::objectExpression() {
     return std::make_unique<ObjectExpression>(std::move(dictionary));
 }
 
-EPtr Parser::objectItemAccessExpression() {
+EPtr Parser::parseObjectItemAccessExpression() {
     std::string variableName = consume(TokenType::WORD).getValue();
     EPtr variable = std::make_unique<VariableExpression>(variableName);
 
@@ -373,14 +373,14 @@ EPtr Parser::objectItemAccessExpression() {
     return variable;
 }
 
-EPtr Parser::arrayItemAccessExpression() {
+EPtr Parser::parseArrayItemAccessExpression() {
 	std::string variableName = consume(TokenType::WORD).getValue();
 	EPtr variable = std::make_unique<VariableExpression>(variableName);
 
 	do {
 		consume(TokenType::OPEN_SQUARE_BRACKET);
 
-		EPtr index = expression();
+		EPtr index = parseExpression();
 
         expressionParsingErrorCheck(index.get(), "Missing expression");
 
@@ -392,7 +392,7 @@ EPtr Parser::arrayItemAccessExpression() {
 	return variable;
 }
 
-EPtr Parser::functionExpression() {
+EPtr Parser::parseFunctionExpression() {
 	std::string functionName = consume(TokenType::WORD).getValue();
     std::vector<std::unique_ptr<IExpression>> args;
     EPtr expr = nullptr;
@@ -401,7 +401,7 @@ EPtr Parser::functionExpression() {
 
     if (!lookMatch(TokenType::CLOSE_BRACKET)) {
         do {
-            expr = expression();
+            expr = parseExpression();
 
             expressionParsingErrorCheck(expr.get(), "Missing expression or )");
 
@@ -415,18 +415,18 @@ EPtr Parser::functionExpression() {
     return std::make_unique<FunctionExpression>(functionName, std::move(args));
 }
 
-EPtr Parser::functionExpressionWithSemicolon() {
-    EPtr function = functionExpression();
+EPtr Parser::parseFunctionExpressionWithSemicolon() {
+    EPtr function = parseFunctionExpression();
     consume(TokenType::SEMICOLON);
     return function;
 }
 
-EPtr Parser::expression() {
-	return logicaOr();
+EPtr Parser::parseExpression() {
+	return parseLogicaOrExpression();
 }
 
-EPtr Parser::subExpression() {
-    EPtr result = expression();
+EPtr Parser::parseSubExpression() {
+    EPtr result = parseExpression();
 
     expressionParsingErrorCheck(result.get(), "Missing expression");
 
@@ -437,12 +437,12 @@ EPtr Parser::subExpression() {
     return result;
 }
 
-EPtr Parser::logicaOr() {
-	EPtr result = logicalAnd();
+EPtr Parser::parseLogicaOrExpression() {
+	EPtr result = parseLogicalAndExpression();
 
 	while (true) {
 		if (match(TokenType::LOGICAL_OR)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_OR, std::move(result), logicalAnd());
+			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_OR, std::move(result), parseLogicalAndExpression());
 			continue;
 		}
 
@@ -452,12 +452,12 @@ EPtr Parser::logicaOr() {
 	return result;
 }
 
-EPtr Parser::logicalAnd() {
-	EPtr result = equality();
+EPtr Parser::parseLogicalAndExpression() {
+	EPtr result = parseEqualityExpression();
 
 	while (true) {
 		if (match(TokenType::LOGICAL_AND)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_AND, std::move(result), equality());
+			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_AND, std::move(result), parseEqualityExpression());
 			continue;
 		}
 
@@ -467,17 +467,17 @@ EPtr Parser::logicalAnd() {
 	return result;
 }
 
-EPtr Parser::equality() {
-	EPtr result = conditional();
+EPtr Parser::parseEqualityExpression() {
+	EPtr result = parseConditionalExpression();
 
 	while (true) {
 		if (match(TokenType::EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::EQUALS, std::move(result), conditional());
+			result = std::make_unique<BinaryExpression>(TokenType::EQUALS, std::move(result), parseConditionalExpression());
 			continue;
 		}
 
 		if (match(TokenType::NOT_EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::NOT_EQUALS, std::move(result), conditional());
+			result = std::make_unique<BinaryExpression>(TokenType::NOT_EQUALS, std::move(result), parseConditionalExpression());
 			continue;
 		}
 
@@ -487,27 +487,27 @@ EPtr Parser::equality() {
 	return result;
 }
 
-EPtr Parser::conditional() {
-	EPtr result = additive();
+EPtr Parser::parseConditionalExpression() {
+	EPtr result = parseAdditiveExpression();
 
 	while (true) {
 		if (match(TokenType::GREATER_THAN)) {
-			result = std::make_unique<BinaryExpression>(TokenType::GREATER_THAN, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::GREATER_THAN, std::move(result), parseAdditiveExpression());
 			continue;
 		}
 
 		if (match(TokenType::GREATER_OR_EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::GREATER_OR_EQUALS, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::GREATER_OR_EQUALS, std::move(result), parseAdditiveExpression());
 			continue;
 		}
 
 		if (match(TokenType::LESS_THAN)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LESS_THAN, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::LESS_THAN, std::move(result), parseAdditiveExpression());
 			continue;
 		}
 
 		if (match(TokenType::LESS_OR_EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LESS_OR_EQUALS, std::move(result), additive());
+			result = std::make_unique<BinaryExpression>(TokenType::LESS_OR_EQUALS, std::move(result), parseAdditiveExpression());
 			continue;
 		}
 
@@ -517,17 +517,17 @@ EPtr Parser::conditional() {
 	return result;
 }
 
-EPtr Parser::additive() {
-	EPtr result = multiplicative();
+EPtr Parser::parseAdditiveExpression() {
+	EPtr result = parseMultiplicativeExpression();
 
 	while (true) {
 		if (match(TokenType::PLUS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::PLUS, std::move(result), multiplicative());
+			result = std::make_unique<BinaryExpression>(TokenType::PLUS, std::move(result), parseMultiplicativeExpression());
 			continue;
 		}
 
 		if (match(TokenType::MINUS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::MINUS, std::move(result), multiplicative());
+			result = std::make_unique<BinaryExpression>(TokenType::MINUS, std::move(result), parseMultiplicativeExpression());
 			continue;
 		}
 
@@ -537,27 +537,27 @@ EPtr Parser::additive() {
 	return result;
 }
 
-EPtr Parser::multiplicative() {
-	EPtr result = unary();
+EPtr Parser::parseMultiplicativeExpression() {
+	EPtr result = parseUnaryExpression();
 
 	while (true) {
 		if (match(TokenType::MULTIPLY)) {
-			result = std::make_unique<BinaryExpression>(TokenType::MULTIPLY, std::move(result), unary());
+			result = std::make_unique<BinaryExpression>(TokenType::MULTIPLY, std::move(result), parseUnaryExpression());
 			continue;
 		}
 
 		if (match(TokenType::DIVISION)) {
-			result = std::make_unique<BinaryExpression>(TokenType::DIVISION, std::move(result), unary());
+			result = std::make_unique<BinaryExpression>(TokenType::DIVISION, std::move(result), parseUnaryExpression());
 			continue;
 		}
 
 		if (match(TokenType::MOD)) {
-			result = std::make_unique<BinaryExpression>(TokenType::MOD, std::move(result), unary());
+			result = std::make_unique<BinaryExpression>(TokenType::MOD, std::move(result), parseUnaryExpression());
 			continue;
 		}
 
 		if (match(TokenType::DIV)) {
-			result = std::make_unique<BinaryExpression>(TokenType::DIV, std::move(result), unary());
+			result = std::make_unique<BinaryExpression>(TokenType::DIV, std::move(result), parseUnaryExpression());
 			continue;
 		}
 
@@ -567,23 +567,23 @@ EPtr Parser::multiplicative() {
 	return result;
 }
 
-EPtr Parser::unary() {
+EPtr Parser::parseUnaryExpression() {
 	if (match(TokenType::MINUS)) {
-		return std::make_unique<UnaryExpression>(TokenType::MINUS, primary());
+		return std::make_unique<UnaryExpression>(TokenType::MINUS, parsePrimaryExpression());
 	}
 
 	if (match(TokenType::PLUS)) {
-		return std::make_unique<UnaryExpression>(TokenType::PLUS, primary());
+		return std::make_unique<UnaryExpression>(TokenType::PLUS, parsePrimaryExpression());
 	}
 
 	if (match(TokenType::LOGICAL_NOT)) {
-		return std::make_unique<UnaryExpression>(TokenType::LOGICAL_NOT, primary());
+		return std::make_unique<UnaryExpression>(TokenType::LOGICAL_NOT, parsePrimaryExpression());
 	}
 
-	return primary();
+	return parsePrimaryExpression();
 }
 
-EPtr Parser::primary() {
+EPtr Parser::parsePrimaryExpression() {
     const Token& token = getToken();
 
 	if (match(TokenType::NUMBER)) {
@@ -603,15 +603,15 @@ EPtr Parser::primary() {
 	}
 
 	if (lookMatch(TokenType::WORD) && lookMatch(TokenType::OPEN_BRACKET, 1)) {
-		return functionExpression();
+		return parseFunctionExpression();
 	}
 
 	if (lookMatch(TokenType::WORD) && lookMatch(TokenType::OPEN_SQUARE_BRACKET, 1)) {
-		return arrayItemAccessExpression();
+		return parseArrayItemAccessExpression();
 	}
 
     if (lookMatch(TokenType::WORD) && lookMatch(TokenType::DOT, 1)) {
-        return objectItemAccessExpression();
+        return parseObjectItemAccessExpression();
     }
 
 	if (match(TokenType::WORD)) {
@@ -619,15 +619,15 @@ EPtr Parser::primary() {
 	}
 
 	if (lookMatch(TokenType::OPEN_SQUARE_BRACKET)) {
-		return arrayExpression();
+		return parseArrayExpression();
 	}
 
     if (lookMatch(TokenType::OPEN_BRACES)) {
-        return objectExpression();
+        return parseObjectExpression();
     }
 
 	if (match(TokenType::OPEN_BRACKET)) {
-		return subExpression();
+		return parseSubExpression();
 	}
 
     return nullptr;

@@ -34,7 +34,7 @@ using EPtr = std::unique_ptr<IExpression>;
 class Parser {
 private:
 	std::vector<Token> tokens;
-    std::set<std::string> tableOfConstVariable;
+    std::set<std::string> tableOfConstantVariables;
 
 	size_t position;
 	size_t size;
@@ -51,37 +51,51 @@ private:
 
     const TokenPosition getPositionAfterToken(const size_t pos) const;
     const TokenPosition getPositionBeforeToken(const size_t pos) const;
-	
-    SPtr statementOrBlockOfStatements();
-    SPtr definitionVariableStatement();
-    SPtr definitionFunctionStatement();
-    SPtr conditionalStatement();
-    SPtr assignmentStatement();
-    SPtr assignmentStatementWithSemicolon();
-    SPtr continueStatement();
-    SPtr doWhileStatement();
-    SPtr returnStatement();
-    SPtr whileStatement();
-    SPtr breakStatement();
-    SPtr forStatement();
-    SPtr statement();
 
-    EPtr arrayItemAccessExpression();
-    EPtr objectItemAccessExpression();
-    EPtr functionExpression();
-    EPtr functionExpressionWithSemicolon();
-    EPtr objectExpression();
-    EPtr arrayExpression();
-    EPtr multiplicative();
-    EPtr subExpression();
-    EPtr conditional();
-    EPtr expression();
-    EPtr logicalAnd();
-    EPtr additive();
-    EPtr logicaOr();
-    EPtr equality();
-    EPtr primary();
-    EPtr unary();
+    // Parsing statements
+	
+    SPtr parseStatement();
+    SPtr parseStatementOrBlockOfStatements();
+
+    SPtr parseVariableDefinitionStatement();
+    SPtr parseFunctionDefinitionStatement();
+
+    SPtr parseConditionalStatement();
+
+    SPtr parseAssignmentStatement();
+    SPtr parseAssignmentStatementWithSemicolon();
+
+    SPtr parseContinueStatement();
+    SPtr parseReturnStatement();
+    SPtr parseBreakStatement();
+
+    SPtr parseDoWhileStatement();
+    SPtr parseWhileStatement();
+    SPtr parseForStatement();
+
+    // Parsing expressions
+
+    EPtr parseArrayExpression();
+    EPtr parseArrayItemAccessExpression();
+
+    EPtr parseObjectExpression();
+    EPtr parseObjectItemAccessExpression();
+
+    EPtr parseFunctionExpression();
+    EPtr parseFunctionExpressionWithSemicolon();
+    
+    EPtr parseMultiplicativeExpression();
+    EPtr parseAdditiveExpression();
+    EPtr parsePrimaryExpression();
+    EPtr parseUnaryExpression();
+
+    EPtr parseExpression();
+    EPtr parseSubExpression();
+
+    EPtr parseConditionalExpression();
+    EPtr parseLogicalAndExpression();
+    EPtr parseLogicaOrExpression();
+    EPtr parseEqualityExpression();
 
 public:
 	Parser();
