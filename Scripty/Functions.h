@@ -68,6 +68,10 @@ public:
 
         return std::make_unique<NumberValue>(0.0);
     }
+
+    virtual size_t PrintFunction::getMaxArgsCount() const override {
+        return std::numeric_limits<size_t>::max();
+    }
 };
 
 class PrintLnFunction : public UserFunctionDefine {
@@ -82,5 +86,9 @@ public:
         std::cout << std::endl;
 
         return std::make_unique<NumberValue>(0.0);
+    }
+
+    virtual size_t PrintLnFunction::getMaxArgsCount() const override {
+        return std::numeric_limits<size_t>::max();
     }
 };

@@ -5,29 +5,33 @@
 
 FunctionExpression::FunctionExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args) :
 	name(name),
-	args(std::move(args)) {}
+    arguments(std::move(args)) {}
 
 Value FunctionExpression::eval(Scope& scope) {
 	Scope localScope;
 	localScope.setParentScope(scope);
 
-	std::vector<Value> values;
+	std::vector<Value> argumentValues;
 
-	for (auto& arg : args) {
-		values.emplace_back(arg->eval(scope));
+	for (auto& argument : arguments) {
+        argumentValues.emplace_back(argument->eval(scope));
 	}
 
 	IFunction* function = scope.getFunction(name);
 
-    size_t argsCountPassed = values.size();
+    if (!function) {
+        throw std::runtime_error("Error: could not find function '" + name + "'");
+    }
+
+    size_t argsCountPassed = arguments.size();
     size_t argsCountExpected = 0;
 
 	if (function->isFixedNumberArguments()) {
         argsCountExpected = function->getArgsCount();
         checkNumberArgumentsPassed(argsCountExpected, argsCountPassed, function, false);
 
-		for (size_t arg = 0; arg < values.size(); ++arg) {
-			localScope.defineVariable(function->getArgsName(arg), std::move(values[arg]));
+		for (size_t arg = 0; arg < argumentValues.size(); ++arg) {
+			localScope.defineVariable(function->getArgsName(arg), std::move(argumentValues[arg]));
 		}
 	}
     else {
@@ -35,7 +39,7 @@ Value FunctionExpression::eval(Scope& scope) {
         checkNumberArgumentsPassed(argsCountExpected, argsCountPassed, function, true);
     }
 
-	return function->eval(localScope, std::move(values));
+	return function->eval(localScope, std::move(argumentValues));
 }
 
 void FunctionExpression::accept(IVisitor* visitor) {
@@ -43,8 +47,8 @@ void FunctionExpression::accept(IVisitor* visitor) {
 }
 
 void FunctionExpression::innerAccept(IVisitor* visitor) {
-	for (auto& arg : args) {
-		arg->accept(visitor);
+	for (auto& argument : arguments) {
+        argument->accept(visitor);
 	}
 }
 

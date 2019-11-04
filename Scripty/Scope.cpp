@@ -90,7 +90,7 @@ IFunction* Scope::getFunction(const std::string& name) const {
 		if (parentScope != nullptr) {
             return parentScope->getFunction(name);
 		} else {
-			throw std::runtime_error("Error: could not find function '" + name + "'");
+            return nullptr;
 		}
 	}
 }

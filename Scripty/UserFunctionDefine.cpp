@@ -36,7 +36,7 @@ std::string UserFunctionDefine::getName() const {
 }
 
 size_t UserFunctionDefine::getMaxArgsCount() const {
-    return std::numeric_limits<size_t>::max();
+    return argsNames.size();
 }
 
 bool UserFunctionDefine::isFixedNumberArguments() const {

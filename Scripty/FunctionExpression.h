@@ -7,7 +7,7 @@
 class FunctionExpression : public IExpression {
 private:
 	std::string name;
-	std::vector<std::unique_ptr<IExpression>> args;
+	std::vector<std::unique_ptr<IExpression>> arguments;
 
 public:
 	FunctionExpression(const std::string& name, std::vector<std::unique_ptr<IExpression>>&& args);
