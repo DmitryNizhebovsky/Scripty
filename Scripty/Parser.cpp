@@ -93,22 +93,22 @@ SPtr Parser::parseStatement() {
 
 SPtr Parser::parseVariableDefinitionStatement() {
     std::unique_ptr<BlockOfVariableStatements> result = std::make_unique<BlockOfVariableStatements>();
-    bool isConst = false;
+    //bool isConst = false;
 
     if (lookMatch(TokenType::CONST)) {
         consume(TokenType::CONST);
-        isConst = true;
+        //isConst = true;
     }
 
     std::string variableName = consume(TokenType::WORD).getValue();
 
-    if (isConst) {
-        if (tableOfConstantVariables.find(variableName) == tableOfConstantVariables.end()) {
-            tableOfConstantVariables.emplace(variableName);
-        } else {
-            throw LangException(ExceptionType::ParserError, "Redeclaration of '" + variableName + "'", getPositionBeforeToken(position - 1));
-        }
-    }
+    //if (isConst) {
+    //    if (tableOfConstantVariables.find(variableName) == tableOfConstantVariables.end()) {
+    //        tableOfConstantVariables.emplace(variableName);
+    //    } else {
+    //        throw LangException(ExceptionType::ParserError, "Redeclaration of '" + variableName + "'", getPositionBeforeToken(position - 1));
+    //    }
+    //}
 
 	while (true) {
 		if (match(TokenType::ASSIGN)) {
@@ -153,53 +153,24 @@ SPtr Parser::parseFunctionDefinitionStatement() {
 }
 
 SPtr Parser::parseAssignmentStatement() {
-	std::string variableName = consume(TokenType::WORD).getValue();
-
-    if (tableOfConstantVariables.find(variableName) != tableOfConstantVariables.end()) {
-        throw LangException(ExceptionType::TypeError, "invalid assignment to const '" + variableName + "'");
-    }
-
 	std::unique_ptr<BlockOfVariableStatements> result = std::make_unique<BlockOfVariableStatements>();
-	EPtr variable;
+	EPtr variable = nullptr;
 
-	while (true) {
-		variable = std::make_unique<VariableExpression>(variableName);
-
-		if (lookMatch(TokenType::OPEN_SQUARE_BRACKET)) {
-			do {
-				consume(TokenType::OPEN_SQUARE_BRACKET);
-
-				EPtr index = parseExpression();
-
-                expressionParsingErrorCheck(index.get(), "Missing expression");
-
-				consume(TokenType::CLOSE_SQUARE_BRACKET);
-
-				variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::move(index));
-
-			} while (lookMatch(TokenType::OPEN_SQUARE_BRACKET));
-		}
-
-        if (lookMatch(TokenType::DOT)) {
-            do {
-                consume(TokenType::DOT);
-
-                std::string attribute = consume(TokenType::WORD).getValue();
-
-                variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::make_unique<ValueExpression>(attribute));
-
-            } while (lookMatch(TokenType::DOT));
+	do {
+        if (lookMatch(TokenType::WORD) && lookMatch(TokenType::OPEN_SQUARE_BRACKET, 1)) {
+            variable = parseArrayLikeAccessExpression();
+        }
+        else if (lookMatch(TokenType::WORD) && lookMatch(TokenType::DOT, 1)) {
+            variable = parseObjectLikeAccessExpression();
+        }
+        else {
+            std::string variableName = consume(TokenType::WORD).getValue();
+            variable = std::make_unique<VariableExpression>(variableName);
         }
 		
 		TokenType assignType = getToken().getType();
 
-		if (assignType == TokenType::ASSIGN           
-			|| assignType == TokenType::PLUS_ASSIGN
-			|| assignType == TokenType::MINUS_ASSIGN
-			|| assignType == TokenType::MULTIPLY_ASSIGN
-			|| assignType == TokenType::DIVISION_ASSIGN
-			|| assignType == TokenType::MOD_ASSIGN
-			|| assignType == TokenType::DIV_ASSIGN)
+		if (Token::isAssignmentOperator(assignType))
 		{
             consume(assignType);
 
@@ -211,14 +182,7 @@ SPtr Parser::parseAssignmentStatement() {
 		} else {
 			throw LangException(ExceptionType::ParserError, "Missing assign expression", getPositionAfterToken(position - 1));
 		}
-
-		if (match(TokenType::COMMA)) {
-			variableName = consume(TokenType::WORD).getValue();
-			continue;
-		}
-
-		break;
-	}
+    } while(match(TokenType::COMMA));
 
 	return result;
 }
@@ -326,7 +290,7 @@ EPtr Parser::parseArrayExpression() {
 
             expressions.emplace_back(std::move(expr));
 
-        } while (match(TokenType::COMMA));
+        } while(match(TokenType::COMMA));
     }
 
     consume(TokenType::CLOSE_SQUARE_BRACKET);
@@ -350,14 +314,14 @@ EPtr Parser::parseObjectExpression() {
 
             dictionary.insert(std::pair<std::string, EPtr>(attribute, std::move(expr)));
 
-        } while (match(TokenType::COMMA));
+        } while(match(TokenType::COMMA));
     }
 
     consume(TokenType::CLOSE_BRACES);
     return std::make_unique<ObjectExpression>(std::move(dictionary));
 }
 
-EPtr Parser::parseObjectItemAccessExpression() {
+EPtr Parser::parseObjectLikeAccessExpression() {
     std::string variableName = consume(TokenType::WORD).getValue();
     EPtr variable = std::make_unique<VariableExpression>(variableName);
 
@@ -368,12 +332,12 @@ EPtr Parser::parseObjectItemAccessExpression() {
 
         variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::make_unique<ValueExpression>(attribute));
 
-    } while (lookMatch(TokenType::DOT));
+    } while(lookMatch(TokenType::DOT));
 
     return variable;
 }
 
-EPtr Parser::parseArrayItemAccessExpression() {
+EPtr Parser::parseArrayLikeAccessExpression() {
 	std::string variableName = consume(TokenType::WORD).getValue();
 	EPtr variable = std::make_unique<VariableExpression>(variableName);
 
@@ -387,7 +351,7 @@ EPtr Parser::parseArrayItemAccessExpression() {
 		consume(TokenType::CLOSE_SQUARE_BRACKET);
 
 		variable = std::make_unique<ArrayLikeAccessExpression>(std::move(variable), std::move(index));
-	} while (lookMatch(TokenType::OPEN_SQUARE_BRACKET));
+	} while(lookMatch(TokenType::OPEN_SQUARE_BRACKET));
 	
 	return variable;
 }
@@ -407,7 +371,7 @@ EPtr Parser::parseFunctionExpression() {
 
             args.emplace_back(std::move(expr));
 
-        } while (match(TokenType::COMMA));
+        } while(match(TokenType::COMMA));
     }
 
 	consume(TokenType::CLOSE_BRACKET);
@@ -440,14 +404,9 @@ EPtr Parser::parseSubExpression() {
 EPtr Parser::parseLogicaOrExpression() {
 	EPtr result = parseLogicalAndExpression();
 
-	while (true) {
-		if (match(TokenType::LOGICAL_OR)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_OR, std::move(result), parseLogicalAndExpression());
-			continue;
-		}
-
-		break;
-	}
+    while (match(TokenType::LOGICAL_OR)) {
+        result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_OR, std::move(result), parseLogicalAndExpression());
+    }
 
 	return result;
 }
@@ -455,29 +414,24 @@ EPtr Parser::parseLogicaOrExpression() {
 EPtr Parser::parseLogicalAndExpression() {
 	EPtr result = parseEqualityExpression();
 
-	while (true) {
-		if (match(TokenType::LOGICAL_AND)) {
-			result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_AND, std::move(result), parseEqualityExpression());
-			continue;
-		}
-
-		break;
-	}
+    while (match(TokenType::LOGICAL_AND)) {
+        result = std::make_unique<BinaryExpression>(TokenType::LOGICAL_AND, std::move(result), parseEqualityExpression());
+    }
 
 	return result;
 }
 
 EPtr Parser::parseEqualityExpression() {
-	EPtr result = parseConditionalExpression();
+	EPtr result = parseComparisonExpression();
 
 	while (true) {
 		if (match(TokenType::EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::EQUALS, std::move(result), parseConditionalExpression());
+			result = std::make_unique<BinaryExpression>(TokenType::EQUALS, std::move(result), parseComparisonExpression());
 			continue;
 		}
 
 		if (match(TokenType::NOT_EQUALS)) {
-			result = std::make_unique<BinaryExpression>(TokenType::NOT_EQUALS, std::move(result), parseConditionalExpression());
+			result = std::make_unique<BinaryExpression>(TokenType::NOT_EQUALS, std::move(result), parseComparisonExpression());
 			continue;
 		}
 
@@ -487,7 +441,7 @@ EPtr Parser::parseEqualityExpression() {
 	return result;
 }
 
-EPtr Parser::parseConditionalExpression() {
+EPtr Parser::parseComparisonExpression() {
 	EPtr result = parseAdditiveExpression();
 
 	while (true) {
@@ -607,11 +561,11 @@ EPtr Parser::parsePrimaryExpression() {
 	}
 
 	if (lookMatch(TokenType::WORD) && lookMatch(TokenType::OPEN_SQUARE_BRACKET, 1)) {
-		return parseArrayItemAccessExpression();
+		return parseArrayLikeAccessExpression();
 	}
 
     if (lookMatch(TokenType::WORD) && lookMatch(TokenType::DOT, 1)) {
-        return parseObjectItemAccessExpression();
+        return parseObjectLikeAccessExpression();
     }
 
 	if (match(TokenType::WORD)) {

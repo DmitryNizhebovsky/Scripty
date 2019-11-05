@@ -16,6 +16,7 @@ private:
  public:
     static std::map<std::string, TokenType> operators;
     static std::map<std::string, TokenType> keywords;
+    static std::map<TokenType, TokenType> compoundAssignmentOperatorToBinaryOperator;
 
 public:
 	Token(const TokenType type, const std::string& value = "");
@@ -32,7 +33,8 @@ public:
 
     static std::string toString(const TokenType tokenType) noexcept;
     static bool isOperator(const std::string& token) noexcept;
-    static bool isCompoundAssignmentOperator(const TokenType tokenType) noexcept;
-    static TokenType convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) noexcept;
     static bool isKeyword(const std::string& token) noexcept;
+    static bool isCompoundAssignmentOperator(const TokenType tokenType) noexcept;
+    static bool isAssignmentOperator(const TokenType tokenType) noexcept;
+    static TokenType convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType);
 };

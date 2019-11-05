@@ -95,30 +95,33 @@ std::map<std::string, TokenType> Token::keywords = {
     { "function", TokenType::FUNCTION }
 };
 
+std::map<TokenType, TokenType> Token::compoundAssignmentOperatorToBinaryOperator = {
+    { TokenType::PLUS_ASSIGN,     TokenType::PLUS},
+    { TokenType::MINUS_ASSIGN,    TokenType::MINUS},
+    { TokenType::MULTIPLY_ASSIGN, TokenType::MULTIPLY},
+    { TokenType::DIVISION_ASSIGN, TokenType::DIVISION},
+    { TokenType::MOD_ASSIGN,      TokenType::MOD},
+    { TokenType::DIV_ASSIGN,      TokenType::DIV}
+};
+
 bool Token::isOperator(const std::string& token) noexcept {
-    return (operators.find(token) != operators.end());
+    return operators.find(token) != operators.end();
 }
 
 bool Token::isKeyword(const std::string& token) noexcept {
-    return (keywords.find(token) != keywords.end());
+    return keywords.find(token) != keywords.end();
+}
+
+bool Token::isAssignmentOperator(const TokenType tokenType) noexcept {
+    return Token::isCompoundAssignmentOperator(tokenType) || tokenType == TokenType::ASSIGN;
 }
 
 bool Token::isCompoundAssignmentOperator(const TokenType tokenType) noexcept {
-    auto it = operators.find(toString(tokenType));
-    return it != operators.end() && it->second != TokenType::ASSIGN;
+    return compoundAssignmentOperatorToBinaryOperator.find(tokenType) != compoundAssignmentOperatorToBinaryOperator.end();
 }
 
-TokenType Token::convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) noexcept {
-    switch (tokenType)
-    {
-        case TokenType::PLUS_ASSIGN:     return TokenType::PLUS;
-        case TokenType::MINUS_ASSIGN:    return TokenType::MINUS;
-        case TokenType::MULTIPLY_ASSIGN: return TokenType::MULTIPLY;
-        case TokenType::DIVISION_ASSIGN: return TokenType::DIVISION;
-        case TokenType::MOD_ASSIGN:      return TokenType::MOD;
-        case TokenType::DIV_ASSIGN:      return TokenType::DIV;
-        default: return TokenType::NONE;
-    }
+TokenType Token::convertCompoundAssignmentOperatorToBinaryOperator(const TokenType tokenType) {
+    return compoundAssignmentOperatorToBinaryOperator.at(tokenType);
 }
 
 std::string Token::toString(const TokenType tokenType) noexcept {

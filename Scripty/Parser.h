@@ -76,10 +76,10 @@ private:
     // Parsing expressions
 
     EPtr parseArrayExpression();
-    EPtr parseArrayItemAccessExpression();
+    EPtr parseArrayLikeAccessExpression();
 
     EPtr parseObjectExpression();
-    EPtr parseObjectItemAccessExpression();
+    EPtr parseObjectLikeAccessExpression();
 
     EPtr parseFunctionExpression();
     EPtr parseFunctionExpressionWithSemicolon();
@@ -92,7 +92,7 @@ private:
     EPtr parseExpression();
     EPtr parseSubExpression();
 
-    EPtr parseConditionalExpression();
+    EPtr parseComparisonExpression();
     EPtr parseLogicalAndExpression();
     EPtr parseLogicaOrExpression();
     EPtr parseEqualityExpression();
